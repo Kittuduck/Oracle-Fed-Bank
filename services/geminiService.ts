@@ -7,7 +7,9 @@ const isReplit = typeof window !== 'undefined' && (window.location.hostname.incl
 
 const ai = apiKey ? new GoogleGenAI({
   apiKey,
-  ...(isReplit ? { httpOptions: { apiVersion: "", baseUrl: window.location.origin + '/gemini-proxy' } } : {}),
+  httpOptions: isReplit
+    ? { apiVersion: "", baseUrl: window.location.origin + '/gemini-proxy' }
+    : { baseUrl: "https://generativelanguage.googleapis.com" },
 }) : null;
 
 const MODEL_NAME = isReplit ? 'gemini-2.5-flash' : 'gemini-2.5-flash-lite';
