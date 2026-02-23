@@ -106,11 +106,11 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({ personas, onSelect, i
                   </div>
                 </div>
 
-                <div className="relative z-10 flex gap-2 mt-3 ml-[4.5rem]">
+                <div className="relative z-10 flex flex-wrap gap-2 mt-3 ml-[4.5rem] pr-2">
                   {persona.features.map((feature, i) => (
                     <span
                       key={i}
-                      className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-800/50"
+                      className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-zinc-500 border border-slate-200 dark:border-zinc-800/50 whitespace-nowrap"
                     >
                       {feature.title.split(' ').slice(0, 2).join(' ')}
                     </span>
