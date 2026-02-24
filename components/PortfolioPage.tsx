@@ -1,46 +1,218 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Sun, Moon, TrendingUp, Filter, Download, Sparkles, Zap, ArrowRight, AlertCircle, Loader2, Check, X, FileText, PieChart as PieChartIcon, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { PieChart as RePieChart, Pie, Cell, ResponsiveContainer, Tooltip, Sector, BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { PersonaProfile } from '../data/personas';
 
 interface PortfolioPageProps {
     onBack: () => void;
     isDarkMode: boolean;
     toggleTheme: () => void;
     festival: 'DEFAULT' | 'DIWALI' | 'HOLI';
+    persona: PersonaProfile | null;
 }
 
-const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggleTheme, festival }) => {
+const getPersonaPortfolioData = (personaId: string) => {
+    const data: Record<string, any> = {
+        advait: {
+            summary: { totalValue: 8540200, investedValue: 7290000, totalReturns: 1250200, returnsPercentage: 17.15, dayChange: 45120, dayChangePercentage: 0.53 },
+            displayValue: '₹85,40,200',
+            allocation: [
+                { name: 'Equity', value: 5124120, color: '#004d9c' },
+                { name: 'Debt', value: 2135050, color: '#333333' },
+                { name: 'Gold', value: 854020, color: '#f37021' },
+                { name: 'Cash', value: 427010, color: '#059669' },
+            ],
+            holdings: [
+                { id: 1, name: 'Mirae Asset Large Cap', type: 'Equity', category: 'Large Cap', value: 1250000, returns: 18.5, allocation: 15 },
+                { id: 2, name: 'Parag Parikh Flexi Cap', type: 'Equity', category: 'Flexi Cap', value: 1840000, returns: 22.1, allocation: 21 },
+                { id: 3, name: 'Kotak Emerging Equity', type: 'Equity', category: 'Mid Cap', value: 950000, returns: 28.4, allocation: 11 },
+                { id: 4, name: 'Sovereign Gold Bond', type: 'Gold', category: 'SGB', value: 854020, returns: 12.2, allocation: 10 },
+                { id: 5, name: 'HDFC Corporate Bond', type: 'Debt', category: 'Corporate', value: 1200000, returns: 7.8, allocation: 14 },
+                { id: 6, name: 'Liquid Fund', type: 'Debt', category: 'Liquid', value: 935050, returns: 6.5, allocation: 11 },
+            ],
+            insight1: {
+                title: 'Allocation Alert',
+                tag: 'Opportunity',
+                text: 'Equity exposure (60%) has surpassed your 55% target due to the recent Mid-Cap rally.',
+                highlight: 'Rebalancing ₹4.2L',
+                detail: 'into Debt instruments helps lock in profits and reduce volatility.',
+                rebalanceResult: '₹4.2L moved to Debt. Risk reduced by 4%.',
+            },
+            insight2: {
+                title: 'Sector Concentration',
+                tag: 'Risk Note',
+                overlapPercent: '32%',
+                text: 'in Banking & Finance across "Mirae Asset" and "Kotak Emerging". Consider diversifying into Pharma or IT for better downside protection.',
+                fund1: 'Mirae Asset Large Cap', fund1Exposure: '28%',
+                fund2: 'Kotak Emerging Equity', fund2Exposure: '34%',
+                sellFund: 'Mirae Asset Large Cap', sellAmount: '₹4,00,000',
+                buyFund: 'Nifty Pharma Index ETF', buyAmount: '₹4,00,000',
+                overlapAfter: '12%', returnBoost: '+0.8%',
+            }
+        },
+        kapoor: {
+            summary: { totalValue: 4520000, investedValue: 3850000, totalReturns: 670000, returnsPercentage: 17.4, dayChange: 8200, dayChangePercentage: 0.18 },
+            displayValue: '₹45,20,000',
+            allocation: [
+                { name: 'Debt/FD', value: 2260000, color: '#333333' },
+                { name: 'Pension Fund', value: 1130000, color: '#004d9c' },
+                { name: 'Gold', value: 678000, color: '#f37021' },
+                { name: 'PPF', value: 452000, color: '#059669' },
+            ],
+            holdings: [
+                { id: 1, name: 'SBI Fixed Deposit', type: 'Debt', category: 'FD (5yr)', value: 1200000, returns: 7.2, allocation: 27 },
+                { id: 2, name: 'Senior Citizen Savings', type: 'Debt', category: 'SCSS', value: 1060000, returns: 8.2, allocation: 23 },
+                { id: 3, name: 'NPS Tier-1', type: 'Pension', category: 'Pension Fund', value: 1130000, returns: 10.5, allocation: 25 },
+                { id: 4, name: 'Sovereign Gold Bond', type: 'Gold', category: 'SGB 2029', value: 678000, returns: 12.8, allocation: 15 },
+                { id: 5, name: 'PPF Account', type: 'PPF', category: 'Tax-Free', value: 452000, returns: 7.1, allocation: 10 },
+            ],
+            insight1: {
+                title: 'FD Maturity Alert',
+                tag: 'Action Required',
+                text: 'Your SBI FD of ₹12L matures in 30 days at 7.2%.',
+                highlight: 'Reinvesting in SCSS at 8.2%',
+                detail: 'would increase annual interest income by ₹12,000 with similar safety.',
+                rebalanceResult: '₹12L moved to SCSS. Annual income increased by ₹12,000.',
+            },
+            insight2: {
+                title: 'Tax Efficiency',
+                tag: 'Savings Tip',
+                overlapPercent: '₹18,000',
+                text: 'in avoidable TDS on FD interest. Moving ₹5L to Senior Citizen Savings Scheme saves tax under Section 80TTB.',
+                fund1: 'SBI Fixed Deposit', fund1Exposure: '₹86,400 TDS',
+                fund2: 'Canara Bank FD', fund2Exposure: '₹42,000 TDS',
+                sellFund: 'Canara Bank FD (Partial)', sellAmount: '₹5,00,000',
+                buyFund: 'Senior Citizen Savings', buyAmount: '₹5,00,000',
+                overlapAfter: '₹6,000', returnBoost: '+1.0%',
+            }
+        },
+        rajesh: {
+            summary: { totalValue: 25800000, investedValue: 21200000, totalReturns: 4600000, returnsPercentage: 21.7, dayChange: 185000, dayChangePercentage: 0.72 },
+            displayValue: '₹2,58,00,000',
+            allocation: [
+                { name: 'Equity', value: 10320000, color: '#004d9c' },
+                { name: 'Real Estate', value: 7740000, color: '#333333' },
+                { name: 'Business Capital', value: 5160000, color: '#f37021' },
+                { name: 'Debt/Liquid', value: 2580000, color: '#059669' },
+            ],
+            holdings: [
+                { id: 1, name: 'HDFC Top 100 Fund', type: 'Equity', category: 'Large Cap', value: 4200000, returns: 19.8, allocation: 16 },
+                { id: 2, name: 'Nippon India Small Cap', type: 'Equity', category: 'Small Cap', value: 3100000, returns: 32.5, allocation: 12 },
+                { id: 3, name: 'Axis Mid Cap Fund', type: 'Equity', category: 'Mid Cap', value: 3020000, returns: 24.1, allocation: 12 },
+                { id: 4, name: 'Commercial Property Fund', type: 'Real Estate', category: 'REIT', value: 7740000, returns: 14.2, allocation: 30 },
+                { id: 5, name: 'Business Working Capital', type: 'Business', category: 'Operating', value: 5160000, returns: 18.0, allocation: 20 },
+                { id: 6, name: 'ICICI Liquid Fund', type: 'Debt', category: 'Liquid', value: 2580000, returns: 6.8, allocation: 10 },
+            ],
+            insight1: {
+                title: 'Liquidity Warning',
+                tag: 'Urgent',
+                text: 'Working capital locked in real estate (30%) limits business agility.',
+                highlight: 'Freeing ₹15L from REIT',
+                detail: 'into liquid funds provides a 6-month operational buffer for your textile business.',
+                rebalanceResult: '₹15L moved to Liquid. Business liquidity improved by 3 months.',
+            },
+            insight2: {
+                title: 'Concentration Risk',
+                tag: 'Risk Note',
+                overlapPercent: '42%',
+                text: 'in Real Estate & Infrastructure. Market correction in realty could impact ₹77L. Diversify into IT and Pharma sectors.',
+                fund1: 'Commercial Property Fund', fund1Exposure: '30% of Portfolio',
+                fund2: 'Nippon India Small Cap', fund2Exposure: '15% Real Estate',
+                sellFund: 'Commercial Property (Partial)', sellAmount: '₹15,00,000',
+                buyFund: 'ICICI Prudential IT Fund', buyAmount: '₹15,00,000',
+                overlapAfter: '22%', returnBoost: '+1.2%',
+            }
+        },
+        ishan: {
+            summary: { totalValue: 148500, investedValue: 125000, totalReturns: 23500, returnsPercentage: 18.8, dayChange: 1250, dayChangePercentage: 0.84 },
+            displayValue: '₹1,48,500',
+            allocation: [
+                { name: 'Index Funds', value: 74250, color: '#004d9c' },
+                { name: 'Stocks', value: 37125, color: '#333333' },
+                { name: 'Digital Gold', value: 22275, color: '#f37021' },
+                { name: 'Savings', value: 14850, color: '#059669' },
+            ],
+            holdings: [
+                { id: 1, name: 'Nifty 50 Index SIP', type: 'Equity', category: 'Index Fund', value: 45000, returns: 16.2, allocation: 30 },
+                { id: 2, name: 'Nifty Next 50 SIP', type: 'Equity', category: 'Index Fund', value: 29250, returns: 22.5, allocation: 20 },
+                { id: 3, name: 'Zomato Shares', type: 'Stock', category: 'Mid Cap', value: 18000, returns: 45.0, allocation: 12 },
+                { id: 4, name: 'Tata Motors Shares', type: 'Stock', category: 'Large Cap', value: 19125, returns: 28.3, allocation: 13 },
+                { id: 5, name: 'Jar Digital Gold', type: 'Gold', category: 'Digital Gold', value: 22275, returns: 11.5, allocation: 15 },
+                { id: 6, name: 'Fi Money Savings', type: 'Savings', category: 'High Yield', value: 14850, returns: 7.0, allocation: 10 },
+            ],
+            insight1: {
+                title: 'SIP Streak',
+                tag: 'On Track',
+                text: 'Your Nifty 50 SIP of ₹2,500/month has been consistent for 18 months.',
+                highlight: 'Increasing SIP by ₹500',
+                detail: 'would grow your corpus by an extra ₹1.8L over 5 years at current returns.',
+                rebalanceResult: 'SIP increased to ₹3,000. Projected corpus: ₹6.2L in 5 years.',
+            },
+            insight2: {
+                title: 'Stock Concentration',
+                tag: 'Risk Note',
+                overlapPercent: '25%',
+                text: 'of your portfolio is in just 2 individual stocks. A single stock drop could significantly impact your small portfolio.',
+                fund1: 'Zomato Shares', fund1Exposure: '12% of Portfolio',
+                fund2: 'Tata Motors Shares', fund2Exposure: '13% of Portfolio',
+                sellFund: 'Tata Motors (Partial)', sellAmount: '₹8,000',
+                buyFund: 'Nifty 50 Index SIP (Top-up)', buyAmount: '₹8,000',
+                overlapAfter: '15%', returnBoost: '+0.5%',
+            }
+        },
+        anjali: {
+            summary: { totalValue: 2840000, investedValue: 2380000, totalReturns: 460000, returnsPercentage: 19.3, dayChange: 12500, dayChangePercentage: 0.44 },
+            displayValue: '₹28,40,000',
+            allocation: [
+                { name: 'Gold', value: 852000, color: '#f37021' },
+                { name: 'PPF/SSY', value: 710000, color: '#004d9c' },
+                { name: 'Mutual Funds', value: 852000, color: '#333333' },
+                { name: 'FD/RD', value: 426000, color: '#059669' },
+            ],
+            holdings: [
+                { id: 1, name: 'Physical Gold + SGB', type: 'Gold', category: 'Gold', value: 852000, returns: 14.5, allocation: 30 },
+                { id: 2, name: 'PPF Account', type: 'PPF', category: 'Tax-Free', value: 420000, returns: 7.1, allocation: 15 },
+                { id: 3, name: 'Sukanya Samriddhi (Meera)', type: 'SSY', category: "Children's Fund", value: 290000, returns: 8.2, allocation: 10 },
+                { id: 4, name: 'SBI Balanced Advantage', type: 'Equity', category: 'Hybrid', value: 480000, returns: 15.8, allocation: 17 },
+                { id: 5, name: 'HDFC Children Gift Fund', type: 'Equity', category: 'Education', value: 372000, returns: 18.2, allocation: 13 },
+                { id: 6, name: 'Post Office RD', type: 'FD', category: 'Recurring', value: 426000, returns: 6.9, allocation: 15 },
+            ],
+            insight1: {
+                title: 'Education Fund Gap',
+                tag: 'Important',
+                text: "Meera's college fund (SSY + Gift Fund) has ₹6.6L but projected need is ₹15L in 8 years.",
+                highlight: 'Starting a ₹5,000/month SIP',
+                detail: "in HDFC Children Gift Fund would bridge the ₹8.4L gap comfortably.",
+                rebalanceResult: 'SIP of ₹5,000 started. Education goal on track for ₹15L.',
+            },
+            insight2: {
+                title: 'Gold Overweight',
+                tag: 'Risk Note',
+                overlapPercent: '30%',
+                text: 'in Gold is above the recommended 10-15%. Consider moving some to balanced equity funds for better long-term growth.',
+                fund1: 'Physical Gold', fund1Exposure: '18% of Portfolio',
+                fund2: 'Sovereign Gold Bond', fund2Exposure: '12% of Portfolio',
+                sellFund: 'Physical Gold (Partial)', sellAmount: '₹3,00,000',
+                buyFund: 'SBI Balanced Advantage', buyAmount: '₹3,00,000',
+                overlapAfter: '19%', returnBoost: '+1.5%',
+            }
+        }
+    };
+    return data[personaId] || data['advait'];
+};
+
+const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggleTheme, festival, persona }) => {
     const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
     const [rebalanceStatus, setRebalanceStatus] = useState<'IDLE' | 'PROCESSING' | 'COMPLETED'>('IDLE');
     const [overlapStatus, setOverlapStatus] = useState<'IDLE' | 'PROCESSING' | 'COMPLETED' | 'EXECUTED'>('IDLE');
     const [showReport, setShowReport] = useState(false);
     const [executionStep, setExecutionStep] = useState<'DETAILS' | 'PROCESSING' | 'SUCCESS'>('DETAILS');
 
-    // Mock Data
-    const portfolioSummary = {
-        totalValue: 8540200,
-        investedValue: 7290000,
-        totalReturns: 1250200,
-        returnsPercentage: 17.15,
-        dayChange: 45120,
-        dayChangePercentage: 0.53
-    };
+    const pData = getPersonaPortfolioData(persona?.id || 'advait');
 
-    const allocationData = [
-        { name: 'Equity', value: 5124120, color: '#004d9c' }, // Federal Blue
-        { name: 'Debt', value: 2135050, color: '#333333' },   // Slate
-        { name: 'Gold', value: 854020, color: '#f37021' },    // Federal Orange
-        { name: 'Cash', value: 427010, color: '#059669' },    // Emerald Green
-    ];
-
-    const holdings = [
-        { id: 1, name: 'Mirae Asset Large Cap', type: 'Equity', category: 'Large Cap', value: 1250000, returns: 18.5, allocation: 15 },
-        { id: 2, name: 'Parag Parikh Flexi Cap', type: 'Equity', category: 'Flexi Cap', value: 1840000, returns: 22.1, allocation: 21 },
-        { id: 3, name: 'Kotak Emerging Equity', type: 'Equity', category: 'Mid Cap', value: 950000, returns: 28.4, allocation: 11 },
-        { id: 4, name: 'Sovereign Gold Bond', type: 'Gold', category: 'SGB', value: 854020, returns: 12.2, allocation: 10 },
-        { id: 5, name: 'HDFC Corporate Bond', type: 'Debt', category: 'Corporate', value: 1200000, returns: 7.8, allocation: 14 },
-        { id: 6, name: 'Liquid Fund', type: 'Debt', category: 'Liquid', value: 935050, returns: 6.5, allocation: 11 },
-    ];
+    const portfolioSummary = pData.summary;
+    const allocationData = pData.allocation;
+    const holdings = pData.holdings;
 
     const formatCurrency = (val: number) => {
         if (val >= 10000000) return `₹${(val / 10000000).toFixed(2)}Cr`;
@@ -151,7 +323,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                     <div>
                                         <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Total Portfolio Value</p>
                                         <h2 className="text-4xl font-light text-[#333333] dark:text-white tracking-tight">
-                                            ₹85,40,200<span className="text-slate-400 text-2xl">.00</span>
+                                            {pData.displayValue}<span className="text-slate-400 text-2xl">.00</span>
                                         </h2>
                                     </div>
                                     <div className="flex flex-col items-end">
@@ -292,23 +464,22 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                         <div className="p-1.5 bg-emerald-50 dark:bg-emerald-900/20 rounded-full text-emerald-700 dark:text-emerald-400">
                                             <Zap className="w-3.5 h-3.5" />
                                         </div>
-                                        <h4 className="text-sm font-bold text-[#333333] dark:text-white">Allocation Alert</h4>
+                                        <h4 className="text-sm font-bold text-[#333333] dark:text-white">{pData.insight1.title}</h4>
                                     </div>
-                                    {/* Smaller Tag */}
                                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-sm bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">
-                                        Opportunity
+                                        {pData.insight1.tag}
                                     </span>
                                 </div>
                                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                                    Equity exposure (60%) has surpassed your 55% target due to the recent Mid-Cap rally. <span className="font-semibold text-[#333333] dark:text-white">Rebalancing ₹4.2L</span> into Debt instruments helps lock in profits and reduce volatility.
+                                    {pData.insight1.text} <span className="font-semibold text-[#333333] dark:text-white">{pData.insight1.highlight}</span> {pData.insight1.detail}
                                 </p>
 
                                 {rebalanceStatus === 'COMPLETED' ? (
                                     <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-3 flex items-start gap-2 animate-fade-in border border-emerald-100 dark:border-emerald-800/30">
                                         <Check className="w-4 h-4 text-emerald-700 dark:text-emerald-400 mt-0.5" />
                                         <div>
-                                            <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400">Rebalancing Orders Placed</p>
-                                            <p className="text-[10px] text-emerald-700/80 dark:text-emerald-400/80 mt-0.5">₹4.2L moved to Debt. Risk reduced by 4%.</p>
+                                            <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400">Orders Placed</p>
+                                            <p className="text-[10px] text-emerald-700/80 dark:text-emerald-400/80 mt-0.5">{pData.insight1.rebalanceResult}</p>
                                         </div>
                                     </div>
                                 ) : (
@@ -334,15 +505,14 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                         <div className="p-1.5 bg-federalgold-50 dark:bg-federalgold-900/20 rounded-full text-federalgold-600 dark:text-federalgold-400">
                                             <AlertCircle className="w-3.5 h-3.5" />
                                         </div>
-                                        <h4 className="text-sm font-bold text-[#333333] dark:text-white">Sector Concentration</h4>
+                                        <h4 className="text-sm font-bold text-[#333333] dark:text-white">{pData.insight2.title}</h4>
                                     </div>
-                                    {/* Smaller Tag */}
                                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-sm bg-federalgold-50 dark:bg-federalgold-900/20 text-federalgold-600 dark:text-federalgold-400 uppercase tracking-wide">
-                                        Risk Note
+                                        {pData.insight2.tag}
                                     </span>
                                 </div>
                                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                                    Your portfolio has a <span className="font-semibold text-[#333333] dark:text-white">high overlap (32%)</span> in Banking & Finance across "Mirae Asset" and "Kotak Emerging". Consider diversifying into Pharma or IT for better downside protection.
+                                    Your portfolio has a <span className="font-semibold text-[#333333] dark:text-white">high overlap ({pData.insight2.overlapPercent})</span> {pData.insight2.text}
                                 </p>
 
                                 {overlapStatus === 'EXECUTED' ? (
@@ -351,7 +521,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                         <div>
                                             <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400">Optimization Active</p>
                                             <p className="text-[10px] text-emerald-700/80 dark:text-emerald-400/80 mt-0.5">
-                                                Orders executed. Overlap reduced to 12%.
+                                                Orders executed. Overlap reduced to {pData.insight2.overlapAfter}.
                                             </p>
                                         </div>
                                     </div>
@@ -477,16 +647,16 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">1. The Analysis</h4>
                                             <div className="bg-[#F9F9F9] dark:bg-[#0b0c10] border border-[#E0E0E0] dark:border-slate-800 rounded-lg p-4">
                                                 <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                                                    Our algorithms detected a <span className="font-semibold text-[#333333] dark:text-white">32% sector overlap</span> in Banking & Financial Services (BFSI). This high concentration increases portfolio volatility during sector-specific downturns.
+                                                    Our algorithms detected a <span className="font-semibold text-[#333333] dark:text-white">{pData.insight2.overlapPercent} overlap</span> {pData.insight2.text}
                                                 </p>
                                                 <div className="mt-4 flex gap-4">
                                                     <div className="flex-1 bg-white dark:bg-[#15161a] p-3 rounded-lg border border-[#E0E0E0] dark:border-slate-800/50">
-                                                        <p className="text-xs text-slate-500 mb-1">Mirae Asset Large Cap</p>
-                                                        <p className="text-lg font-bold text-[#333333] dark:text-white">28% <span className="text-xs font-medium text-slate-400">BFSI Exposure</span></p>
+                                                        <p className="text-xs text-slate-500 mb-1">{pData.insight2.fund1}</p>
+                                                        <p className="text-lg font-bold text-[#333333] dark:text-white">{pData.insight2.fund1Exposure} <span className="text-xs font-medium text-slate-400">Exposure</span></p>
                                                     </div>
                                                     <div className="flex-1 bg-white dark:bg-[#15161a] p-3 rounded-lg border border-[#E0E0E0] dark:border-slate-800/50">
-                                                        <p className="text-xs text-slate-500 mb-1">Kotak Emerging Equity</p>
-                                                        <p className="text-lg font-bold text-[#333333] dark:text-white">34% <span className="text-xs font-medium text-slate-400">BFSI Exposure</span></p>
+                                                        <p className="text-xs text-slate-500 mb-1">{pData.insight2.fund2}</p>
+                                                        <p className="text-lg font-bold text-[#333333] dark:text-white">{pData.insight2.fund2Exposure} <span className="text-xs font-medium text-slate-400">Exposure</span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -505,9 +675,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                                         <div className="bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-slate-800 rounded-lg p-4 flex justify-between items-center">
                                                             <div>
                                                                 <p className="text-xs text-red-600 font-bold uppercase tracking-wider mb-1">Sell (Partial)</p>
-                                                                <p className="font-semibold text-[#333333] dark:text-white">Mirae Asset Large Cap</p>
+                                                                <p className="font-semibold text-[#333333] dark:text-white">{pData.insight2.sellFund}</p>
                                                             </div>
-                                                            <p className="text-sm font-mono font-medium text-slate-600 dark:text-slate-400">₹4,00,000</p>
+                                                            <p className="text-sm font-mono font-medium text-slate-600 dark:text-slate-400">{pData.insight2.sellAmount}</p>
                                                         </div>
                                                     </div>
                                                     <div className="relative pl-10">
@@ -517,9 +687,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                                         <div className="bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-slate-800 rounded-lg p-4 flex justify-between items-center">
                                                             <div>
                                                                 <p className="text-xs text-emerald-600 font-bold uppercase tracking-wider mb-1">Buy</p>
-                                                                <p className="font-semibold text-[#333333] dark:text-white">Nifty Pharma Index ETF</p>
+                                                                <p className="font-semibold text-[#333333] dark:text-white">{pData.insight2.buyFund}</p>
                                                             </div>
-                                                            <p className="text-sm font-mono font-medium text-slate-600 dark:text-slate-400">₹4,00,000</p>
+                                                            <p className="text-sm font-mono font-medium text-slate-600 dark:text-slate-400">{pData.insight2.buyAmount}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -533,12 +703,12 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                                 <div className="p-4 rounded-lg bg-federalblue-50 dark:bg-federalblue-900/10 border border-federalblue-100 dark:border-federalblue-900/20 text-center">
                                                     <PieChartIcon className="w-5 h-5 text-federalblue-900 mx-auto mb-2" />
                                                     <p className="text-xs text-slate-500 mb-1">Overlap</p>
-                                                    <p className="text-lg font-bold text-[#333333] dark:text-white">32% <span className="text-slate-400">→</span> 12%</p>
+                                                    <p className="text-lg font-bold text-[#333333] dark:text-white">{pData.insight2.overlapPercent} <span className="text-slate-400">→</span> {pData.insight2.overlapAfter}</p>
                                                 </div>
                                                 <div className="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/20 text-center">
                                                     <ArrowUpRight className="w-5 h-5 text-emerald-600 mx-auto mb-2" />
                                                     <p className="text-xs text-slate-500 mb-1">Exp. Return</p>
-                                                    <p className="text-lg font-bold text-[#333333] dark:text-white">+0.8%</p>
+                                                    <p className="text-lg font-bold text-[#333333] dark:text-white">{pData.insight2.returnBoost}</p>
                                                 </div>
                                                 <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20 text-center">
                                                     <Shield className="w-5 h-5 text-blue-600 mx-auto mb-2" />
@@ -576,7 +746,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                     </div>
                                     <h3 className="mt-6 text-xl font-bold text-[#333333] dark:text-white">Executing Strategy</h3>
                                     <p className="text-slate-500 dark:text-slate-400 mt-2 max-w-xs">
-                                        Placing orders to sell Mirae Asset and buy Nifty Pharma ETF...
+                                        Placing orders to sell {pData.insight2.sellFund} and buy {pData.insight2.buyFund}...
                                     </p>
                                 </div>
                             )}
@@ -588,7 +758,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                                     </div>
                                     <h3 className="text-2xl font-bold text-[#333333] dark:text-white">Optimization Complete</h3>
                                     <p className="text-slate-500 dark:text-slate-400 mt-3 max-w-sm leading-relaxed">
-                                        Your portfolio has been rebalanced. The overlap is now reduced to 12% and projected returns have improved by 0.8%.
+                                        Your portfolio has been rebalanced. The overlap is now reduced to {pData.insight2.overlapAfter} and projected returns have improved by {pData.insight2.returnBoost}.
                                     </p>
 
                                     <div className="mt-8 grid grid-cols-2 gap-4 w-full max-w-sm">

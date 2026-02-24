@@ -343,6 +343,7 @@ const App: React.FC = () => {
                     isDarkMode={isDarkMode}
                     toggleTheme={toggleTheme}
                     festival={festival}
+                    persona={selectedPersona}
                 />
             );
         }
