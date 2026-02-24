@@ -272,16 +272,15 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             {persona.discoverCards.map((card, i) => (
                                 <div
                                     key={i}
-                                    className={`min-w-[240px] snap-center p-5 rounded-2xl bg-gradient-to-b ${card.color} text-white shadow-lg relative overflow-hidden cursor-pointer active:scale-[0.97] transition-all duration-200 border border-white/10`}
+                                    className="min-w-[220px] snap-center p-4 rounded-xl glass-card border border-slate-200/80 dark:border-zinc-700/60 cursor-pointer active:scale-[0.97] transition-all duration-200"
                                     onClick={() => card.navigateTo && onNavigate(card.navigateTo)}
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                                     {card.tag && (
-                                        <span className="relative z-10 text-[9px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-md bg-white/20 backdrop-blur-md mb-2 inline-block">{card.tag}</span>
+                                        <span className="text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded bg-federalblue-900/10 dark:bg-federalblue-300/15 text-federalblue-900 dark:text-federalblue-300 mb-2 inline-block">{card.tag}</span>
                                     )}
-                                    <h4 className="relative z-10 text-[15px] font-semibold mt-2 mb-1 leading-snug">{card.title}</h4>
-                                    <p className="relative z-10 text-[11px] text-white/70 leading-relaxed">{card.subtitle}</p>
-                                    <div className="relative z-10 mt-3 flex items-center gap-1 text-[10px] font-bold text-white/50 uppercase tracking-widest">
+                                    <h4 className="text-[14px] font-semibold text-zinc-900 dark:text-white mt-1 mb-1 leading-snug">{card.title}</h4>
+                                    <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">{card.subtitle}</p>
+                                    <div className="mt-3 flex items-center gap-1 text-[10px] font-semibold text-federalblue-900 dark:text-federalblue-300 uppercase tracking-widest">
                                         <span>Explore</span>
                                         <ArrowRight className="w-3 h-3" />
                                     </div>
