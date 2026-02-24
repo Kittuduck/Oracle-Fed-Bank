@@ -14,8 +14,36 @@ import {
     ChevronRight,
     ShieldCheck,
     Fingerprint,
-    QrCode
+    QrCode,
+    ArrowRight,
+    Receipt,
+    CreditCard,
+    TrendingUp,
+    Wallet,
+    Users,
+    Heart,
+    GraduationCap,
+    Briefcase,
+    Home,
+    Coffee,
+    Globe,
+    AlertTriangle,
+    FileText,
+    BarChart3,
+    PiggyBank,
+    Target,
+    ShoppingCart,
+    Flame,
+    Music,
+    ScanLine
 } from 'lucide-react';
+import { PersonaProfile } from '../data/personas';
+
+const txIconMap: Record<string, any> = {
+    CreditCard, Zap, Smartphone, TrendingUp, Wallet, Receipt, Users, Heart,
+    GraduationCap, Briefcase, Home, Coffee, Globe, AlertTriangle, FileText,
+    BarChart3, PiggyBank, Target, ShoppingCart, Flame, Music, ShieldCheck, ScanLine
+};
 
 interface PaymentFlowProps {
     onBack: () => void;
@@ -23,9 +51,11 @@ interface PaymentFlowProps {
     currentBalance: number;
     isDarkMode: boolean;
     initialTab?: 'SEND' | 'BILL' | 'SCAN';
+    persona?: PersonaProfile | null;
+    onNavigate?: (page: any) => void;
 }
 
-const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, currentBalance, isDarkMode, initialTab = 'SEND' }) => {
+const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, currentBalance, isDarkMode, initialTab = 'SEND', persona, onNavigate }) => {
     const [tab, setTab] = useState<'SEND' | 'BILL' | 'SCAN'>(initialTab);
     const [step, setStep] = useState<'IDLE' | 'AMOUNT' | 'VERIFY' | 'SUCCESS'>('IDLE');
     const [selectedRecipient, setSelectedRecipient] = useState<any>(null);
@@ -307,6 +337,39 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
                             <div className="p-2 border border-white/20 rounded-full">
                                 <ChevronRight className="w-4 h-4" />
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {persona && persona.transactions && persona.transactions.length > 0 && (
+                    <div className="space-y-4 pt-2">
+                        <div className="flex justify-between items-center px-1">
+                            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recent Transactions</h3>
+                            <button
+                                onClick={() => onNavigate && onNavigate('TRANSACTIONS')}
+                                className="text-[10px] font-bold text-federalblue-900 dark:text-federalblue-400 hover:underline flex items-center gap-1"
+                            >
+                                Show All <ArrowRight className="w-3 h-3" />
+                            </button>
+                        </div>
+                        <div className="bg-white dark:bg-zinc-900 rounded-xl border border-slate-100 dark:border-zinc-800 divide-y divide-slate-100 dark:divide-zinc-800 overflow-hidden">
+                            {persona.transactions.slice(0, 3).map((tx) => {
+                                const TxIcon = txIconMap[tx.icon] || Receipt;
+                                return (
+                                    <div key={tx.id} className="flex items-center gap-4 px-4 py-3">
+                                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${tx.type === 'credit' ? 'bg-emerald-50 dark:bg-emerald-900/20' : 'bg-slate-100 dark:bg-zinc-800'}`}>
+                                            <TxIcon className={`w-4 h-4 ${tx.type === 'credit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-zinc-400'}`} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-xs font-semibold text-zinc-900 dark:text-white truncate">{tx.name}</h4>
+                                            <p className="text-[10px] text-zinc-400 dark:text-zinc-500">{tx.date} · {tx.method}</p>
+                                        </div>
+                                        <span className={`text-xs font-bold tabular-nums ${tx.type === 'credit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-800 dark:text-zinc-200'}`}>
+                                            {tx.type === 'credit' ? '+' : '-'}₹{tx.amount.toLocaleString('en-IN')}
+                                        </span>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 )}

@@ -226,6 +226,8 @@ const App: React.FC = () => {
                     currentBalance={currentFinancials.liquid}
                     isDarkMode={isDarkMode}
                     initialTab={payTab}
+                    persona={selectedPersona}
+                    onNavigate={setView}
                 />
             );
         }
