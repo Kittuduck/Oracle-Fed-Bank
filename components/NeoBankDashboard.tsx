@@ -272,6 +272,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                                 <div
                                     key={i}
                                     className={`min-w-[260px] snap-center p-6 rounded-[2rem] bg-gradient-to-br ${card.color} text-white shadow-xl relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform`}
+                                    onClick={() => card.navigateTo && onNavigate(card.navigateTo)}
                                 >
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-[40px] -mr-10 -mt-10"></div>
                                     {card.tag && (
@@ -392,7 +393,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                         {persona.features.map((feature, i) => {
                             const FeatureIcon = iconMap[feature.icon] || Sparkles;
                             return (
-                                <div key={i} className="glass-card p-5 rounded-[1.75rem] border border-slate-100 dark:border-zinc-800 flex items-start gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+                                <div key={i} className="glass-card p-5 rounded-[1.75rem] border border-slate-100 dark:border-zinc-800 flex items-start gap-4 cursor-pointer active:scale-[0.98] transition-transform" onClick={() => feature.navigateTo && onNavigate(feature.navigateTo)}>
                                     <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${persona.accentColor}15` }}>
                                         <FeatureIcon className="w-6 h-6" style={{ color: persona.accentColor }} />
                                     </div>

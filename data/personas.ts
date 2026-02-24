@@ -19,11 +19,13 @@ export interface PersonaProfile {
   discoverCards: DiscoverCard[];
 }
 
+export type AppView = 'DASHBOARD' | 'PROFILE' | 'GOALS' | 'ORACLE' | 'ORACLE_HUB' | 'AUTOMATION_HUB' | 'PORTFOLIO' | 'EXPENDITURE' | 'PAYMENTS' | 'CARDS' | 'SUPPORT' | 'INVESTMENTS' | 'LOANS';
+
 export interface PersonaFeature {
   title: string;
   description: string;
   icon: string;
-  navigateTo?: string;
+  navigateTo?: AppView;
 }
 
 export interface PersonaFinancials {
@@ -78,7 +80,7 @@ export interface DiscoverCard {
   subtitle: string;
   color: string;
   tag?: string;
-  navigateTo?: string;
+  navigateTo?: AppView;
 }
 
 export const PERSONAS: PersonaProfile[] = [
@@ -93,9 +95,9 @@ export const PERSONAS: PersonaProfile[] = [
     description: 'The "Agile Orchestrator" balancing multi-generational support with "Fat FIRE" goals. Needs an autonomous Oracle.',
     accentColor: '#004d9c',
     features: [
-      { title: 'Fat FIRE Planner', description: 'Track and optimize path to Financial Independence by 50.', icon: 'TrendingUp' },
-      { title: 'Family Shield', description: 'World-class healthcare management for parents. Auto-fund medical reserves.', icon: 'ShieldCheck' },
-      { title: 'Smart Automation', description: 'Auto-move funds between goals, medical, and savings. Zero manual banking.', icon: 'Zap' },
+      { title: 'Fat FIRE Planner', description: 'Track and optimize path to Financial Independence by 50.', icon: 'TrendingUp', navigateTo: 'GOALS' },
+      { title: 'Family Shield', description: 'World-class healthcare management for parents. Auto-fund medical reserves.', icon: 'ShieldCheck', navigateTo: 'ORACLE' },
+      { title: 'Smart Automation', description: 'Auto-move funds between goals, medical, and savings. Zero manual banking.', icon: 'Zap', navigateTo: 'AUTOMATION_HUB' },
     ],
     financials: {
       liquid: 1240500,
@@ -132,9 +134,9 @@ export const PERSONAS: PersonaProfile[] = [
       { label: 'Invest', icon: 'TrendingUp', color: '#f37021' },
     ],
     discoverCards: [
-      { title: 'Fat FIRE Dashboard', subtitle: 'Track your path to early retirement.', color: 'from-blue-700 to-indigo-900', tag: 'FIRE' },
-      { title: 'Family Shield', subtitle: 'Healthcare & legacy for 3 generations.', color: 'from-emerald-600 to-teal-900' },
-      { title: 'Auto-Pilot Banking', subtitle: 'Zero manual tasks. Oracle handles it all.', color: 'from-orange-500 to-red-700', tag: 'SMART' },
+      { title: 'Fat FIRE Dashboard', subtitle: 'Track your path to early retirement.', color: 'from-blue-700 to-indigo-900', tag: 'FIRE', navigateTo: 'GOALS' },
+      { title: 'Family Shield', subtitle: 'Healthcare & legacy for 3 generations.', color: 'from-emerald-600 to-teal-900', navigateTo: 'ORACLE' },
+      { title: 'Auto-Pilot Banking', subtitle: 'Zero manual tasks. Oracle handles it all.', color: 'from-orange-500 to-red-700', tag: 'SMART', navigateTo: 'AUTOMATION_HUB' },
     ],
   },
   {
@@ -148,9 +150,9 @@ export const PERSONAS: PersonaProfile[] = [
     description: 'Retired bank manager. Prioritizes safety, health schemes, and protecting his pension from scams.',
     accentColor: '#065f46',
     features: [
-      { title: 'Pension Orchestrator', description: 'Auto-split pension into medical, household, and savings wallets each month.', icon: 'Wallet' },
-      { title: 'Benefit Matchmaker', description: 'AI finds government health schemes and senior benefits you\'re eligible for.', icon: 'Heart' },
-      { title: 'Deepfake Scrutiny', description: 'AI-powered fraud protection. Soft-locks on suspicious transfers. Voice verification.', icon: 'ShieldCheck' },
+      { title: 'Pension Orchestrator', description: 'Auto-split pension into medical, household, and savings wallets each month.', icon: 'Wallet', navigateTo: 'PORTFOLIO' },
+      { title: 'Benefit Matchmaker', description: 'AI finds government health schemes and senior benefits you\'re eligible for.', icon: 'Heart', navigateTo: 'ORACLE' },
+      { title: 'Deepfake Scrutiny', description: 'AI-powered fraud protection. Soft-locks on suspicious transfers. Voice verification.', icon: 'ShieldCheck', navigateTo: 'ORACLE' },
     ],
     financials: {
       liquid: 425000,
@@ -186,9 +188,9 @@ export const PERSONAS: PersonaProfile[] = [
       { label: 'SOS', icon: 'ShieldCheck', color: '#7c3aed' },
     ],
     discoverCards: [
-      { title: 'Pension Orchestrator', subtitle: 'Auto-split pension into wallets.', color: 'from-emerald-600 to-green-900', tag: 'ACTIVE' },
-      { title: 'Benefit Matchmaker', subtitle: 'Government schemes you qualify for.', color: 'from-blue-500 to-indigo-800' },
-      { title: 'Deepfake Scrutiny', subtitle: 'AI fraud shield. Sleep peacefully.', color: 'from-red-500 to-rose-800', tag: 'SHIELD' },
+      { title: 'Pension Orchestrator', subtitle: 'Auto-split pension into wallets.', color: 'from-emerald-600 to-green-900', tag: 'ACTIVE', navigateTo: 'PORTFOLIO' },
+      { title: 'Benefit Matchmaker', subtitle: 'Government schemes you qualify for.', color: 'from-blue-500 to-indigo-800', navigateTo: 'ORACLE' },
+      { title: 'Deepfake Scrutiny', subtitle: 'AI fraud shield. Sleep peacefully.', color: 'from-red-500 to-rose-800', tag: 'SHIELD', navigateTo: 'ORACLE' },
     ],
   },
   {
@@ -202,9 +204,9 @@ export const PERSONAS: PersonaProfile[] = [
     description: 'Runs a ₹4Cr textile export business. Juggles GST, vendors, and cash flow daily.',
     accentColor: '#004d9c',
     features: [
-      { title: 'Auto-GST Reconciliation', description: 'Auto-match invoices with GSTN filings. Flag mismatches before deadlines.', icon: 'FileText' },
-      { title: 'Cash Flow Forecaster', description: 'Predict lean months and auto-suggest credit line drawdowns.', icon: 'TrendingUp' },
-      { title: 'Vendor Risk Alert', description: 'Monitor supplier credit ratings. Get warned before a vendor defaults.', icon: 'AlertTriangle' },
+      { title: 'Auto-GST Reconciliation', description: 'Auto-match invoices with GSTN filings. Flag mismatches before deadlines.', icon: 'FileText', navigateTo: 'EXPENDITURE' },
+      { title: 'Cash Flow Forecaster', description: 'Predict lean months and auto-suggest credit line drawdowns.', icon: 'TrendingUp', navigateTo: 'PORTFOLIO' },
+      { title: 'Vendor Risk Alert', description: 'Monitor supplier credit ratings. Get warned before a vendor defaults.', icon: 'AlertTriangle', navigateTo: 'ORACLE' },
     ],
     financials: {
       liquid: 2450000,
@@ -240,9 +242,9 @@ export const PERSONAS: PersonaProfile[] = [
       { label: 'GST', icon: 'Receipt', color: '#dc2626' },
     ],
     discoverCards: [
-      { title: 'Auto-GST Reconciliation', subtitle: 'Match invoices with GSTN. Zero mismatches.', color: 'from-blue-600 to-blue-900', tag: 'NEW' },
-      { title: 'Cash Flow Forecaster', subtitle: 'AI predicts your next lean month.', color: 'from-amber-500 to-orange-700' },
-      { title: 'Vendor Risk Monitor', subtitle: 'Track supplier credit health live.', color: 'from-red-500 to-red-800', tag: 'ALERT' },
+      { title: 'Auto-GST Reconciliation', subtitle: 'Match invoices with GSTN. Zero mismatches.', color: 'from-blue-600 to-blue-900', tag: 'NEW', navigateTo: 'EXPENDITURE' },
+      { title: 'Cash Flow Forecaster', subtitle: 'AI predicts your next lean month.', color: 'from-amber-500 to-orange-700', navigateTo: 'PORTFOLIO' },
+      { title: 'Vendor Risk Monitor', subtitle: 'Track supplier credit health live.', color: 'from-red-500 to-red-800', tag: 'ALERT', navigateTo: 'ORACLE' },
     ],
   },
   {
@@ -256,9 +258,9 @@ export const PERSONAS: PersonaProfile[] = [
     description: 'Engineering student at IIT. Manages part-time freelancing, subscriptions, and group expenses.',
     accentColor: '#7c3aed',
     features: [
-      { title: 'Instant Bill Splitting', description: 'Split bills with friends instantly via UPI. Auto-send payment requests.', icon: 'Users' },
-      { title: 'Goal Gamifier', description: 'Skip that coffee, save for Europe. Gamified saving streaks with rewards.', icon: 'Flame' },
-      { title: 'Subscription Clean-up', description: 'Find and cancel unused trials. Save ₹2k/month on forgotten subscriptions.', icon: 'Smartphone' },
+      { title: 'Instant Bill Splitting', description: 'Split bills with friends instantly via UPI. Auto-send payment requests.', icon: 'Users', navigateTo: 'PAYMENTS' },
+      { title: 'Goal Gamifier', description: 'Skip that coffee, save for Europe. Gamified saving streaks with rewards.', icon: 'Flame', navigateTo: 'GOALS' },
+      { title: 'Subscription Clean-up', description: 'Find and cancel unused trials. Save ₹2k/month on forgotten subscriptions.', icon: 'Smartphone', navigateTo: 'EXPENDITURE' },
     ],
     financials: {
       liquid: 34500,
@@ -294,9 +296,9 @@ export const PERSONAS: PersonaProfile[] = [
       { label: 'Save', icon: 'PiggyBank', color: '#f37021' },
     ],
     discoverCards: [
-      { title: 'Instant Bill Splitting', subtitle: 'Split dinner. Auto-request friends.', color: 'from-violet-500 to-purple-800', tag: 'HOT' },
-      { title: 'Goal Gamifier', subtitle: 'Skip coffee → Save for Europe.', color: 'from-orange-400 to-red-600' },
-      { title: 'Subscription Clean-up', subtitle: '₹2k/mo wasted on unused trials.', color: 'from-emerald-500 to-teal-700', tag: 'SAVE' },
+      { title: 'Instant Bill Splitting', subtitle: 'Split dinner. Auto-request friends.', color: 'from-violet-500 to-purple-800', tag: 'HOT', navigateTo: 'PAYMENTS' },
+      { title: 'Goal Gamifier', subtitle: 'Skip coffee → Save for Europe.', color: 'from-orange-400 to-red-600', navigateTo: 'GOALS' },
+      { title: 'Subscription Clean-up', subtitle: '₹2k/mo wasted on unused trials.', color: 'from-emerald-500 to-teal-700', tag: 'SAVE', navigateTo: 'EXPENDITURE' },
     ],
   },
   {
@@ -310,9 +312,9 @@ export const PERSONAS: PersonaProfile[] = [
     description: 'Manages household of 5. Tracks 15+ bills, school fees, and builds savings for family milestones.',
     accentColor: '#be185d',
     features: [
-      { title: 'Household Admin', description: 'Pay 15+ utility bills from one dashboard. Auto-pay, reminders, and payment history.', icon: 'Home' },
-      { title: 'Saving Architect', description: 'Optimize surplus cash for wedding fund, school fees, and emergency reserves.', icon: 'PiggyBank' },
-      { title: 'Spending Guardrails', description: 'Smart nudges when grocery or shopping trends exceed your monthly average.', icon: 'AlertTriangle' },
+      { title: 'Household Admin', description: 'Pay 15+ utility bills from one dashboard. Auto-pay, reminders, and payment history.', icon: 'Home', navigateTo: 'EXPENDITURE' },
+      { title: 'Saving Architect', description: 'Optimize surplus cash for wedding fund, school fees, and emergency reserves.', icon: 'PiggyBank', navigateTo: 'GOALS' },
+      { title: 'Spending Guardrails', description: 'Smart nudges when grocery or shopping trends exceed your monthly average.', icon: 'AlertTriangle', navigateTo: 'EXPENDITURE' },
     ],
     financials: {
       liquid: 285000,
@@ -352,9 +354,9 @@ export const PERSONAS: PersonaProfile[] = [
       { label: 'Save', icon: 'PiggyBank', color: '#059669' },
     ],
     discoverCards: [
-      { title: 'Household Admin', subtitle: 'All 15+ bills in one dashboard.', color: 'from-pink-500 to-rose-800', tag: 'MANAGE' },
-      { title: 'Saving Architect', subtitle: 'Optimize surplus for family goals.', color: 'from-emerald-500 to-green-800' },
-      { title: 'Spending Guardrails', subtitle: 'Nudges when you overspend.', color: 'from-amber-500 to-orange-700', tag: 'SMART' },
+      { title: 'Household Admin', subtitle: 'All 15+ bills in one dashboard.', color: 'from-pink-500 to-rose-800', tag: 'MANAGE', navigateTo: 'EXPENDITURE' },
+      { title: 'Saving Architect', subtitle: 'Optimize surplus for family goals.', color: 'from-emerald-500 to-green-800', navigateTo: 'GOALS' },
+      { title: 'Spending Guardrails', subtitle: 'Nudges when you overspend.', color: 'from-amber-500 to-orange-700', tag: 'SMART', navigateTo: 'EXPENDITURE' },
     ],
   },
 ];
