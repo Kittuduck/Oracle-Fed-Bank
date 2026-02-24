@@ -265,7 +265,7 @@ const InvestmentsHub: React.FC<InvestmentsHubProps> = ({ onBack, onBookFD, onVie
                 {/* View Full Portfolio Button */}
                 <button
                     onClick={onViewPortfolio}
-                    className="w-full bg-slate-900 dark:bg-zinc-800 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg hover:bg-slate-800 transition-colors"
+                    className="w-full bg-federalblue-900 dark:bg-federalblue-800 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 shadow-lg hover:bg-federalblue-800 dark:hover:bg-federalblue-700 transition-colors"
                 >
                     View Stocks and Mutual Funds <ArrowUpRight className="w-5 h-5" />
                 </button>
