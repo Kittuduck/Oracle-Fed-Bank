@@ -125,8 +125,8 @@ export const PERSONAS: PersonaProfile[] = [
     ],
     quickActions: [
       { label: 'Send', icon: 'Send', color: '#1e3a5f' },
-      { label: 'UPI', icon: 'Smartphone', color: '#059669' },
-      { label: 'Scan', icon: 'Smartphone', color: '#333333' },
+      { label: 'UPI', icon: 'Wallet', color: '#059669' },
+      { label: 'Scan', icon: 'ScanLine', color: '#333333' },
       { label: 'Invest', icon: 'TrendingUp', color: '#f37021' },
     ],
     discoverCards: [
@@ -234,7 +234,7 @@ export const PERSONAS: PersonaProfile[] = [
     quickActions: [
       { label: 'Send', icon: 'Send', color: '#004d9c' },
       { label: 'Invoice', icon: 'FileText', color: '#f37021' },
-      { label: 'Scan', icon: 'Smartphone', color: '#333333' },
+      { label: 'Scan', icon: 'ScanLine', color: '#333333' },
       { label: 'GST', icon: 'Receipt', color: '#dc2626' },
     ],
     discoverCards: [
@@ -287,8 +287,8 @@ export const PERSONAS: PersonaProfile[] = [
     ],
     quickActions: [
       { label: 'Split', icon: 'Users', color: '#7c3aed' },
-      { label: 'UPI', icon: 'Smartphone', color: '#059669' },
-      { label: 'Scan', icon: 'Smartphone', color: '#333333' },
+      { label: 'UPI', icon: 'Wallet', color: '#059669' },
+      { label: 'Scan', icon: 'ScanLine', color: '#333333' },
       { label: 'Save', icon: 'PiggyBank', color: '#f37021' },
     ],
     discoverCards: [
@@ -346,7 +346,7 @@ export const PERSONAS: PersonaProfile[] = [
     quickActions: [
       { label: 'Pay Bills', icon: 'Receipt', color: '#be185d' },
       { label: 'Transfer', icon: 'Send', color: '#004d9c' },
-      { label: 'Scan', icon: 'Smartphone', color: '#333333' },
+      { label: 'Scan', icon: 'ScanLine', color: '#333333' },
       { label: 'Save', icon: 'PiggyBank', color: '#059669' },
     ],
     discoverCards: [

@@ -166,6 +166,14 @@ const App: React.FC = () => {
         setIsDarkMode(!isDarkMode);
     };
 
+    React.useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [isDarkMode]);
+
     const handleSimulationUpdate = (data: SimulationUpdateData) => {
         if (data.liquidCash) {
             setCurrentFinancials(prev => ({ ...prev, liquid: data.liquidCash }));

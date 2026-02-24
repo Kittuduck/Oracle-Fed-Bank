@@ -15,7 +15,7 @@ import {
     TrendingUp, CheckCircle2, AlertTriangle, GraduationCap,
     PlusCircle, X, Target, Plus, EyeOff, ShieldCheck, StopCircle, Search, UserPlus, ArrowRight,
     Home, PieChart, BarChart3, Gift, Laptop, HeartPulse, Cpu, Globe, ArrowUpRight, Circle,
-    FileText, Users, Heart, Receipt, PiggyBank, Flame
+    FileText, Users, Heart, Receipt, PiggyBank, Flame, ScanLine
 } from 'lucide-react';
 import { Biller } from '../App';
 import GrowthEngine from './GrowthEngine';
@@ -72,7 +72,7 @@ interface NeoBankDashboardProps {
 }
 
 const iconMap: Record<string, any> = {
-    Send, FileText, Smartphone, Receipt, Users, PiggyBank, Heart, ShieldCheck, Flame,
+    Send, FileText, Smartphone, Receipt, Users, PiggyBank, Heart, ShieldCheck, Flame, ScanLine, Wallet, TrendingUp,
 };
 
 const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
@@ -176,7 +176,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                 {/* --- Hero: The Titanium Balance Card --- */}
                 <div className="relative group cursor-pointer" onClick={() => setShowCardDetails(true)}>
                     <div className="absolute -inset-1 bg-gradient-to-r from-federalblue-600 to-federalblue-900 rounded-[2.5rem] blur-2xl opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200"></div>
-                    <div className="relative aspect-[1.618/1] w-full rounded-[2rem] bg-gradient-to-br from-[#004d9c] via-[#003a80] to-[#011a41] p-10 flex flex-col justify-between shadow-hero overflow-hidden border border-white/10 transition-transform active:scale-[0.98]">
+                    <div className="relative aspect-[1.618/1] w-full rounded-[2rem] bg-gradient-to-br from-federalblue-900 via-federalblue-800 to-federalblue-900 p-10 flex flex-col justify-between shadow-hero overflow-hidden border border-white/10 transition-all duration-500 active:scale-[0.98]">
                         {/* Decorative Atmospheric Glow */}
                         <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-[80px] -mr-20 -mt-20"></div>
                         <div className="absolute bottom-0 left-0 w-48 h-48 bg-federalgold-500/10 rounded-full blur-[60px] -ml-10 -mb-10"></div>
@@ -266,12 +266,12 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
 
                 {/* --- Persona Discover Cards --- */}
                 {persona && persona.discoverCards.length > 0 && (
-                    <div className="space-y-6 pt-2">
+                    <div className="space-y-4">
                         <div className="flex justify-between items-center px-1">
                             <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none tracking-tight">Discover</h3>
                         </div>
 
-                        <div className="flex gap-4 overflow-x-auto pb-4 -mx-2 px-2 snap-x snap-mandatory scrollbar-hide">
+                        <div className="flex gap-4 overflow-x-auto pb-2 -mx-2 px-2 snap-x snap-mandatory sleek-scroll">
                             {persona.discoverCards.map((card, i) => (
                                 <div
                                     key={i}
@@ -295,7 +295,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
 
                 {/* --- Oracle Daily Brief Preview --- */}
                 {persona && persona.oracleBriefs.length > 0 && (
-                    <div className="space-y-4 pt-2">
+                    <div className="space-y-4">
                         <div className="flex items-center gap-3 px-1">
                             <div className="w-8 h-8 rounded-2xl bg-federalgold-50 flex items-center justify-center">
                                 <Sparkles className="w-4 h-4 text-federalgold-500" />

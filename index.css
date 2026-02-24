@@ -108,6 +108,27 @@ body {
   color: #ffffff;
 }
 
+body.theme-diwali {
+  background: radial-gradient(circle at top right, #fffcf0, #fff7ed, #fef2f2);
+}
+.dark body.theme-diwali {
+  background: radial-gradient(circle at top right, #1a0f05, #120808, #0a0202);
+}
+
+body.theme-onam {
+  background: radial-gradient(circle at top left, #f0fdf4, #ecfdf5, #f0fdfa);
+}
+.dark body.theme-onam {
+  background: radial-gradient(circle at top left, #051a0e, #030f08, #020a06);
+}
+
+body.theme-newyear {
+  background: radial-gradient(circle at top left, #eef2ff, #f0f0ff, #f5f3ff);
+}
+.dark body.theme-newyear {
+  background: radial-gradient(circle at top left, #05051a, #080820, #030318);
+}
+
 .glass-card {
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(24px) saturate(180%);
@@ -147,11 +168,11 @@ body {
 }
 
 .shadow-oracle {
-  box-shadow: 0 0 40px rgba(243, 112, 33, 0.6);
+  box-shadow: 0 0 20px rgba(243, 112, 33, 0.3);
 }
 
 .dark .shadow-oracle {
-  box-shadow: 0 0 50px rgba(243, 112, 33, 0.4), 0 0 100px rgba(243, 112, 33, 0.1);
+  box-shadow: 0 0 25px rgba(243, 112, 33, 0.25), 0 0 50px rgba(243, 112, 33, 0.08);
 }
 
 .spatial-hover {

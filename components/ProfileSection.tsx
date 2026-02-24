@@ -414,9 +414,9 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
                                     style={theme === t.id ? { borderColor: t.color, backgroundColor: `${t.color}08` } : {}}
                                 >
                                     <div className="w-full h-3 rounded-lg" style={{ background: `linear-gradient(to right, ${t.gradientFrom}, ${t.gradientTo})` }}></div>
-                                    <span className={`text-[10px] font-bold`} style={theme === t.id ? { color: t.color } : { color: '#94a3b8' }}>{t.name}</span>
+                                    <span className={`text-[10px] font-bold text-slate-600 dark:text-slate-300`}>{t.name}</span>
                                     {theme === t.id && (
-                                        <span className="text-[8px] font-bold uppercase tracking-widest" style={{ color: t.color, opacity: 0.7 }}>Active</span>
+                                        <span className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Active</span>
                                     )}
                                 </div>
                             ))}
@@ -427,7 +427,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
                             <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">
                                 {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                             </div>
-                            <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                            <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{isDarkMode ? 'Dark Mode On' : 'Dark Mode Off'}</span>
                         </div>
                         <div className={`w-10 h-5 rounded-full relative transition-colors ${isDarkMode ? 'bg-federalblue-900' : 'bg-slate-300'}`}>
                             <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${isDarkMode ? 'left-[22px]' : 'left-0.5'}`}></div>
