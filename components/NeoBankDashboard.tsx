@@ -175,19 +175,20 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
             <div className="px-6 space-y-10 max-w-md mx-auto pt-4">
                 {/* --- Hero: The Titanium Balance Card --- */}
                 <div className="relative group cursor-pointer" onClick={() => setShowCardDetails(true)}>
-                    <div className="absolute -inset-1 bg-gradient-to-r from-federalblue-600 to-federalblue-900 rounded-[2.5rem] blur-2xl opacity-20 group-hover:opacity-30 transition duration-1000 group-hover:duration-200"></div>
-                    <div className="relative aspect-[1.618/1] w-full rounded-[2rem] bg-gradient-to-br from-federalblue-900 via-federalblue-800 to-federalblue-900 px-8 py-7 flex flex-col justify-center shadow-hero overflow-hidden border border-white/10 transition-all duration-500 active:scale-[0.98]">
-                        <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-[80px] -mr-20 -mt-20"></div>
-                        <div className="absolute bottom-0 left-0 w-48 h-48 bg-federalgold-500/10 rounded-full blur-[60px] -ml-10 -mb-10"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-federalblue-600 via-federalgold-500/30 to-federalblue-900 rounded-[2.5rem] blur-2xl opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                    <div className="relative aspect-[1.618/1] w-full rounded-[2rem] bg-gradient-to-br from-[#001d3d] via-federalblue-900 to-[#003566] px-8 py-7 flex flex-col justify-center shadow-hero overflow-hidden border border-white/10 transition-all duration-500 active:scale-[0.98]">
+                        <div className="absolute top-0 right-0 w-72 h-72 bg-federalgold-500/15 rounded-full blur-[80px] -mr-16 -mt-16"></div>
+                        <div className="absolute bottom-0 left-0 w-56 h-56 bg-federalblue-400/10 rounded-full blur-[70px] -ml-16 -mb-16"></div>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-white/[0.07] to-transparent rotate-[25deg]"></div>
 
                         <div className="relative z-10 flex flex-col h-full justify-between">
-                            <span className="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em]">Total Liquidity</span>
+                            <span className="text-white/60 text-[10px] font-bold uppercase tracking-[0.2em]">Total Liquidity</span>
 
                             <div className="flex-1 flex flex-col justify-center -mt-1">
-                                <h2 className="text-[2.75rem] font-extralight text-white tabular-nums tracking-tighter drop-shadow-sm leading-none">
+                                <h2 className="text-[2.75rem] font-extralight text-white tabular-nums tracking-tighter drop-shadow-lg leading-none">
                                     ₹{totalBalance.toLocaleString('en-IN')}
                                 </h2>
-                                <p className="text-white/40 text-[10px] font-medium tracking-tight mt-2.5 flex items-center gap-2">
+                                <p className="text-white/50 text-[10px] font-medium tracking-tight mt-2.5 flex items-center gap-2">
                                     <TrendingUp className="w-3 h-3 text-emerald-400" />
                                     <span className={changePercent >= 0 ? 'text-emerald-400' : 'text-red-400'}>{changePercent >= 0 ? '+' : ''}{changePercent}%</span> vs last month
                                 </p>
@@ -195,10 +196,10 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
 
                             <div className="flex justify-between items-end">
                                 <div>
-                                    <p className="text-white/50 text-[9px] font-bold uppercase tracking-widest leading-none mb-1.5">Primary Account</p>
-                                    <p className="text-white/80 text-[13px] font-medium tracking-tight leading-none italic">{accountLabel} {accountNumber}</p>
+                                    <p className="text-white/60 text-[9px] font-bold uppercase tracking-widest leading-none mb-1.5">Primary Account</p>
+                                    <p className="text-white/90 text-[13px] font-medium tracking-tight leading-none italic">{accountLabel} {accountNumber}</p>
                                 </div>
-                                <CreditCard className="w-5 h-5 text-white/30" />
+                                <CreditCard className="w-5 h-5 text-white/40" />
                             </div>
                         </div>
                     </div>
@@ -322,7 +323,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                                         <ChevronRight className="w-4 h-4 text-zinc-400 shrink-0 mt-1" />
                                     </div>
                                     {brief.actionLabel && (
-                                        <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest" style={{ color: persona.accentColor }}>
+                                        <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-federalblue-900 dark:text-federalblue-300">
                                             <span>{brief.actionLabel}</span>
                                             <ArrowRight className="w-3 h-3" />
                                         </div>
