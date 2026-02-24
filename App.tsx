@@ -373,6 +373,7 @@ const App: React.FC = () => {
                     onAddBiller={handleAddBiller}
                     festival={festival}
                     persona={selectedPersona}
+                    onNavigate={setView}
                 />
             );
         }

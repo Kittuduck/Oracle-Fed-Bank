@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Sun, Moon, AlertTriangle, ShieldAlert, PauseCircle, PlayCircle, Snowflake, CheckCircle2, Zap, TrendingUp, Calendar, CreditCard, ChevronDown, RefreshCw, ShoppingBag, Utensils, Plane, Car, Home, TrendingDown, Plus, X, Globe, Smartphone, Dumbbell, Receipt, Heart, BookOpen, GraduationCap, Fuel } from 'lucide-react';
+import { ArrowLeft, Sun, Moon, AlertTriangle, ShieldAlert, PauseCircle, PlayCircle, Snowflake, CheckCircle2, Zap, TrendingUp, Calendar, CreditCard, ChevronDown, RefreshCw, ShoppingBag, Utensils, Plane, Car, Home, TrendingDown, Plus, X, Globe, Smartphone, Dumbbell, Receipt, Heart, BookOpen, GraduationCap, Fuel, ArrowRight, Wallet, Users, Briefcase, Coffee, FileText, BarChart3, PiggyBank, Target, ShoppingCart, Flame, Music, ShieldCheck, ScanLine } from 'lucide-react';
 import { ComposedChart, Line, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
 import { Biller } from '../App';
 import { PersonaProfile } from '../data/personas';
+
+const txIconMap: Record<string, any> = {
+    CreditCard, Zap, Smartphone, TrendingUp, Wallet, Receipt, Users, Heart,
+    GraduationCap, Briefcase, Home, Coffee, Globe, AlertTriangle, FileText,
+    BarChart3, PiggyBank, Target, ShoppingCart, Flame, Music, ShieldCheck, ScanLine
+};
 
 interface ExpenditurePageProps {
     onBack: () => void;
@@ -13,6 +19,7 @@ interface ExpenditurePageProps {
     onAddBiller: (biller: Biller) => void;
     festival: 'DEFAULT' | 'DIWALI' | 'HOLI';
     persona: PersonaProfile | null;
+    onNavigate?: (page: any) => void;
 }
 
 type TimeFrame = 'DAILY' | 'MONTHLY' | 'YEARLY';
@@ -273,7 +280,7 @@ const getPersonaExpenditureData = (personaId: string) => {
     return data[personaId] || data['advait'];
 };
 
-const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, toggleTheme, billers, onToggleAutopay, onAddBiller, festival, persona }) => {
+const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, toggleTheme, billers, onToggleAutopay, onAddBiller, festival, persona, onNavigate }) => {
     const [timeframe, setTimeframe] = useState<TimeFrame>('MONTHLY');
     const [anomalyStatus, setAnomalyStatus] = useState<'PENDING' | 'VERIFIED' | 'FROZEN'>('PENDING');
     const [showAddBiller, setShowAddBiller] = useState(false);
@@ -655,6 +662,39 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                             ))}
                         </div>
                     </div>
+
+                    {persona && persona.transactions && persona.transactions.length > 0 && (
+                        <div className="space-y-4 pt-2">
+                            <div className="flex justify-between items-center px-1">
+                                <h3 className="text-sm font-bold text-[#333333] dark:text-zinc-100">Recent Transactions</h3>
+                                <button
+                                    onClick={() => onNavigate && onNavigate('TRANSACTIONS')}
+                                    className="text-[10px] font-bold text-federalblue-900 dark:text-federalblue-400 hover:underline flex items-center gap-1"
+                                >
+                                    Show All <ArrowRight className="w-3 h-3" />
+                                </button>
+                            </div>
+                            <div className="bg-white dark:bg-[#15161a] rounded-xl border border-[#E0E0E0] dark:border-zinc-800 divide-y divide-[#E0E0E0] dark:divide-zinc-800 overflow-hidden">
+                                {persona.transactions.slice(0, 3).map((tx) => {
+                                    const TxIcon = txIconMap[tx.icon] || Receipt;
+                                    return (
+                                        <div key={tx.id} className="flex items-center gap-4 px-4 py-3">
+                                            <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${tx.type === 'credit' ? 'bg-emerald-50 dark:bg-emerald-900/20' : 'bg-[#F6F6F6] dark:bg-zinc-800'}`}>
+                                                <TxIcon className={`w-4 h-4 ${tx.type === 'credit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-zinc-400'}`} />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="text-xs font-semibold text-[#333333] dark:text-white truncate">{tx.name}</h4>
+                                                <p className="text-[10px] text-slate-400 dark:text-zinc-500">{tx.date} · {tx.method}</p>
+                                            </div>
+                                            <span className={`text-xs font-bold tabular-nums ${tx.type === 'credit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-[#333333] dark:text-zinc-200'}`}>
+                                                {tx.type === 'credit' ? '+' : '-'}₹{tx.amount.toLocaleString('en-IN')}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    )}
                 </main>
             </div>
         </div>
