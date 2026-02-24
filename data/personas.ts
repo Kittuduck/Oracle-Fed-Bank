@@ -17,9 +17,10 @@ export interface PersonaProfile {
   oracleBriefs: OracleBrief[];
   quickActions: QuickAction[];
   discoverCards: DiscoverCard[];
+  transactions: PersonaTransaction[];
 }
 
-export type AppView = 'DASHBOARD' | 'PROFILE' | 'GOALS' | 'ORACLE' | 'ORACLE_HUB' | 'AUTOMATION_HUB' | 'PORTFOLIO' | 'EXPENDITURE' | 'PAYMENTS' | 'CARDS' | 'SUPPORT' | 'INVESTMENTS' | 'LOANS';
+export type AppView = 'DASHBOARD' | 'PROFILE' | 'GOALS' | 'ORACLE' | 'ORACLE_HUB' | 'AUTOMATION_HUB' | 'PORTFOLIO' | 'EXPENDITURE' | 'PAYMENTS' | 'CARDS' | 'SUPPORT' | 'INVESTMENTS' | 'LOANS' | 'TRANSACTIONS';
 
 export interface PersonaFeature {
   title: string;
@@ -83,6 +84,17 @@ export interface DiscoverCard {
   navigateTo?: AppView;
 }
 
+export interface PersonaTransaction {
+  id: string;
+  name: string;
+  category: string;
+  amount: number;
+  type: 'credit' | 'debit';
+  date: string;
+  icon: string;
+  method: string;
+}
+
 export const PERSONAS: PersonaProfile[] = [
   {
     id: 'advait',
@@ -138,6 +150,18 @@ export const PERSONAS: PersonaProfile[] = [
       { title: 'Family Shield', subtitle: 'Healthcare & legacy for 3 generations.', color: 'from-emerald-600 to-teal-900', navigateTo: 'ORACLE' },
       { title: 'Auto-Pilot Banking', subtitle: 'Zero manual tasks. Oracle handles it all.', color: 'from-orange-500 to-red-700', tag: 'SMART', navigateTo: 'AUTOMATION_HUB' },
     ],
+    transactions: [
+      { id: 'at1', name: 'Salary Credit - TCS', category: 'Income', amount: 185000, type: 'credit', date: '24 Feb', icon: 'Briefcase', method: 'NEFT' },
+      { id: 'at2', name: 'Whole Foods Market', category: 'Groceries', amount: 4280, type: 'debit', date: '23 Feb', icon: 'ShoppingCart', method: 'UPI' },
+      { id: 'at3', name: 'Netflix Premium', category: 'Entertainment', amount: 649, type: 'debit', date: '22 Feb', icon: 'Smartphone', method: 'Auto-Pay' },
+      { id: 'at4', name: 'Parag Parikh SIP', category: 'Investment', amount: 25000, type: 'debit', date: '21 Feb', icon: 'TrendingUp', method: 'Auto-SIP' },
+      { id: 'at5', name: 'Swiggy Order', category: 'Food', amount: 856, type: 'debit', date: '21 Feb', icon: 'Coffee', method: 'UPI' },
+      { id: 'at6', name: 'Adani Electricity', category: 'Utilities', amount: 4250, type: 'debit', date: '20 Feb', icon: 'Zap', method: 'Auto-Pay' },
+      { id: 'at7', name: 'Amazon Shopping', category: 'Shopping', amount: 12400, type: 'debit', date: '19 Feb', icon: 'ShoppingCart', method: 'Card' },
+      { id: 'at8', name: 'Parents Medical Insurance', category: 'Health', amount: 12500, type: 'debit', date: '18 Feb', icon: 'Heart', method: 'Auto-Pay' },
+      { id: 'at9', name: 'Uber Ride', category: 'Transport', amount: 380, type: 'debit', date: '18 Feb', icon: 'Globe', method: 'UPI' },
+      { id: 'at10', name: 'Freelance Payment', category: 'Income', amount: 45000, type: 'credit', date: '17 Feb', icon: 'Briefcase', method: 'IMPS' },
+    ],
   },
   {
     id: 'kapoor',
@@ -191,6 +215,18 @@ export const PERSONAS: PersonaProfile[] = [
       { title: 'Pension Orchestrator', subtitle: 'Auto-split pension into wallets.', color: 'from-emerald-600 to-green-900', tag: 'ACTIVE', navigateTo: 'PORTFOLIO' },
       { title: 'Benefit Matchmaker', subtitle: 'Government schemes you qualify for.', color: 'from-blue-500 to-indigo-800', navigateTo: 'ORACLE' },
       { title: 'Deepfake Scrutiny', subtitle: 'AI fraud shield. Sleep peacefully.', color: 'from-red-500 to-rose-800', tag: 'SHIELD', navigateTo: 'ORACLE' },
+    ],
+    transactions: [
+      { id: 'kt1', name: 'Pension Credit - SBI', category: 'Pension', amount: 62000, type: 'credit', date: '24 Feb', icon: 'Briefcase', method: 'NEFT' },
+      { id: 'kt2', name: 'Apollo Pharmacy', category: 'Medical', amount: 3450, type: 'debit', date: '23 Feb', icon: 'Heart', method: 'Card' },
+      { id: 'kt3', name: 'BSNL Landline', category: 'Utilities', amount: 1199, type: 'debit', date: '22 Feb', icon: 'Smartphone', method: 'Auto-Pay' },
+      { id: 'kt4', name: 'Bigbasket Groceries', category: 'Groceries', amount: 2850, type: 'debit', date: '21 Feb', icon: 'ShoppingCart', method: 'UPI' },
+      { id: 'kt5', name: 'Temple Donation', category: 'Charity', amount: 1100, type: 'debit', date: '20 Feb', icon: 'Heart', method: 'UPI' },
+      { id: 'kt6', name: 'LIC Premium', category: 'Insurance', amount: 8500, type: 'debit', date: '19 Feb', icon: 'ShieldCheck', method: 'Auto-Pay' },
+      { id: 'kt7', name: 'Dr. Sharma Consultation', category: 'Medical', amount: 1500, type: 'debit', date: '18 Feb', icon: 'Heart', method: 'UPI' },
+      { id: 'kt8', name: 'FD Interest Credit', category: 'Income', amount: 7200, type: 'credit', date: '17 Feb', icon: 'TrendingUp', method: 'Auto' },
+      { id: 'kt9', name: 'Newspaper Subscription', category: 'Utilities', amount: 450, type: 'debit', date: '16 Feb', icon: 'FileText', method: 'Auto-Pay' },
+      { id: 'kt10', name: 'Grandson Birthday Gift', category: 'Family', amount: 5000, type: 'debit', date: '15 Feb', icon: 'Heart', method: 'IMPS' },
     ],
   },
   {
@@ -246,6 +282,18 @@ export const PERSONAS: PersonaProfile[] = [
       { title: 'Cash Flow Forecaster', subtitle: 'AI predicts your next lean month.', color: 'from-amber-500 to-orange-700', navigateTo: 'PORTFOLIO' },
       { title: 'Vendor Risk Monitor', subtitle: 'Track supplier credit health live.', color: 'from-red-500 to-red-800', tag: 'ALERT', navigateTo: 'ORACLE' },
     ],
+    transactions: [
+      { id: 'rt1', name: 'Client Payment - Reliance', category: 'Business Income', amount: 850000, type: 'credit', date: '24 Feb', icon: 'Briefcase', method: 'RTGS' },
+      { id: 'rt2', name: 'Surat Textiles - Vendor', category: 'Vendor Payment', amount: 245000, type: 'debit', date: '23 Feb', icon: 'Receipt', method: 'NEFT' },
+      { id: 'rt3', name: 'GST Quarterly Payment', category: 'Tax', amount: 185000, type: 'debit', date: '22 Feb', icon: 'FileText', method: 'Net Banking' },
+      { id: 'rt4', name: 'Factory Electricity', category: 'Operations', amount: 42000, type: 'debit', date: '21 Feb', icon: 'Zap', method: 'Auto-Pay' },
+      { id: 'rt5', name: 'Staff Salaries', category: 'Payroll', amount: 380000, type: 'debit', date: '20 Feb', icon: 'Users', method: 'Bulk NEFT' },
+      { id: 'rt6', name: 'Diesel for Transport', category: 'Operations', amount: 28000, type: 'debit', date: '19 Feb', icon: 'Globe', method: 'Card' },
+      { id: 'rt7', name: 'HDFC Top 100 SIP', category: 'Investment', amount: 50000, type: 'debit', date: '18 Feb', icon: 'TrendingUp', method: 'Auto-SIP' },
+      { id: 'rt8', name: 'Client Payment - Tata', category: 'Business Income', amount: 620000, type: 'credit', date: '17 Feb', icon: 'Briefcase', method: 'RTGS' },
+      { id: 'rt9', name: 'Office Rent', category: 'Operations', amount: 75000, type: 'debit', date: '16 Feb', icon: 'Home', method: 'NEFT' },
+      { id: 'rt10', name: 'Business Lunch - Taj', category: 'Entertainment', amount: 8500, type: 'debit', date: '15 Feb', icon: 'Coffee', method: 'Card' },
+    ],
   },
   {
     id: 'ishan',
@@ -299,6 +347,18 @@ export const PERSONAS: PersonaProfile[] = [
       { title: 'Instant Bill Splitting', subtitle: 'Split dinner. Auto-request friends.', color: 'from-violet-500 to-purple-800', tag: 'HOT', navigateTo: 'PAYMENTS' },
       { title: 'Goal Gamifier', subtitle: 'Skip coffee → Save for Europe.', color: 'from-orange-400 to-red-600', navigateTo: 'GOALS' },
       { title: 'Subscription Clean-up', subtitle: '₹2k/mo wasted on unused trials.', color: 'from-emerald-500 to-teal-700', tag: 'SAVE', navigateTo: 'EXPENDITURE' },
+    ],
+    transactions: [
+      { id: 'it1', name: 'Allowance from Dad', category: 'Income', amount: 15000, type: 'credit', date: '24 Feb', icon: 'Heart', method: 'IMPS' },
+      { id: 'it2', name: 'Zomato Order', category: 'Food', amount: 450, type: 'debit', date: '23 Feb', icon: 'Coffee', method: 'UPI' },
+      { id: 'it3', name: 'Spotify Premium', category: 'Subscriptions', amount: 119, type: 'debit', date: '22 Feb', icon: 'Music', method: 'Auto-Pay' },
+      { id: 'it4', name: 'College Canteen', category: 'Food', amount: 180, type: 'debit', date: '22 Feb', icon: 'Coffee', method: 'UPI' },
+      { id: 'it5', name: 'Freelance - Logo Design', category: 'Income', amount: 5000, type: 'credit', date: '21 Feb', icon: 'Briefcase', method: 'UPI' },
+      { id: 'it6', name: 'Nifty 50 SIP', category: 'Investment', amount: 2500, type: 'debit', date: '20 Feb', icon: 'TrendingUp', method: 'Auto-SIP' },
+      { id: 'it7', name: 'Amazon - Headphones', category: 'Shopping', amount: 2999, type: 'debit', date: '19 Feb', icon: 'ShoppingCart', method: 'Card' },
+      { id: 'it8', name: 'Metro Recharge', category: 'Transport', amount: 500, type: 'debit', date: '18 Feb', icon: 'Globe', method: 'UPI' },
+      { id: 'it9', name: 'Steam Games', category: 'Entertainment', amount: 1200, type: 'debit', date: '17 Feb', icon: 'Smartphone', method: 'Card' },
+      { id: 'it10', name: 'Split Bill - Dinner', category: 'Food', amount: 680, type: 'debit', date: '16 Feb', icon: 'Coffee', method: 'UPI' },
     ],
   },
   {
@@ -357,6 +417,18 @@ export const PERSONAS: PersonaProfile[] = [
       { title: 'Household Admin', subtitle: 'All 15+ bills in one dashboard.', color: 'from-pink-500 to-rose-800', tag: 'MANAGE', navigateTo: 'EXPENDITURE' },
       { title: 'Saving Architect', subtitle: 'Optimize surplus for family goals.', color: 'from-emerald-500 to-green-800', navigateTo: 'GOALS' },
       { title: 'Spending Guardrails', subtitle: 'Nudges when you overspend.', color: 'from-amber-500 to-orange-700', tag: 'SMART', navigateTo: 'EXPENDITURE' },
+    ],
+    transactions: [
+      { id: 'ajt1', name: "Husband's Salary Credit", category: 'Income', amount: 120000, type: 'credit', date: '24 Feb', icon: 'Briefcase', method: 'NEFT' },
+      { id: 'ajt2', name: 'DMart Groceries', category: 'Groceries', amount: 5680, type: 'debit', date: '23 Feb', icon: 'ShoppingCart', method: 'UPI' },
+      { id: 'ajt3', name: "Meera's School Fees", category: 'Education', amount: 18500, type: 'debit', date: '22 Feb', icon: 'GraduationCap', method: 'NEFT' },
+      { id: 'ajt4', name: 'Cooking Gas Refill', category: 'Utilities', amount: 1103, type: 'debit', date: '21 Feb', icon: 'Zap', method: 'UPI' },
+      { id: 'ajt5', name: "Arjun's Tuition", category: 'Education', amount: 3500, type: 'debit', date: '20 Feb', icon: 'GraduationCap', method: 'UPI' },
+      { id: 'ajt6', name: 'Sukanya Samriddhi Deposit', category: 'Savings', amount: 5000, type: 'debit', date: '19 Feb', icon: 'PiggyBank', method: 'Auto-Pay' },
+      { id: 'ajt7', name: 'Tanishq Gold Purchase', category: 'Gold', amount: 15000, type: 'debit', date: '18 Feb', icon: 'Target', method: 'Card' },
+      { id: 'ajt8', name: 'Water Bill', category: 'Utilities', amount: 850, type: 'debit', date: '17 Feb', icon: 'Zap', method: 'Auto-Pay' },
+      { id: 'ajt9', name: 'Myntra - Kids Clothes', category: 'Shopping', amount: 3200, type: 'debit', date: '16 Feb', icon: 'ShoppingCart', method: 'Card' },
+      { id: 'ajt10', name: 'SBI Balanced Fund SIP', category: 'Investment', amount: 5000, type: 'debit', date: '15 Feb', icon: 'TrendingUp', method: 'Auto-SIP' },
     ],
   },
 ];

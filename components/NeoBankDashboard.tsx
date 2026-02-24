@@ -385,27 +385,37 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                 </div>
                 )}
 
-                {/* --- Persona Tailored Features --- */}
-                {persona && (
+                {/* --- Recent Transactions --- */}
+                {persona && persona.transactions && (
                     <div className="space-y-4 pt-2">
                         <div className="flex justify-between items-center px-1">
-                            <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none tracking-tight">Your Features</h3>
+                            <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none tracking-tight">Recent Transactions</h3>
+                            <button
+                                onClick={() => onNavigate('TRANSACTIONS')}
+                                className="text-xs font-bold text-federalblue-900 dark:text-federalblue-400 hover:underline flex items-center gap-1"
+                            >
+                                Show All <ArrowRight className="w-3 h-3" />
+                            </button>
                         </div>
-                        {persona.features.map((feature, i) => {
-                            const FeatureIcon = iconMap[feature.icon] || Sparkles;
-                            return (
-                                <div key={i} className="glass-card p-5 rounded-[1.75rem] border border-slate-100 dark:border-zinc-800 flex items-start gap-4 cursor-pointer active:scale-[0.98] transition-transform" onClick={() => feature.navigateTo && onNavigate(feature.navigateTo)}>
-                                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${persona.accentColor}15` }}>
-                                        <FeatureIcon className="w-6 h-6" style={{ color: persona.accentColor }} />
+                        <div className="glass-card rounded-[1.75rem] border border-slate-100 dark:border-zinc-800 divide-y divide-slate-100 dark:divide-zinc-800 overflow-hidden">
+                            {persona.transactions.slice(0, 3).map((tx, i) => {
+                                const TxIcon = iconMap[tx.icon] || Receipt;
+                                return (
+                                    <div key={tx.id} className="flex items-center gap-4 px-5 py-4">
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${tx.type === 'credit' ? 'bg-emerald-50 dark:bg-emerald-900/20' : 'bg-slate-100 dark:bg-zinc-800'}`}>
+                                            <TxIcon className={`w-5 h-5 ${tx.type === 'credit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-zinc-400'}`} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="text-sm font-semibold text-zinc-900 dark:text-white truncate">{tx.name}</h4>
+                                            <p className="text-[11px] text-zinc-400 dark:text-zinc-500">{tx.date} · {tx.method}</p>
+                                        </div>
+                                        <span className={`text-sm font-bold tabular-nums ${tx.type === 'credit' ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-800 dark:text-zinc-200'}`}>
+                                            {tx.type === 'credit' ? '+' : '-'}₹{tx.amount.toLocaleString('en-IN')}
+                                        </span>
                                     </div>
-                                    <div className="flex-1">
-                                        <h4 className="text-sm font-bold text-zinc-900 dark:text-white mb-1">{feature.title}</h4>
-                                        <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{feature.description}</p>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-zinc-400 shrink-0 mt-1" />
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        </div>
                     </div>
                 )}
             </div>

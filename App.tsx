@@ -18,6 +18,7 @@ import LoansHub from './components/LoansHub';
 import CardApplicationFlow from './components/CardApplicationFlow';
 import NicheLendingHub from './components/NicheLendingHub';
 import LegacyServices from './components/LegacyServices';
+import TransactionsPage from './components/TransactionsPage';
 import BottomNav from './components/BottomNav';
 import PersonaSelector from './components/PersonaSelector';
 import { PERSONAS, PersonaProfile } from './data/personas';
@@ -36,7 +37,7 @@ export interface Biller {
 
 const App: React.FC = () => {
     const [selectedPersona, setSelectedPersona] = useState<PersonaProfile | null>(null);
-    const [view, setView] = useState<'PERSONA_SELECT' | 'DASHBOARD' | 'PROFILE' | 'GOALS' | 'ORACLE' | 'ORACLE_HUB' | 'AUTOMATION_HUB' | 'PORTFOLIO' | 'EXPENDITURE' | 'ONBOARDING' | 'PAYMENTS' | 'CARDS' | 'SUPPORT' | 'INVESTMENTS' | 'LOANS' | 'CARD_APPLY' | 'NICHE_LOANS' | 'LEGACY_SERVICES'>('PERSONA_SELECT');
+    const [view, setView] = useState<'PERSONA_SELECT' | 'DASHBOARD' | 'PROFILE' | 'GOALS' | 'ORACLE' | 'ORACLE_HUB' | 'AUTOMATION_HUB' | 'PORTFOLIO' | 'EXPENDITURE' | 'ONBOARDING' | 'PAYMENTS' | 'CARDS' | 'SUPPORT' | 'INVESTMENTS' | 'LOANS' | 'CARD_APPLY' | 'NICHE_LOANS' | 'LEGACY_SERVICES' | 'TRANSACTIONS'>('PERSONA_SELECT');
     const [payTab, setPayTab] = useState<'SEND' | 'BILL' | 'SCAN'>('SEND');
     const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -343,6 +344,17 @@ const App: React.FC = () => {
                     isDarkMode={isDarkMode}
                     toggleTheme={toggleTheme}
                     festival={festival}
+                    persona={selectedPersona}
+                />
+            );
+        }
+
+        if (view === 'TRANSACTIONS') {
+            return (
+                <TransactionsPage
+                    onBack={() => setView('DASHBOARD')}
+                    isDarkMode={isDarkMode}
+                    toggleTheme={toggleTheme}
                     persona={selectedPersona}
                 />
             );
