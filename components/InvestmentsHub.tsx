@@ -161,32 +161,32 @@ const InvestmentsHub: React.FC<InvestmentsHubProps> = ({ onBack, onBookFD, onVie
 
             <div className="flex-1 overflow-y-auto p-6 pb-32 space-y-8">
                 {/* Wealth Overview Card */}
-                <div className="bg-white rounded-3xl p-6 shadow-federal border border-slate-100 space-y-6">
+                <div className="bg-white dark:bg-zinc-900 rounded-3xl p-6 shadow-federal border border-slate-100 dark:border-zinc-800 space-y-6">
                     <div className="flex justify-between items-center">
                         <div className="space-y-1">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Net Investment Value</span>
-                            <h3 className="text-2xl font-bold text-federalblue-900">₹1,24,50,000</h3>
+                            <span className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest">Net Investment Value</span>
+                            <h3 className="text-2xl font-bold text-federalblue-900 dark:text-white">₹1,24,50,000</h3>
                         </div>
-                        <div className="bg-emerald-50 text-emerald-700 px-2 py-1 rounded-md text-[10px] font-bold flex items-center gap-1">
+                        <div className="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 px-2 py-1 rounded-md text-[10px] font-bold flex items-center gap-1">
                             <TrendingUp className="w-3 h-3" /> +12.4%
                         </div>
                     </div>
                     <div className="flex gap-2">
-                        <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden flex">
+                        <div className="flex-1 h-3 bg-slate-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
                             <div className="w-[40%] h-full bg-federalblue-900" />
                             <div className="w-[30%] h-full bg-federalgold-500" />
                             <div className="w-[20%] h-full bg-emerald-500" />
-                            <div className="w-[10%] h-full bg-slate-300" />
+                            <div className="w-[10%] h-full bg-slate-300 dark:bg-zinc-600" />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-federalblue-900" />
-                            <span className="text-[10px] font-bold text-slate-500 uppercase">Mutual Funds</span>
+                            <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase">Mutual Funds</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-federalgold-500" />
-                            <span className="text-[10px] font-bold text-slate-500 uppercase">Fixed Deposits</span>
+                            <span className="text-[10px] font-bold text-slate-500 dark:text-zinc-400 uppercase">Fixed Deposits</span>
                         </div>
                     </div>
                 </div>
@@ -220,42 +220,42 @@ const InvestmentsHub: React.FC<InvestmentsHubProps> = ({ onBack, onBookFD, onVie
                 <div className="space-y-4">
                     <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Current Holdings</h3>
                     <div className="space-y-3">
-                        <div className="bg-white p-4 rounded-2xl border border-slate-100 flex justify-between items-center group cursor-pointer hover:bg-slate-50 transition-colors">
+                        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-slate-100 dark:border-zinc-800 flex justify-between items-center group cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
                             <div className="flex gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-federalblue-900">
+                                <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-zinc-800 flex items-center justify-center text-federalblue-900 dark:text-federalblue-400">
                                     <BarChart3 className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h4 className="text-sm font-bold text-federalblue-900">Equity Bluechip Fund</h4>
-                                    <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest mt-0.5">+14.2% Return</p>
+                                    <h4 className="text-sm font-bold text-federalblue-900 dark:text-zinc-100">Equity Bluechip Fund</h4>
+                                    <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-widest mt-0.5">+14.2% Return</p>
                                 </div>
                             </div>
-                            <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-federalblue-900 transition-colors" />
+                            <ChevronRight className="w-5 h-5 text-slate-300 dark:text-zinc-600 group-hover:text-federalblue-900 dark:group-hover:text-federalblue-400 transition-colors" />
                         </div>
-                        <div className="bg-white p-4 rounded-2xl border border-slate-100 flex justify-between items-center group cursor-pointer hover:bg-slate-50 transition-colors">
+                        <div className="bg-white dark:bg-zinc-900 p-4 rounded-2xl border border-slate-100 dark:border-zinc-800 flex justify-between items-center group cursor-pointer hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition-colors">
                             <div className="flex gap-4">
-                                <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-federalblue-900">
+                                <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-zinc-800 flex items-center justify-center text-federalblue-900 dark:text-federalblue-400">
                                     <Clock className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h4 className="text-sm font-bold text-federalblue-900">Fixed Deposit (3Y)</h4>
-                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Expires Oct 2026</p>
+                                    <h4 className="text-sm font-bold text-federalblue-900 dark:text-zinc-100">Fixed Deposit (3Y)</h4>
+                                    <p className="text-[10px] text-slate-400 dark:text-zinc-500 font-bold uppercase tracking-widest mt-0.5">Expires Oct 2026</p>
                                 </div>
                             </div>
-                            <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-federalblue-900 transition-colors" />
+                            <ChevronRight className="w-5 h-5 text-slate-300 dark:text-zinc-600 group-hover:text-federalblue-900 dark:group-hover:text-federalblue-400 transition-colors" />
                         </div>
                     </div>
                 </div>
 
                 {/* Wealth Insights */}
-                <div className="bg-federalblue-50 border border-federalblue-100 rounded-3xl p-6 relative overflow-hidden group cursor-pointer">
+                <div className="bg-federalblue-50 dark:bg-federalblue-900/20 border border-federalblue-100 dark:border-federalblue-800/30 rounded-3xl p-6 relative overflow-hidden group cursor-pointer">
                     <div className="relative z-10 space-y-4">
                         <div className="flex items-center gap-2">
-                            <ShieldCheck className="w-5 h-5 text-federalblue-900" />
-                            <span className="text-[10px] font-black text-federalblue-900 uppercase tracking-widest">Portfolio Health</span>
+                            <ShieldCheck className="w-5 h-5 text-federalblue-900 dark:text-federalblue-400" />
+                            <span className="text-[10px] font-black text-federalblue-900 dark:text-federalblue-300 uppercase tracking-widest">Portfolio Health</span>
                         </div>
-                        <p className="text-sm font-bold text-federalblue-900 leading-tight">Your portfolio is well-diversified. Consider hedging with <span className="text-federalgold-600 underline">Gold Mutual Funds</span>.</p>
-                        <button className="text-[10px] font-black text-federalblue-900 bg-white px-3 py-1.5 rounded-full shadow-sm hover:translate-x-1 transition-transform flex items-center gap-1 uppercase tracking-widest">
+                        <p className="text-sm font-bold text-federalblue-900 dark:text-zinc-200 leading-tight">Your portfolio is well-diversified. Consider hedging with <span className="text-federalgold-600 dark:text-federalgold-400 underline">Gold Mutual Funds</span>.</p>
+                        <button className="text-[10px] font-black text-federalblue-900 dark:text-federalblue-900 bg-white dark:bg-zinc-100 px-3 py-1.5 rounded-full shadow-sm hover:translate-x-1 transition-transform flex items-center gap-1 uppercase tracking-widest">
                             Analyze Mix <ChevronRight className="w-3 h-3" />
                         </button>
                     </div>
