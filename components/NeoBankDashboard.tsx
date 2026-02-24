@@ -272,7 +272,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             {persona.discoverCards.map((card, i) => (
                                 <div
                                     key={i}
-                                    className={`min-w-[260px] snap-center p-6 rounded-[2rem] bg-gradient-to-br ${card.color} text-white shadow-xl relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform`}
+                                    className={`min-w-[260px] snap-center p-6 rounded-[2rem] bg-gradient-to-br ${card.color} text-white shadow-xl relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform backdrop-blur-md bg-opacity-80 border border-white/15`}
                                     onClick={() => card.navigateTo && onNavigate(card.navigateTo)}
                                 >
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-[40px] -mr-10 -mt-10"></div>
