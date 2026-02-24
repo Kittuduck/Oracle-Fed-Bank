@@ -357,6 +357,7 @@ const App: React.FC = () => {
                     onToggleAutopay={handleToggleAutopay}
                     onAddBiller={handleAddBiller}
                     festival={festival}
+                    persona={selectedPersona}
                 />
             );
         }

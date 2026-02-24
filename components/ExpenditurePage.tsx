@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Sun, Moon, AlertTriangle, ShieldAlert, PauseCircle, PlayCircle, Snowflake, CheckCircle2, Zap, TrendingUp, Calendar, CreditCard, ChevronDown, RefreshCw, ShoppingBag, Utensils, Plane, Car, Home, TrendingDown, Plus, X, Globe, Smartphone, Dumbbell, Receipt } from 'lucide-react';
+import { ArrowLeft, Sun, Moon, AlertTriangle, ShieldAlert, PauseCircle, PlayCircle, Snowflake, CheckCircle2, Zap, TrendingUp, Calendar, CreditCard, ChevronDown, RefreshCw, ShoppingBag, Utensils, Plane, Car, Home, TrendingDown, Plus, X, Globe, Smartphone, Dumbbell, Receipt, Heart, BookOpen, GraduationCap, Fuel } from 'lucide-react';
 import { ComposedChart, Line, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts';
 import { Biller } from '../App';
+import { PersonaProfile } from '../data/personas';
 
 interface ExpenditurePageProps {
     onBack: () => void;
@@ -11,11 +12,268 @@ interface ExpenditurePageProps {
     onToggleAutopay: (id: string) => void;
     onAddBiller: (biller: Biller) => void;
     festival: 'DEFAULT' | 'DIWALI' | 'HOLI';
+    persona: PersonaProfile | null;
 }
 
 type TimeFrame = 'DAILY' | 'MONTHLY' | 'YEARLY';
 
-const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, toggleTheme, billers, onToggleAutopay, onAddBiller, festival }) => {
+const getPersonaExpenditureData = (personaId: string) => {
+    const data: Record<string, any> = {
+        advait: {
+            anomaly: { amount: '₹12,400', location: 'Club Aqua, London' },
+            insight: { text: 'You haven\'t visited "Gold\'s Gym" in 45 days, but the ₹3,500 auto-pay is scheduled for tomorrow.', action: 'Pause Subscription', billerId: 'adb3' },
+            daily: [
+                { name: 'Mon', amount: 2800, average: 4500 },
+                { name: 'Tue', amount: 5200, average: 4500 },
+                { name: 'Wed', amount: 1200, average: 4500 },
+                { name: 'Thu', amount: 12400, average: 4800 },
+                { name: 'Fri', amount: 3800, average: 5500 },
+                { name: 'Sat', amount: 8500, average: 6000 },
+                { name: 'Sun', amount: 4200, average: 5000 }
+            ],
+            monthly: [
+                { name: 'Week 1', amount: 18000, average: 28000 },
+                { name: 'Week 2', amount: 45000, average: 32000 },
+                { name: 'Week 3', amount: 32000, average: 30000 },
+                { name: 'Week 4', amount: 40000, average: 35000 }
+            ],
+            yearly: [
+                { name: 'Jan', amount: 120000, average: 110000 },
+                { name: 'Feb', amount: 145000, average: 115000 },
+                { name: 'Mar', amount: 180000, average: 120000 },
+                { name: 'Apr', amount: 130000, average: 125000 },
+                { name: 'May', amount: 160000, average: 130000 },
+                { name: 'Jun', amount: 140000, average: 135000 }
+            ],
+            totalSpend: '₹1,35,000',
+            categories: {
+                DAILY: [
+                    { name: 'Shopping', amount: 12400, percent: 45, icon: ShoppingBag, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Dining', amount: 4200, percent: 22, icon: Utensils, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                    { name: 'Transport', amount: 2500, percent: 13, icon: Car, color: 'bg-slate-600', textColor: 'text-slate-600' },
+                ],
+                MONTHLY: [
+                    { name: 'Travel', amount: 45000, percent: 33, icon: Plane, color: 'bg-federalblue-700', textColor: 'text-federalblue-700' },
+                    { name: 'Housing', amount: 42000, percent: 31, icon: Home, color: 'bg-slate-800', textColor: 'text-slate-800' },
+                    { name: 'Lifestyle', amount: 28000, percent: 21, icon: ShoppingBag, color: 'bg-federalblue-500', textColor: 'text-federalblue-500' },
+                ],
+                YEARLY: [
+                    { name: 'Investments', amount: 600000, percent: 45, icon: TrendingUp, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Housing', amount: 420000, percent: 30, icon: Home, color: 'bg-slate-700', textColor: 'text-slate-700' },
+                    { name: 'Travel', amount: 180000, percent: 13, icon: Plane, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                ]
+            },
+            insights: {
+                DAILY: { icon: ShoppingBag, colorClass: 'text-federalblue-900', text: 'Unusual spike in Shopping today (+₹12.4k).', highlight: 'Shopping', highlightColor: 'text-federalblue-900' },
+                MONTHLY: { icon: Plane, colorClass: 'text-federalblue-700', text: 'Spending is elevated this month due to Travel bookings (+₹45k).', highlight: 'Travel bookings', highlightColor: 'text-federalblue-700' },
+                YEARLY: { icon: TrendingUp, colorClass: 'text-emerald-700', text: 'Investment allocation has increased by 45% year-over-year.', highlight: '45%', highlightColor: 'text-emerald-700' },
+            }
+        },
+        kapoor: {
+            anomaly: { amount: '₹45,000', location: 'Unknown UPI Transfer' },
+            insight: { text: 'Your BSNL Landline bill of ₹1,199 can be reduced by switching to the Senior Citizen plan at ₹799/month.', action: 'Compare Plans', billerId: 'kb2' },
+            daily: [
+                { name: 'Mon', amount: 800, average: 1200 },
+                { name: 'Tue', amount: 1500, average: 1200 },
+                { name: 'Wed', amount: 600, average: 1200 },
+                { name: 'Thu', amount: 2200, average: 1300 },
+                { name: 'Fri', amount: 900, average: 1400 },
+                { name: 'Sat', amount: 3200, average: 1500 },
+                { name: 'Sun', amount: 1100, average: 1200 }
+            ],
+            monthly: [
+                { name: 'Week 1', amount: 8000, average: 9000 },
+                { name: 'Week 2', amount: 12000, average: 9500 },
+                { name: 'Week 3', amount: 9000, average: 9500 },
+                { name: 'Week 4', amount: 9000, average: 10000 }
+            ],
+            yearly: [
+                { name: 'Jan', amount: 35000, average: 38000 },
+                { name: 'Feb', amount: 42000, average: 38000 },
+                { name: 'Mar', amount: 38000, average: 38000 },
+                { name: 'Apr', amount: 36000, average: 38000 },
+                { name: 'May', amount: 40000, average: 38000 },
+                { name: 'Jun', amount: 39000, average: 38000 }
+            ],
+            totalSpend: '₹38,000',
+            categories: {
+                DAILY: [
+                    { name: 'Medical', amount: 1800, percent: 40, icon: Heart, color: 'bg-red-600', textColor: 'text-red-600' },
+                    { name: 'Groceries', amount: 1200, percent: 27, icon: ShoppingBag, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Utilities', amount: 800, percent: 18, icon: Zap, color: 'bg-slate-600', textColor: 'text-slate-600' },
+                ],
+                MONTHLY: [
+                    { name: 'Medical', amount: 15000, percent: 39, icon: Heart, color: 'bg-red-600', textColor: 'text-red-600' },
+                    { name: 'Household', amount: 12000, percent: 32, icon: Home, color: 'bg-slate-800', textColor: 'text-slate-800' },
+                    { name: 'Utilities', amount: 6000, percent: 16, icon: Zap, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                ],
+                YEARLY: [
+                    { name: 'Medical', amount: 180000, percent: 39, icon: Heart, color: 'bg-red-600', textColor: 'text-red-600' },
+                    { name: 'Household', amount: 144000, percent: 31, icon: Home, color: 'bg-slate-700', textColor: 'text-slate-700' },
+                    { name: 'Insurance', amount: 102000, percent: 22, icon: ShieldAlert, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                ]
+            },
+            insights: {
+                DAILY: { icon: Heart, colorClass: 'text-red-600', text: 'Medical expenses above average today. Pharmacy bill of ₹1,800.', highlight: 'Medical', highlightColor: 'text-red-600' },
+                MONTHLY: { icon: Heart, colorClass: 'text-red-600', text: 'Medical spending rose 18% this month. Consider claiming PMJAY benefits.', highlight: 'Medical spending', highlightColor: 'text-red-600' },
+                YEARLY: { icon: ShieldAlert, colorClass: 'text-federalblue-900', text: 'Insurance premiums saved ₹12k via senior citizen discount this year.', highlight: '₹12k', highlightColor: 'text-emerald-700' },
+            }
+        },
+        rajesh: {
+            anomaly: { amount: '₹2,30,000', location: 'Unverified Vendor Transfer' },
+            insight: { text: 'GST filing deadline is in 5 days. ₹1,85,000 quarterly payment is due. Auto-pay is not set up yet.', action: 'Set Up Auto-Pay', billerId: 'rb1' },
+            daily: [
+                { name: 'Mon', amount: 15000, average: 20000 },
+                { name: 'Tue', amount: 45000, average: 20000 },
+                { name: 'Wed', amount: 8000, average: 20000 },
+                { name: 'Thu', amount: 62000, average: 22000 },
+                { name: 'Fri', amount: 25000, average: 22000 },
+                { name: 'Sat', amount: 12000, average: 18000 },
+                { name: 'Sun', amount: 5000, average: 10000 }
+            ],
+            monthly: [
+                { name: 'Week 1', amount: 120000, average: 150000 },
+                { name: 'Week 2', amount: 280000, average: 155000 },
+                { name: 'Week 3', amount: 145000, average: 155000 },
+                { name: 'Week 4', amount: 175000, average: 160000 }
+            ],
+            yearly: [
+                { name: 'Jan', amount: 580000, average: 620000 },
+                { name: 'Feb', amount: 720000, average: 620000 },
+                { name: 'Mar', amount: 650000, average: 620000 },
+                { name: 'Apr', amount: 600000, average: 620000 },
+                { name: 'May', amount: 690000, average: 620000 },
+                { name: 'Jun', amount: 640000, average: 620000 }
+            ],
+            totalSpend: '₹6,20,000',
+            categories: {
+                DAILY: [
+                    { name: 'Vendor Pay', amount: 45000, percent: 52, icon: Receipt, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Operations', amount: 18000, percent: 21, icon: Dumbbell, color: 'bg-slate-700', textColor: 'text-slate-700' },
+                    { name: 'Utilities', amount: 12000, percent: 14, icon: Zap, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                ],
+                MONTHLY: [
+                    { name: 'Vendors', amount: 320000, percent: 44, icon: Receipt, color: 'bg-federalblue-700', textColor: 'text-federalblue-700' },
+                    { name: 'GST & Tax', amount: 185000, percent: 26, icon: Globe, color: 'bg-slate-800', textColor: 'text-slate-800' },
+                    { name: 'Factory Ops', amount: 115000, percent: 16, icon: Home, color: 'bg-federalblue-500', textColor: 'text-federalblue-500' },
+                ],
+                YEARLY: [
+                    { name: 'Vendors', amount: 3800000, percent: 50, icon: Receipt, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Tax & GST', amount: 2200000, percent: 29, icon: Globe, color: 'bg-slate-700', textColor: 'text-slate-700' },
+                    { name: 'Operations', amount: 1500000, percent: 20, icon: Home, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                ]
+            },
+            insights: {
+                DAILY: { icon: Receipt, colorClass: 'text-federalblue-900', text: 'Large vendor payment of ₹45k to Surat Textiles. Invoice pending GSTN match.', highlight: 'Surat Textiles', highlightColor: 'text-federalblue-900' },
+                MONTHLY: { icon: Globe, colorClass: 'text-slate-800', text: 'GST outflow is 26% of monthly spend. ₹12k input credit claimable.', highlight: '₹12k input credit', highlightColor: 'text-emerald-700' },
+                YEARLY: { icon: TrendingUp, colorClass: 'text-emerald-700', text: 'Vendor costs down 8% YoY after renegotiating with 3 suppliers.', highlight: '8%', highlightColor: 'text-emerald-700' },
+            }
+        },
+        ishan: {
+            anomaly: { amount: '₹4,800', location: 'Steam Games Store' },
+            insight: { text: 'Your Adobe CC subscription (₹1,675/mo) has been unused for 45 days. Cancel to save ₹20k/year.', action: 'Cancel Subscription', billerId: 'ib4' },
+            daily: [
+                { name: 'Mon', amount: 350, average: 600 },
+                { name: 'Tue', amount: 800, average: 600 },
+                { name: 'Wed', amount: 200, average: 600 },
+                { name: 'Thu', amount: 1500, average: 650 },
+                { name: 'Fri', amount: 2200, average: 800 },
+                { name: 'Sat', amount: 3500, average: 900 },
+                { name: 'Sun', amount: 1200, average: 700 }
+            ],
+            monthly: [
+                { name: 'Week 1', amount: 3500, average: 4200 },
+                { name: 'Week 2', amount: 5800, average: 4500 },
+                { name: 'Week 3', amount: 4200, average: 4500 },
+                { name: 'Week 4', amount: 4500, average: 4800 }
+            ],
+            yearly: [
+                { name: 'Jan', amount: 16000, average: 18000 },
+                { name: 'Feb', amount: 22000, average: 18000 },
+                { name: 'Mar', amount: 19000, average: 18000 },
+                { name: 'Apr', amount: 17000, average: 18000 },
+                { name: 'May', amount: 20000, average: 18000 },
+                { name: 'Jun', amount: 18000, average: 18000 }
+            ],
+            totalSpend: '₹18,000',
+            categories: {
+                DAILY: [
+                    { name: 'Food', amount: 1500, percent: 42, icon: Utensils, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                    { name: 'Subscriptions', amount: 800, percent: 22, icon: Smartphone, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Transport', amount: 500, percent: 14, icon: Car, color: 'bg-slate-600', textColor: 'text-slate-600' },
+                ],
+                MONTHLY: [
+                    { name: 'Food & Mess', amount: 7500, percent: 42, icon: Utensils, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                    { name: 'Subscriptions', amount: 3500, percent: 19, icon: Smartphone, color: 'bg-federalblue-700', textColor: 'text-federalblue-700' },
+                    { name: 'Social', amount: 4000, percent: 22, icon: ShoppingBag, color: 'bg-federalblue-500', textColor: 'text-federalblue-500' },
+                ],
+                YEARLY: [
+                    { name: 'Food', amount: 90000, percent: 42, icon: Utensils, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                    { name: 'Subscriptions', amount: 42000, percent: 19, icon: Smartphone, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Social', amount: 48000, percent: 22, icon: ShoppingBag, color: 'bg-slate-700', textColor: 'text-slate-700' },
+                ]
+            },
+            insights: {
+                DAILY: { icon: Utensils, colorClass: 'text-federalgold-600', text: 'You spent ₹1.5k on food today. Hostel mess saves ₹800/day on average.', highlight: 'Hostel mess', highlightColor: 'text-emerald-700' },
+                MONTHLY: { icon: Smartphone, colorClass: 'text-federalblue-700', text: '3 unused subscriptions detected. Cancel to save ₹2k/month.', highlight: '₹2k/month', highlightColor: 'text-emerald-700' },
+                YEARLY: { icon: TrendingUp, colorClass: 'text-emerald-700', text: 'Freelance income covered 55% of yearly expenses. Great progress!', highlight: '55%', highlightColor: 'text-emerald-700' },
+            }
+        },
+        anjali: {
+            anomaly: { amount: '₹8,500', location: 'Unknown Online Payment' },
+            insight: { text: 'School fees for Meera (₹18,500) and Arjun (₹15,000) are due in 7 days. Total: ₹33,500. Sufficient balance available.', action: 'Pay All Fees', billerId: 'ab2' },
+            daily: [
+                { name: 'Mon', amount: 1200, average: 2800 },
+                { name: 'Tue', amount: 3500, average: 2800 },
+                { name: 'Wed', amount: 800, average: 2800 },
+                { name: 'Thu', amount: 4200, average: 3000 },
+                { name: 'Fri', amount: 2500, average: 3200 },
+                { name: 'Sat', amount: 5800, average: 3500 },
+                { name: 'Sun', amount: 2200, average: 2800 }
+            ],
+            monthly: [
+                { name: 'Week 1', amount: 18000, average: 22000 },
+                { name: 'Week 2', amount: 35000, average: 23000 },
+                { name: 'Week 3', amount: 22000, average: 23000 },
+                { name: 'Week 4', amount: 17000, average: 24000 }
+            ],
+            yearly: [
+                { name: 'Jan', amount: 85000, average: 92000 },
+                { name: 'Feb', amount: 98000, average: 92000 },
+                { name: 'Mar', amount: 92000, average: 92000 },
+                { name: 'Apr', amount: 88000, average: 92000 },
+                { name: 'May', amount: 95000, average: 92000 },
+                { name: 'Jun', amount: 90000, average: 92000 }
+            ],
+            totalSpend: '₹92,000',
+            categories: {
+                DAILY: [
+                    { name: 'Groceries', amount: 2800, percent: 42, icon: ShoppingBag, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Household', amount: 1500, percent: 22, icon: Home, color: 'bg-slate-700', textColor: 'text-slate-700' },
+                    { name: 'Kids', amount: 1200, percent: 18, icon: GraduationCap, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                ],
+                MONTHLY: [
+                    { name: 'School Fees', amount: 33500, percent: 36, icon: GraduationCap, color: 'bg-federalblue-700', textColor: 'text-federalblue-700' },
+                    { name: 'Groceries', amount: 25000, percent: 27, icon: ShoppingBag, color: 'bg-slate-800', textColor: 'text-slate-800' },
+                    { name: 'Utilities', amount: 15000, percent: 16, icon: Zap, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                ],
+                YEARLY: [
+                    { name: 'Education', amount: 402000, percent: 36, icon: GraduationCap, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
+                    { name: 'Groceries', amount: 300000, percent: 27, icon: ShoppingBag, color: 'bg-slate-700', textColor: 'text-slate-700' },
+                    { name: 'Utilities', amount: 180000, percent: 16, icon: Zap, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
+                ]
+            },
+            insights: {
+                DAILY: { icon: ShoppingBag, colorClass: 'text-federalblue-900', text: 'Grocery spending is 18% above your 3-month daily average.', highlight: 'Grocery', highlightColor: 'text-federalblue-900' },
+                MONTHLY: { icon: GraduationCap, colorClass: 'text-federalblue-700', text: 'School fees account for 36% of monthly spend. Fee hike of 8% expected next term.', highlight: 'School fees', highlightColor: 'text-federalblue-700' },
+                YEARLY: { icon: TrendingDown, colorClass: 'text-emerald-700', text: 'Utility costs dropped 12% after switching to auto-pay discounts.', highlight: '12%', highlightColor: 'text-emerald-700' },
+            }
+        }
+    };
+    return data[personaId] || data['advait'];
+};
+
+const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, toggleTheme, billers, onToggleAutopay, onAddBiller, festival, persona }) => {
     const [timeframe, setTimeframe] = useState<TimeFrame>('MONTHLY');
     const [anomalyStatus, setAnomalyStatus] = useState<'PENDING' | 'VERIFIED' | 'FROZEN'>('PENDING');
     const [showAddBiller, setShowAddBiller] = useState(false);
@@ -26,80 +284,39 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
         type: 'AUTO' as 'AUTO' | 'DUE'
     });
 
-    // Enhanced Mock Chart Data with Averages
-    const dailyData = [
-        { name: 'Mon', amount: 1200, average: 4000 },
-        { name: 'Tue', amount: 4500, average: 4000 },
-        { name: 'Wed', amount: 850, average: 4000 },
-        { name: 'Thu', amount: 12000, average: 4200 },
-        { name: 'Fri', amount: 3200, average: 5500 },
-        { name: 'Sat', amount: 15400, average: 6000 },
-        { name: 'Sun', amount: 6500, average: 6000 }
-    ];
+    const pData = getPersonaExpenditureData(persona?.id || 'advait');
 
-    const monthlyData = [
-        { name: 'Week 1', amount: 12500, average: 25000 },
-        { name: 'Week 2', amount: 45000, average: 28000 },
-        { name: 'Week 3', amount: 28000, average: 26000 },
-        { name: 'Week 4', amount: 32000, average: 30000 }
-    ];
+    const dailyData = pData.daily;
+    const monthlyData = pData.monthly;
+    const yearlyData = pData.yearly;
 
-    const yearlyData = [
-        { name: 'Jan', amount: 120000, average: 110000 },
-        { name: 'Feb', amount: 145000, average: 115000 },
-        { name: 'Mar', amount: 180000, average: 120000 },
-        { name: 'Apr', amount: 130000, average: 120000 },
-        { name: 'May', amount: 160000, average: 125000 },
-        { name: 'Jun', amount: 140000, average: 130000 }
-    ];
-
-    // Category Breakdown Data (Updated colors to match Federal Bank Palette)
-    // Federal Blue = Shopping/Lifestyle (Primary)
-    // Federal Orange/Gold = Dining (Accent)
-    // Slate = Transport/Utilities (Neutral)
-    const categoryData = {
-        DAILY: [
-            { name: 'Shopping', amount: 12400, percent: 55, icon: ShoppingBag, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
-            { name: 'Dining', amount: 4200, percent: 18, icon: Utensils, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
-            { name: 'Transport', amount: 1500, percent: 7, icon: Car, color: 'bg-slate-600', textColor: 'text-slate-600' },
-        ],
-        MONTHLY: [
-            { name: 'Travel', amount: 45000, percent: 38, icon: Plane, color: 'bg-federalblue-700', textColor: 'text-federalblue-700' },
-            { name: 'Housing', amount: 35000, percent: 29, icon: Home, color: 'bg-slate-800', textColor: 'text-slate-800' },
-            { name: 'Lifestyle', amount: 22000, percent: 18, icon: ShoppingBag, color: 'bg-federalblue-500', textColor: 'text-federalblue-500' },
-        ],
-        YEARLY: [
-            { name: 'Investments', amount: 600000, percent: 45, icon: TrendingUp, color: 'bg-federalblue-900', textColor: 'text-federalblue-900' },
-            { name: 'Housing', amount: 420000, percent: 30, icon: Home, color: 'bg-slate-700', textColor: 'text-slate-700' },
-            { name: 'Travel', amount: 150000, percent: 11, icon: Plane, color: 'bg-federalgold-500', textColor: 'text-federalgold-600' },
-        ]
-    };
+    const categoryData = pData.categories;
 
     const insightData = {
         DAILY: {
-            icon: ShoppingBag,
-            colorClass: 'text-federalblue-900',
+            icon: pData.insights.DAILY.icon,
+            colorClass: pData.insights.DAILY.colorClass,
             message: (
                 <>
-                    <span className="font-semibold text-[#333333] dark:text-white">Insight:</span> Unusual spike in <span className="font-medium text-federalblue-900">Shopping</span> today (+₹12.4k).
+                    <span className="font-semibold text-[#333333] dark:text-white">Insight:</span> <span className={`font-medium ${pData.insights.DAILY.highlightColor}`}>{pData.insights.DAILY.highlight}</span> — {pData.insights.DAILY.text}
                 </>
             )
         },
         MONTHLY: {
-            icon: Plane,
-            colorClass: 'text-federalblue-700',
+            icon: pData.insights.MONTHLY.icon,
+            colorClass: pData.insights.MONTHLY.colorClass,
             message: (
                 <>
-                    <span className="font-semibold text-[#333333] dark:text-white">Insight:</span> Spending is elevated this month due to <span className="font-medium text-federalblue-700">Travel bookings</span> (+₹45k).
+                    <span className="font-semibold text-[#333333] dark:text-white">Insight:</span> <span className={`font-medium ${pData.insights.MONTHLY.highlightColor}`}>{pData.insights.MONTHLY.highlight}</span> — {pData.insights.MONTHLY.text}
                 </>
             )
         },
         YEARLY: {
-            icon: TrendingUp,
-            colorClass: 'text-emerald-700',
+            icon: pData.insights.YEARLY.icon,
+            colorClass: pData.insights.YEARLY.colorClass,
             message: (
                 <>
-                    <span className="font-semibold text-[#333333] dark:text-white">Insight:</span> Investment allocation has increased by <span className="font-medium text-emerald-700">45%</span> year-over-year.
+                    <span className="font-semibold text-[#333333] dark:text-white">Insight:</span> <span className={`font-medium ${pData.insights.YEARLY.highlightColor}`}>{pData.insights.YEARLY.highlight}</span> — {pData.insights.YEARLY.text}
                 </>
             )
         }
@@ -277,7 +494,7 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                                 </div>
 
                                 <p className="text-sm text-slate-600 dark:text-slate-300 mb-4 leading-relaxed max-w-xl">
-                                    We noticed an unusual transaction of <span className="font-bold text-[#333333] dark:text-white">₹12,400</span> at <span className="font-bold text-[#333333] dark:text-white">Club Aqua, London</span>.
+                                    We noticed an unusual transaction of <span className="font-bold text-[#333333] dark:text-white">{pData.anomaly.amount}</span> at <span className="font-bold text-[#333333] dark:text-white">{pData.anomaly.location}</span>.
                                 </p>
 
                                 <div className="flex gap-3">
@@ -304,14 +521,14 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                                     <span className="text-[10px] text-slate-400">Just now</span>
                                 </div>
                                 <p className="text-sm text-slate-700 dark:text-slate-200 font-medium mb-3">
-                                    You haven't visited "Gold's Gym" in 45 days, but the ₹3,500 auto-pay is scheduled for tomorrow.
+                                    {pData.insight.text}
                                 </p>
                                 <button
-                                    onClick={() => onToggleAutopay('b4')}
-                                    disabled={billers.find(a => a.id === 'b4')?.status === 'PAUSED'}
+                                    onClick={() => onToggleAutopay(pData.insight.billerId)}
+                                    disabled={billers.find(a => a.id === pData.insight.billerId)?.status === 'PAUSED'}
                                     className="text-xs bg-white border border-[#E0E0E0] hover:border-federalblue-500 hover:text-federalblue-900 dark:bg-[#1c1e24] dark:border-slate-700 dark:hover:border-federalblue-500 text-slate-700 dark:text-white px-4 py-2 rounded-lg font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                                 >
-                                    {billers.find(a => a.id === 'b4')?.status === 'PAUSED' ? 'Suggestion Executed' : 'Pause Subscription'}
+                                    {billers.find(a => a.id === pData.insight.billerId)?.status === 'PAUSED' ? 'Suggestion Executed' : pData.insight.action}
                                 </button>
                             </div>
                         </div>
@@ -323,7 +540,7 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                             <div>
                                 <h3 className="text-lg font-bold text-[#333333] dark:text-white">Spending Analysis</h3>
                                 <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
-                                    Current Period: <span className="font-semibold text-[#333333] dark:text-white">₹1,18,500</span>
+                                    Current Period: <span className="font-semibold text-[#333333] dark:text-white">{pData.totalSpend}</span>
                                 </p>
                             </div>
 
