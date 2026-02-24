@@ -272,18 +272,18 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             {persona.discoverCards.map((card, i) => (
                                 <div
                                     key={i}
-                                    className={`min-w-[260px] snap-center p-6 rounded-[2rem] bg-gradient-to-br ${card.color} text-white shadow-xl relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform backdrop-blur-md bg-opacity-80 border border-white/15`}
+                                    className={`min-w-[200px] snap-center p-4 rounded-2xl bg-gradient-to-br ${card.color} text-white shadow-lg relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform backdrop-blur-md bg-opacity-80 border border-white/15`}
                                     onClick={() => card.navigateTo && onNavigate(card.navigateTo)}
                                 >
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-[40px] -mr-10 -mt-10"></div>
+                                    <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-[30px] -mr-8 -mt-8"></div>
                                     {card.tag && (
-                                        <span className="text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-md mb-3 inline-block">{card.tag}</span>
+                                        <span className="text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-md mb-1 inline-block">{card.tag}</span>
                                     )}
-                                    <h4 className="text-base font-bold mt-2 mb-1">{card.title}</h4>
-                                    <p className="text-xs text-white/70">{card.subtitle}</p>
-                                    <div className="mt-4 flex items-center gap-1 text-[10px] font-bold text-white/60 uppercase tracking-widest">
+                                    <h4 className="text-[13px] font-bold mt-1 mb-0.5 leading-snug">{card.title}</h4>
+                                    <p className="text-[10px] text-white/70 leading-relaxed">{card.subtitle}</p>
+                                    <div className="mt-2.5 flex items-center gap-1 text-[9px] font-bold text-white/60 uppercase tracking-widest">
                                         <span>Explore</span>
-                                        <ArrowRight className="w-3 h-3" />
+                                        <ArrowRight className="w-2.5 h-2.5" />
                                     </div>
                                 </div>
                             ))}
