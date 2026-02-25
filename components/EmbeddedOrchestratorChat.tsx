@@ -344,43 +344,8 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
             }
         }
 
-        const isTripRelated = (msg: string): boolean => {
-            const t = msg.toLowerCase();
-            const words = ['trip', 'travel', 'travelling', 'traveling', 'vacation', 'holiday', 'abroad', 'international', 'overseas', 'foreign', 'flight', 'tour', 'japan', 'dubai', 'thailand', 'singapore', 'varanasi', 'goa', 'kashmir', 'bali', 'europe', 'maldives', 'vietnam', 'sri lanka', 'srilanka'];
-            if (words.some(w => t.includes(w))) return true;
-            const phrases = [
-                /plan.*(trip|vacation|holiday|travel)/,
-                /afford.*(trip|travel|vacation)/,
-                /go\s+(abroad|somewhere|on\s+a)/,
-                /visit\s+another\s+country/,
-                /see\s+the\s+world/,
-                /outside\s+india/,
-                /fund.*(trip|travel)/,
-                /funding\s+gap/,
-                /extra\s+funds/,
-                /additional\s+(money|amount|funds)/,
-                /fall\s+short/,
-                /enough\s+money/,
-                /financial.*(stress|support)/,
-                /shortfall/,
-                /explore\s+another\s+country/,
-                /take\s+(a|my|an|the)\s+(family\s+)?(trip|vacation|holiday)/,
-                /go\s+on\s+(a|an)\s+(trip|vacation|holiday)/,
-                /thinking\s+(of|about)\s+(travel|going|a\s+trip)/,
-                /interested\s+in.*(travel|trip)/,
-                /help\s+(me\s+)?plan/,
-                /considering\s+travel/,
-                /travel\s+(is\s+)?on\s+my\s+mind/,
-                /travel\s+(budget|expenses|plans|planning)/,
-                /family\s+(trip|vacation|holiday|travel)/,
-            ];
-            return phrases.some(p => p.test(t));
-        };
-
-        const tripMatch = isTripRelated(text);
-        if (tripMatch) {
-            setLoanJourneyActive(false);
-            loanJourneyRef.current = null;
+        const tripKeywords = /\b(trip|travel|vacation|holiday|abroad|international|japan|dubai|thailand|singapore|varanasi|flight|tour|family trip|afford.*trip|plan.*trip|trip.*plan)\b/i;
+        if (tripKeywords.test(text) && !loanJourneyActive) {
             const userMsg: Message = { id: Date.now().toString(), role: 'user', content: text, text };
             setMessages(prev => [...prev, userMsg]);
             setInput('');
@@ -408,7 +373,6 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
                                     rate: loanData.rate,
                                     destination: loanData.destination
                                 });
-                                setTimeout(() => setLoanJourneyActive(false), 100);
                             }}
                             onDismiss={(savedOffer) => {
                                 setLoanJourneyActive(false);
