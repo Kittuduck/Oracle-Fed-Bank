@@ -264,7 +264,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
   const completeDisbursement = () => {
     setDisbursed(true);
     setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 6500);
+    setTimeout(() => setShowConfetti(false), 4000);
     onComplete({
       amount: loanAmount,
       tenure,
@@ -1005,24 +1005,21 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
       <div className={`space-y-4 transition-all duration-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         {showConfetti && (
           <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-            {Array.from({ length: 80 }).map((_, i) => {
-              const colors = ['#f37021', '#004d9c', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#06b6d4', '#ef4444'];
-              const variant = (i % 3) + 1;
-              const shapes = ['50%', '2px', '0'];
+            {Array.from({ length: 40 }).map((_, i) => {
+              const colors = ['#ff5500', '#0055cc', '#00c853', '#ffab00', '#d500f9', '#ff1744', '#00bcd4', '#651fff'];
               return (
                 <div
                   key={i}
-                  className={`absolute animate-confetti-${variant}`}
+                  className="absolute animate-confetti"
                   style={{
                     left: `${Math.random() * 100}%`,
-                    top: `-${Math.random() * 15}%`,
-                    width: `${8 + Math.random() * 10}px`,
-                    height: `${8 + Math.random() * 10}px`,
-                    borderRadius: shapes[i % 3],
+                    top: `-${Math.random() * 10}%`,
+                    width: `${6 + Math.random() * 6}px`,
+                    height: `${6 + Math.random() * 6}px`,
+                    borderRadius: i % 2 === 0 ? '50%' : '2px',
                     backgroundColor: colors[i % colors.length],
-                    animationDelay: `${Math.random() * 2.5}s`,
-                    animationDuration: `${3 + Math.random() * 3}s`,
-                    boxShadow: `0 0 ${4 + Math.random() * 4}px ${colors[i % colors.length]}66`,
+                    animationDelay: `${Math.random() * 1.5}s`,
+                    animationDuration: `${2 + Math.random() * 2}s`,
                   }}
                 />
               );
