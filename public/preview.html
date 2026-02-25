@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oracle — Mobile Preview</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 20% 50%, #0a1628 0%, #050a14 60%, #0d0d0d 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 40px 20px;
+      gap: 32px;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      padding: 6px 16px;
+      margin-bottom: 16px;
+    }
+
+    .header-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .header-badge span {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .header h1 strong {
+      font-weight: 700;
+      background: linear-gradient(135deg, #004d9c, #f37021);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 6px;
+    }
+
+    /* Phone wrapper for glow effect */
+    .phone-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .phone-glow {
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(ellipse at center, rgba(0, 77, 156, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    /* iPhone 15 Pro frame */
+    .phone {
+      position: relative;
+      width: 375px;
+      height: 812px;
+      background: #1a1a1a;
+      border-radius: 54px;
+      box-shadow:
+        0 0 0 1px #2a2a2a,
+        0 0 0 2px #111,
+        0 0 0 3px #3a3a3a,
+        0 50px 100px rgba(0,0,0,0.8),
+        0 20px 40px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.06);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Side buttons */
+    .phone::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 130px;
+      width: 3px;
+      height: 36px;
+      background: #2a2a2a;
+      border-radius: 2px 0 0 2px;
+      box-shadow: 0 50px 0 #2a2a2a, 0 100px 0 #2a2a2a;
+    }
+
+    .phone::after {
+      content: '';
+      position: absolute;
+      right: -4px;
+      top: 160px;
+      width: 3px;
+      height: 70px;
+      background: #2a2a2a;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Screen area */
+    .screen {
+      position: absolute;
+      inset: 8px;
+      border-radius: 46px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 35px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dynamic-island .camera {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 1px solid #222;
+      position: relative;
+    }
+
+    .dynamic-island .camera::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: #0a0a2a;
+    }
+
+    /* iframe fills the screen */
+    .phone iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 46px;
+    }
+
+    /* Screen reflection */
+    .screen-glare {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(170deg, rgba(255,255,255,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      border-radius: 46px 46px 0 0;
+      z-index: 50;
+    }
+
+    /* URL bar */
+    .url-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 16px;
+      max-width: 375px;
+      width: 100%;
+    }
+
+    .url-bar .lock {
+      width: 14px;
+      height: 14px;
+      color: #10b981;
+      flex-shrink: 0;
+    }
+
+    .url-bar span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .url-bar .open-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: all 0.2s;
+    }
+
+    .url-bar .open-btn:hover {
+      background: rgba(255,255,255,0.14);
+      color: #fff;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 8px;
+    }
+
+    .footer .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .footer .btn:hover { color: rgba(255,255,255,0.65); }
+
+    @media (max-width: 440px) {
+      .phone { width: 320px; height: 693px; border-radius: 46px; }
+      .screen { border-radius: 38px; }
+      .phone iframe { border-radius: 38px; }
+      .screen-glare { border-radius: 38px 38px 0 0; }
+      .dynamic-island { width: 100px; height: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-badge">
+      <div class="dot"></div>
+      <span>Live Production</span>
+    </div>
+    <h1>Oracle by <strong>Federal Bank</strong></h1>
+    <p>AI-first banking experience — mobile preview</p>
+  </div>
+
+  <div class="phone-wrapper">
+    <div class="phone-glow"></div>
+    <div class="phone">
+      <div class="screen">
+        <div class="dynamic-island">
+          <div class="camera"></div>
+        </div>
+        <iframe
+          src="https://oracle-fed-bank-replit.vercel.app/?_vercel_share=NIMwB7pjZdGwIRMhN7IgGUuHwxkvy2rm"
+          title="Oracle Federal Bank"
+          allow="microphone; camera"
+          loading="lazy"
+        ></iframe>
+        <div class="screen-glare"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="url-bar">
+    <svg class="lock" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+    <span>oracle-fed-bank-replit.vercel.app</span>
+    <a class="open-btn" href="https://oracle-fed-bank-replit.vercel.app/?_vercel_share=NIMwB7pjZdGwIRMhN7IgGUuHwxkvy2rm" target="_blank">Open ↗</a>
+  </div>
+
+  <div class="footer">
+    <button class="btn" onclick="document.querySelector('iframe').src = document.querySelector('iframe').src">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-5"/></svg>
+      Reload
+    </button>
+    <button class="btn" onclick="toggleSize()">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>
+      Toggle Size
+    </button>
+  </div>
+
+  <script>
+    let enlarged = false;
+    function toggleSize() {
+      const phone = document.querySelector('.phone');
+      enlarged = !enlarged;
+      if (enlarged) {
+        phone.style.width = '430px';
+        phone.style.height = '932px';
+      } else {
+        phone.style.width = '';
+        phone.style.height = '';
+      }
+    }
+  </script>
+</body>
+</html>
