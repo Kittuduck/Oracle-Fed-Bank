@@ -366,7 +366,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
                                     state: 'AUTONOMY',
                                     text: `Loan of ${loanData.amount.toLocaleString('en-IN')} disbursed successfully.`,
                                     content: <p className="text-xs">Your loan has been disbursed. EMI of ₹{loanData.emi.toLocaleString('en-IN')}/month starts from 5th April 2026.</p>,
-                                    actions: ['Track in Expenditure', 'View My Loans', 'View Dashboard']
+                                    actions: ['View My Loans', 'View Dashboard']
                                 };
                                 setMessages(prev => [...prev, successMsg]);
                             }}

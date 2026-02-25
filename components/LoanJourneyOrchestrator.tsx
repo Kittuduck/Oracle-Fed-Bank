@@ -423,12 +423,12 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
               <p className={labelClass}>
                 <Users className="w-3 h-3 inline mr-1" /> Number of Travelers
               </p>
-              <div className="flex gap-2">
-                {[1, 2, 3, 4, 5, 6].map(n => (
+              <div className="grid grid-cols-5 gap-2">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
                   <button
                     key={n}
                     onClick={() => setTravelerCount(n)}
-                    className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                    className={`py-2.5 rounded-xl text-sm font-bold transition-all ${
                       travelerCount === n
                         ? 'bg-federalblue-900 text-white shadow-md'
                         : (isDarkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100')
@@ -450,18 +450,18 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
               <input
                 type="range"
                 min={3}
-                max={21}
+                max={45}
                 step={1}
                 value={tripDays}
                 onChange={e => setTripDays(Number(e.target.value))}
                 className="w-full h-2 rounded-full appearance-none cursor-pointer"
                 style={{
-                  background: `linear-gradient(to right, #004d9c ${((tripDays - 3) / 18) * 100}%, ${isDarkMode ? '#27272a' : '#e2e8f0'} ${((tripDays - 3) / 18) * 100}%)`
+                  background: `linear-gradient(to right, #004d9c ${((tripDays - 3) / 42) * 100}%, ${isDarkMode ? '#27272a' : '#e2e8f0'} ${((tripDays - 3) / 42) * 100}%)`
                 }}
               />
               <div className="flex justify-between text-[10px] mt-1">
                 <span className={isDarkMode ? 'text-zinc-600' : 'text-slate-300'}>3 days</span>
-                <span className={isDarkMode ? 'text-zinc-600' : 'text-slate-300'}>21 days</span>
+                <span className={isDarkMode ? 'text-zinc-600' : 'text-slate-300'}>45 days</span>
               </div>
             </div>
           </div>
@@ -538,7 +538,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
 
           <button
             onClick={startAnalysis}
-            disabled={selectedCities.length === 0}
+            disabled={selectedCities.length === 0 && additionalNotes.trim().length === 0}
             className="w-full mt-4 py-3 bg-gradient-to-r from-federalblue-900 to-federalblue-700 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98] shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <Sparkles className="w-4 h-4" /> Analyze My Trip
@@ -1064,16 +1064,16 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
 
         <div className="flex gap-2">
           <button
-            onClick={() => { onDismiss(); onNavigate?.('EXPENDITURE'); }}
-            className={`flex-1 py-3 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all ${isDarkMode ? 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-          >
-            Track in Expenditure <ArrowRight className="w-3 h-3" />
-          </button>
-          <button
             onClick={() => { onDismiss(); onNavigate?.('LOANS'); }}
             className="flex-1 py-3 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all bg-federalblue-900 text-white hover:opacity-90"
           >
-            View My Loans <ArrowRight className="w-3 h-3" />
+            Track My Loan <ArrowRight className="w-3 h-3" />
+          </button>
+          <button
+            onClick={() => { onDismiss(); onNavigate?.('DASHBOARD'); }}
+            className={`flex-1 py-3 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all ${isDarkMode ? 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+          >
+            Go to Dashboard <ArrowRight className="w-3 h-3" />
           </button>
         </div>
       </div>
