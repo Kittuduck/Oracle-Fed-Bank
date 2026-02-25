@@ -41,19 +41,19 @@ type Phase = 'INTAKE' | 'GAP_ANALYSIS' | 'PRE_APPROVED' | 'CUSTOMIZATION' | 'COM
 type IntakeStep = 'DESTINATION' | 'TRAVELERS' | 'DURATION' | 'CITIES' | 'ANALYZING';
 type ComplianceStep = 'TERMS' | 'AADHAAR' | 'ENACH';
 
-const DESTINATIONS: Record<string, { emoji: string; perPersonPerDay: number; flightBase: number; visaCost: number }> = {
-  'Japan': { emoji: '🇯🇵', perPersonPerDay: 8000, flightBase: 55000, visaCost: 3000 },
-  'Thailand': { emoji: '🇹🇭', perPersonPerDay: 4000, flightBase: 18000, visaCost: 2500 },
-  'Dubai': { emoji: '🇦🇪', perPersonPerDay: 10000, flightBase: 25000, visaCost: 5500 },
-  'Singapore': { emoji: '🇸🇬', perPersonPerDay: 9000, flightBase: 22000, visaCost: 2000 },
-  'Bali': { emoji: '🇮🇩', perPersonPerDay: 5000, flightBase: 28000, visaCost: 3500 },
-  'Europe': { emoji: '🇪🇺', perPersonPerDay: 12000, flightBase: 65000, visaCost: 6000 },
-  'Maldives': { emoji: '🇲🇻', perPersonPerDay: 15000, flightBase: 20000, visaCost: 0 },
-  'Vietnam': { emoji: '🇻🇳', perPersonPerDay: 3500, flightBase: 22000, visaCost: 2500 },
-  'Sri Lanka': { emoji: '🇱🇰', perPersonPerDay: 4500, flightBase: 12000, visaCost: 2000 },
-  'Varanasi': { emoji: '🙏', perPersonPerDay: 3000, flightBase: 6000, visaCost: 0 },
-  'Goa': { emoji: '🏖️', perPersonPerDay: 4000, flightBase: 5000, visaCost: 0 },
-  'Kashmir': { emoji: '🏔️', perPersonPerDay: 3500, flightBase: 7000, visaCost: 0 },
+const DESTINATIONS: Record<string, { emoji: string; hotelPerNight: number; activityPerDay: number; foodPerDay: number; flightBase: number; visaCost: number }> = {
+  'Japan': { emoji: '🇯🇵', hotelPerNight: 4800, activityPerDay: 2800, foodPerDay: 1800, flightBase: 52000, visaCost: 2500 },
+  'Thailand': { emoji: '🇹🇭', hotelPerNight: 2200, activityPerDay: 1400, foodPerDay: 900, flightBase: 16500, visaCost: 1500 },
+  'Dubai': { emoji: '🇦🇪', hotelPerNight: 5500, activityPerDay: 3200, foodPerDay: 2400, flightBase: 24000, visaCost: 5500 },
+  'Singapore': { emoji: '🇸🇬', hotelPerNight: 4200, activityPerDay: 2600, foodPerDay: 1600, flightBase: 20000, visaCost: 2500 },
+  'Bali': { emoji: '🇮🇩', hotelPerNight: 2800, activityPerDay: 1800, foodPerDay: 1000, flightBase: 26000, visaCost: 0 },
+  'Europe': { emoji: '🇪🇺', hotelPerNight: 7200, activityPerDay: 4000, foodPerDay: 2800, flightBase: 62000, visaCost: 6500 },
+  'Maldives': { emoji: '🇲🇻', hotelPerNight: 9500, activityPerDay: 4500, foodPerDay: 3200, flightBase: 18000, visaCost: 0 },
+  'Vietnam': { emoji: '🇻🇳', hotelPerNight: 2000, activityPerDay: 1200, foodPerDay: 800, flightBase: 21000, visaCost: 2000 },
+  'Sri Lanka': { emoji: '🇱🇰', hotelPerNight: 2400, activityPerDay: 1500, foodPerDay: 900, flightBase: 11000, visaCost: 0 },
+  'Varanasi': { emoji: '🙏', hotelPerNight: 1500, activityPerDay: 800, foodPerDay: 600, flightBase: 5500, visaCost: 0 },
+  'Goa': { emoji: '🏖️', hotelPerNight: 2200, activityPerDay: 1200, foodPerDay: 800, flightBase: 4500, visaCost: 0 },
+  'Kashmir': { emoji: '🏔️', hotelPerNight: 2000, activityPerDay: 1000, foodPerDay: 700, flightBase: 6500, visaCost: 0 },
 };
 
 const CITY_SUGGESTIONS: Record<string, string[]> = {
@@ -181,7 +181,7 @@ const LoanJourneyOrchestrator = ({
             const match = destKeys.find(d => d.toLowerCase() === customDestination.toLowerCase());
             setSelectedDestination(match || customDestination);
             if (!match) {
-              DESTINATIONS[customDestination] = { emoji: '🌍', perPersonPerDay: 7000, flightBase: 40000, visaCost: 4000 };
+              DESTINATIONS[customDestination] = { emoji: '🌍', hotelPerNight: 3500, activityPerDay: 2000, foodPerDay: 1200, flightBase: 38000, visaCost: 4000 };
               CITY_SUGGESTIONS[customDestination] = ['City Center', 'Old Town', 'Coastal Area', 'Mountain Region'];
             }
           }
@@ -358,17 +358,20 @@ const LoanJourneyOrchestrator = ({
     }, 2500);
   };
 
+  const roundTo = (n: number, nearest: number) => Math.round(n / nearest) * nearest;
+
   const buildTripDetails = (): TripDetails => {
     const dest = selectedDestination || 'Japan';
     const destData = DESTINATIONS[dest] || DESTINATIONS['Japan'];
-    const flightCost = destData.flightBase * travelerCount;
-    const dailyCost = destData.perPersonPerDay * travelerCount;
-    const hotelCost = Math.round(dailyCost * 0.4 * tripDays);
+    const flightCost = roundTo(destData.flightBase * travelerCount, 500);
+    const nights = Math.max(tripDays - 1, 1);
+    const hotelCost = roundTo(destData.hotelPerNight * travelerCount * nights * (selectedCities.length > 2 ? 1.1 : 1), 100);
     const hasLuxuryInterests = selectedInterests.some(i => ['Relaxation & Spa', 'Shopping', 'Nightlife'].includes(i));
     const interestMultiplier = hasLuxuryInterests ? 1.15 : 1;
+    const cityMultiplier = 1 + Math.min(selectedCities.length, 4) * 0.05;
     const notesMultiplier = additionalNotes.length > 0 ? 1.05 : 1;
-    const activityCost = Math.round(dailyCost * 0.25 * tripDays * (1 + selectedCities.length * 0.05) * interestMultiplier * notesMultiplier);
-    const foodCost = Math.round(dailyCost * 0.2 * tripDays * (selectedInterests.includes('Food & Cuisine') ? 1.1 : 1));
+    const activityCost = roundTo(destData.activityPerDay * travelerCount * tripDays * cityMultiplier * interestMultiplier * notesMultiplier, 100);
+    const foodCost = roundTo(destData.foodPerDay * travelerCount * tripDays * (selectedInterests.includes('Food & Cuisine') ? 1.15 : 1), 100);
     const visaCost = destData.visaCost * travelerCount;
     const totalCost = flightCost + hotelCost + activityCost + foodCost + visaCost;
 
@@ -576,7 +579,7 @@ const LoanJourneyOrchestrator = ({
                 const match = Object.keys(DESTINATIONS).find(d => d.toLowerCase() === customDestination.toLowerCase());
                 setSelectedDestination(match || customDestination);
                 if (!match) {
-                  DESTINATIONS[customDestination] = { emoji: '🌍', perPersonPerDay: 7000, flightBase: 40000, visaCost: 4000 };
+                  DESTINATIONS[customDestination] = { emoji: '🌍', hotelPerNight: 3500, activityPerDay: 2000, foodPerDay: 1200, flightBase: 38000, visaCost: 4000 };
                   CITY_SUGGESTIONS[customDestination] = ['City Center', 'Old Town', 'Coastal Area', 'Mountain Region'];
                 }
               }
