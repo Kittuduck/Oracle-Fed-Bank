@@ -369,7 +369,10 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
             return phrases.some(p => p.test(t));
         };
 
-        if (!loanJourneyActive && isTripRelated(text)) {
+        const tripMatch = isTripRelated(text);
+        if (tripMatch) {
+            setLoanJourneyActive(false);
+            loanJourneyRef.current = null;
             const userMsg: Message = { id: Date.now().toString(), role: 'user', content: text, text };
             setMessages(prev => [...prev, userMsg]);
             setInput('');
@@ -397,6 +400,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
                                     rate: loanData.rate,
                                     destination: loanData.destination
                                 });
+                                setTimeout(() => setLoanJourneyActive(false), 100);
                             }}
                             onDismiss={(savedOffer) => {
                                 setLoanJourneyActive(false);
