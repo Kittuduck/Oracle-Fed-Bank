@@ -80,6 +80,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
     const [loading, setLoading] = useState(false);
     const [isListening, setIsListening] = useState(false);
     const recognitionRef = useRef<any>(null);
+    const handleSendRef = useRef<(text?: string) => void>(() => {});
 
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [uploadStatus, setUploadStatus] = useState<'IDLE' | 'UPLOADING' | 'SUCCESS'>('IDLE');
@@ -274,7 +275,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
             }
             if (finalTranscript) {
                 setInput(finalTranscript);
-                setTimeout(() => handleSend(finalTranscript), 300);
+                setTimeout(() => handleSendRef.current(finalTranscript), 300);
             } else {
                 setInput(interimTranscript);
             }
@@ -360,15 +361,6 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
                                     rate: loanData.rate,
                                     destination: loanData.destination
                                 });
-                                const successMsg: Message = {
-                                    id: (Date.now() + 2).toString(),
-                                    role: 'model',
-                                    state: 'AUTONOMY',
-                                    text: `Loan of ${loanData.amount.toLocaleString('en-IN')} disbursed successfully.`,
-                                    content: <p className="text-xs">Your loan has been disbursed. EMI of ₹{loanData.emi.toLocaleString('en-IN')}/month starts from 5th April 2026.</p>,
-                                    actions: ['View My Loans', 'View Dashboard']
-                                };
-                                setMessages(prev => [...prev, successMsg]);
                             }}
                             onDismiss={() => {
                                 setLoanJourneyActive(false);
@@ -441,6 +433,8 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
             setLoading(false);
         }
     };
+
+    handleSendRef.current = handleSend;
 
     return (
         <div className="flex flex-col h-full w-full bg-white dark:bg-[#15161a] transition-colors relative">
