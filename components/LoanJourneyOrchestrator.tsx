@@ -139,6 +139,23 @@ const LoanJourneyOrchestrator = ({
   const processingFee = 999;
   const liquid = currentFinancials?.liquid || persona?.financials?.liquid || 1240500;
 
+  const wordToNum: Record<string, number> = {
+    one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
+    eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17,
+    eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, forty5: 45, 'forty five': 45,
+    'twenty one': 21, 'twenty five': 25, 'thirty five': 35
+  };
+
+  const parseSpokenNumber = (text: string): number | null => {
+    const digitMatch = text.match(/\b(\d+)\b/);
+    if (digitMatch) return parseInt(digitMatch[1]);
+    const lower = text.toLowerCase();
+    for (const [word, num] of Object.entries(wordToNum)) {
+      if (lower.includes(word)) return num;
+    }
+    return null;
+  };
+
   const fuzzyMatch = (transcript: string, target: string): boolean => {
     const t = transcript.toLowerCase().replace(/[^a-z0-9\s]/g, '');
     const tgt = target.toLowerCase().replace(/[^a-z0-9\s]/g, '');
@@ -178,16 +195,23 @@ const LoanJourneyOrchestrator = ({
       }
 
       if (phase === 'INTAKE' && intakeStep === 'TRAVELERS') {
-        const numMatch = t.match(/(\d+)\s*(people|person|traveler|traveller|member|of us)/i) || t.match(/\b(\d+)\b/);
-        if (numMatch) {
-          const n = Math.min(10, Math.max(1, parseInt(numMatch[1])));
+        const hasPeopleContext = /people|person|traveler|traveller|member|of us|passenger/i.test(t);
+        const hasDayContext = /day|days|night|nights/i.test(t);
+        const spokenNum = parseSpokenNumber(t);
+
+        if (hasDayContext && spokenNum !== null) {
+          const d = Math.min(45, Math.max(3, spokenNum));
+          setTripDays(d);
+          return true;
+        }
+        if (hasPeopleContext && spokenNum !== null) {
+          const n = Math.min(10, Math.max(1, spokenNum));
           setTravelerCount(n);
           return true;
         }
-        const dayMatch = t.match(/(\d+)\s*(day|night)/i);
-        if (dayMatch) {
-          const d = Math.min(45, Math.max(3, parseInt(dayMatch[1])));
-          setTripDays(d);
+        if (spokenNum !== null && !hasDayContext) {
+          const n = Math.min(10, Math.max(1, spokenNum));
+          setTravelerCount(n);
           return true;
         }
         if (/continue|next|go ahead|looks good|confirm/i.test(t)) {
