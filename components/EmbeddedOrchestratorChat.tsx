@@ -366,7 +366,6 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
                             currentFinancials={currentFinancials}
                             onNavigate={onNavigate}
                             onComplete={(loanData) => {
-                                setLoanJourneyActive(false);
                                 onLoanDisbursed?.({
                                     amount: loanData.amount,
                                     emi: loanData.emi,
@@ -379,16 +378,16 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
                                 setLoanJourneyActive(false);
                                 if (savedOffer) {
                                     onSaveLoanOffer?.(savedOffer);
+                                    const dismissMsg: Message = {
+                                        id: (Date.now() + 3).toString(),
+                                        role: 'model',
+                                        state: 'GUIDANCE',
+                                        text: "No problem! This offer is saved in your 'Discover' section on the dashboard. Tap on it anytime to resume.",
+                                        content: <p>No problem! This offer is saved in your <strong>'Discover'</strong> section on the dashboard. Tap on it anytime to resume.</p>,
+                                        actions: ['View Dashboard', 'Track Goals']
+                                    };
+                                    setMessages(prev => [...prev, dismissMsg]);
                                 }
-                                const dismissMsg: Message = {
-                                    id: (Date.now() + 3).toString(),
-                                    role: 'model',
-                                    state: 'GUIDANCE',
-                                    text: "No problem! This offer is saved in your 'Discover' section on the dashboard. Tap on it anytime to resume.",
-                                    content: <p>No problem! This offer is saved in your <strong>'Discover'</strong> section on the dashboard. Tap on it anytime to resume.</p>,
-                                    actions: ['View Dashboard', 'Track Goals']
-                                };
-                                setMessages(prev => [...prev, dismissMsg]);
                             }}
                         />
                     )
