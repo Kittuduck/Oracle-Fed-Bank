@@ -242,6 +242,13 @@ const LoanJourneyOrchestrator = ({
         if (matched) return true;
       }
 
+      if (phase === 'GAP_ANALYSIS') {
+        if (/bridge|gap|loan|fund|finance|proceed|let.*go/i.test(t)) {
+          setPhase('PRE_APPROVED');
+          return true;
+        }
+      }
+
       if (phase === 'PRE_APPROVED') {
         if (/custom|customise|customize|loan|proceed|accept/i.test(t)) {
           if (!cibilConsent) setCibilConsent(true);
@@ -275,6 +282,29 @@ const LoanJourneyOrchestrator = ({
         if (complianceStep === 'TERMS' && /accept|agree|terms|proceed/i.test(t)) {
           setTermsAccepted(true);
           setComplianceStep('AADHAAR');
+          return true;
+        }
+        if (complianceStep === 'AADHAAR' && /send|otp|secure|aadhaar|aadhar|verify|sign/i.test(t) && !otpSent) {
+          sendOtp();
+          return true;
+        }
+        if (complianceStep === 'ENACH' && /confirm|mandate|disburse|authorize|nach|proceed/i.test(t)) {
+          setEnachConfirmed(true);
+          setPhase('DISBURSEMENT');
+          completeDisbursement();
+          return true;
+        }
+      }
+
+      if (phase === 'DISBURSEMENT') {
+        if (/track.*loan|view.*loan|my loan|loan/i.test(t)) {
+          onDismiss();
+          onNavigate?.('LOANS');
+          return true;
+        }
+        if (/dashboard|go.*dashboard|home|go.*home/i.test(t)) {
+          onDismiss();
+          onNavigate?.('DASHBOARD');
           return true;
         }
       }
