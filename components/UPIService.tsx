@@ -352,22 +352,24 @@ const UPIService: React.FC<UPIServiceProps> = ({ onBack, currentBalance, isDarkM
         <div className={`min-h-screen transition-all duration-700 font-sans flex flex-col pt-safe overflow-hidden ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             {/* Header */}
             <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-xl sticky top-0 z-50">
-                <button
-                    onClick={view === 'LANDING' ? onBack : () => setView('LANDING')}
-                    className="p-2 -ml-2 text-zinc-400 hover:text-federalblue-900 transition-colors"
-                >
-                    <ArrowLeft className="w-6 h-6" />
-                </button>
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-                        <Smartphone className="w-5 h-5 text-white" />
+                <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
+                    <button
+                        onClick={view === 'LANDING' ? onBack : () => setView('LANDING')}
+                        className="p-2 -ml-2 text-zinc-400 hover:text-federalblue-900 transition-colors"
+                    >
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
+                            <Smartphone className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="text-sm font-bold tracking-widest uppercase">Federal UPI</span>
                     </div>
-                    <span className="text-sm font-bold tracking-widest uppercase">Federal UPI</span>
+                    <div className="w-10"></div>
                 </div>
-                <div className="w-10"></div>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto max-w-4xl mx-auto w-full">
                 {view === 'LANDING' && renderLanding()}
                 {view === 'CREATE_ID' && renderCreateId()}
                 {view === 'PAY_ID' && renderPayId()}

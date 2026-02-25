@@ -75,17 +75,19 @@ const CardManagement: React.FC<CardManagementProps> = ({ onBack }) => {
     return (
         <div className="min-h-screen bg-slate-50 text-[#333333] font-sans flex flex-col pb-safe">
             <div className="px-6 py-4 flex items-center justify-between border-b border-white bg-white/50 backdrop-blur-md sticky top-0 z-20">
-                <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-federalblue-900 transition-colors">
-                    <ArrowLeft className="w-6 h-6" />
-                </button>
-                <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Card Management</h2>
-                <div className="p-2">
-                    <Settings className="w-5 h-5 text-slate-400" />
+                <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
+                    <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-federalblue-900 transition-colors">
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Card Management</h2>
+                    <div className="p-2">
+                        <Settings className="w-5 h-5 text-slate-400" />
+                    </div>
                 </div>
             </div>
 
             <div className="flex-1 overflow-y-auto">
-                <div className="px-6 py-8 space-y-6">
+                <div className="px-6 py-8 space-y-6 max-w-4xl mx-auto">
                     <div className="relative h-56 w-full">
                         {cards.map((card, idx) => (
                             <div

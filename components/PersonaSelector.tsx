@@ -47,7 +47,7 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({ personas, onSelect, i
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center px-6 py-12 max-w-md mx-auto w-full">
+      <div className="flex-1 flex flex-col justify-center px-6 py-12 max-w-md md:max-w-2xl lg:max-w-3xl mx-auto w-full">
         <div className="text-center mb-12">
           <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#f37021] to-[#FFD740] flex items-center justify-center mx-auto mb-6 shadow-lg shadow-orange-500/20">
             <Sparkles className="w-8 h-8 text-white" />
@@ -63,7 +63,7 @@ const PersonaSelector: React.FC<PersonaSelectorProps> = ({ personas, onSelect, i
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
           {personas.map((persona) => {
             const IconComponent = personaIcons[persona.id] || Briefcase;
             const gradient = personaGradients[persona.id] || 'from-slate-700 to-slate-900';

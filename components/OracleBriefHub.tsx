@@ -29,9 +29,9 @@ interface OracleBriefHubProps {
 const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, onAction, currentFinancials, persona }) => {
     return (
         <div className={`flex flex-col h-full bg-white dark:bg-[#0b0c10] transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
-            <div className="p-6 space-y-8 overflow-y-auto">
+            <div className="p-6 space-y-8 overflow-y-auto max-w-4xl mx-auto">
                 {/* --- Hero: Safe to Spend --- */}
-                <div className="p-6 bg-gradient-to-br from-federalblue-900 via-[#003a80] to-[#011a41] rounded-[2.5rem] text-white shadow-hero relative overflow-hidden">
+                <div className="p-6 md:p-8 bg-gradient-to-br from-federalblue-900 via-[#003a80] to-[#011a41] rounded-[2.5rem] text-white shadow-hero relative overflow-hidden md:max-w-2xl">
                     <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-[60px] -mr-10 -mt-10"></div>
                     <div className="relative z-10 flex flex-col gap-4">
                         <div className="flex justify-between items-start">
@@ -55,6 +55,7 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                         <h3 className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em] ml-2">
                             Oracle Briefs for {persona.name}
                         </h3>
+                        <div className="space-y-3 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
                         {persona.oracleBriefs.map((brief) => (
                             <div
                                 key={brief.id}
@@ -91,11 +92,12 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                                 )}
                             </div>
                         ))}
+                        </div>
                     </div>
                 )}
 
                 {/* --- Predictive Prompt Top --- */}
-                <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-[2.5rem] border border-slate-100 dark:border-zinc-800 text-center space-y-4 shadow-sm animate-in slide-in-from-top-4">
+                <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-[2.5rem] border border-slate-100 dark:border-zinc-800 text-center space-y-4 shadow-sm animate-in slide-in-from-top-4 md:max-w-lg">
                     <div className="space-y-1">
                         <h4 className="text-sm font-bold text-federalblue-900 dark:text-white">Ask Oracle Anything</h4>
                         <p className="text-[10px] text-slate-500 dark:text-zinc-400">Type "Can I afford a trip to Bali?" or track expenses.</p>
@@ -108,10 +110,10 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                 </div>
 
                 {/* --- Predictive Chart Section --- */}
-                < PredictiveChart isDarkMode={isDarkMode} />
+                <PredictiveChart isDarkMode={isDarkMode} />
 
                 {/* --- Performance Section --- */}
-                < div className="grid grid-cols-2 gap-4" >
+                <div className="grid grid-cols-2 gap-4">
                     <div className="p-5 glass-card rounded-3xl border border-slate-100 dark:border-zinc-800 space-y-3">
                         <div className="flex justify-between items-start">
                             <div className="p-2 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 rounded-xl">
@@ -126,7 +128,7 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                     </div>
                     <div className="p-5 glass-card rounded-3xl border border-slate-100 dark:border-zinc-800 space-y-3">
                         <div className="flex justify-between items-start">
-                            <div className="p-2 bg- federalgold-50 dark:bg-federalgold-950/40 text-federalgold-600 rounded-xl">
+                            <div className="p-2 bg-federalgold-50 dark:bg-federalgold-950/40 text-federalgold-600 rounded-xl">
                                 <ArrowDownRight className="w-4 h-4" />
                             </div>
                             <span className="text-[10px] font-bold text-federalgold-500">-8.2%</span>
@@ -136,10 +138,10 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                             <h4 className="text-lg font-bold text-federalblue-900 dark:text-white">Spending</h4>
                         </div>
                     </div>
-                </div >
+                </div>
 
                 {/* --- AI Insight: Anomaly Detected --- */}
-                < div className="p-6 bg-amber-50 dark:bg-amber-950/20 rounded-[2rem] border border-amber-100 dark:border-amber-900/30 space-y-4" >
+                <div className="p-6 bg-amber-50 dark:bg-amber-950/20 rounded-[2rem] border border-amber-100 dark:border-amber-900/30 space-y-4">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 flex items-center justify-center">
                             <AlertTriangle className="w-5 h-5" />
@@ -156,10 +158,10 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                         <button onClick={() => onAction('Investigate')} className="flex-1 py-3 bg-amber-600 text-white rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-amber-200 dark:shadow-none">Investigate</button>
                         <button onClick={() => onAction('Dismiss')} className="flex-1 py-3 bg-white dark:bg-zinc-900 text-amber-600 border border-amber-200 dark:border-amber-800/50 rounded-xl text-[10px] font-bold uppercase tracking-widest">Mark Safe</button>
                     </div>
-                </div >
+                </div>
 
                 {/* --- AI Subscription Manager --- */}
-                < div className="space-y-4" >
+                <div className="space-y-4">
                     <div className="flex justify-between items-end px-2">
                         <h3 className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Subscription Optimizer</h3>
                         <Layers className="w-3.5 h-3.5 text-slate-400" />
@@ -185,10 +187,10 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                             </button>
                         </div>
                     </div>
-                </div >
+                </div>
 
                 {/* --- Automation Quick Link --- */}
-                < div
+                <div
                     onClick={() => onAction('Automation')}
                     className="p-6 bg-federalblue-900 dark:bg-federalblue-900/20 rounded-[2rem] text-white cursor-pointer group spatial-hover"
                 >
@@ -206,11 +208,11 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                             <ArrowRight className="w-5 h-5" />
                         </div>
                     </div>
-                </div >
+                </div>
 
 
-            </div >
-        </div >
+            </div>
+        </div>
     );
 };
 

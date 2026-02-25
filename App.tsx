@@ -395,32 +395,34 @@ const App: React.FC = () => {
 
         if (view === 'ORACLE') {
             return (
-                <div className="fixed inset-0 z-[50] w-full max-w-md mx-auto bg-white dark:bg-[#15161a] transition-colors duration-300 shadow-2xl overflow-hidden shadow-apple-lg border-x-2 border-slate-800 flex flex-col">
+                <div className="fixed inset-0 z-[50] w-full max-w-md md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto bg-white dark:bg-[#15161a] transition-colors duration-300 shadow-2xl overflow-hidden shadow-apple-lg md:border-x md:border-slate-200 md:dark:border-slate-800 flex flex-col">
                     <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#15161a]/95 backdrop-blur-md shrink-0 py-4 px-6 flex justify-between items-center relative z-10 transition-colors">
-                        <div className="flex items-center gap-3">
-                            <button
-                                onClick={() => setView('DASHBOARD')}
-                                className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 dark:hover:text-white rounded-full transition-all active:scale-95"
-                            >
-                                <ArrowLeft className="w-5 h-5" />
-                            </button>
-                            <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-tr from-federalblue-900 to-federalblue-700 text-white shadow-md">
-                                <Sparkles className="w-4 h-4" />
-                            </div>
-                            <div>
-                                <h1 className="font-semibold text-sm tracking-tight text-federalblue-900 dark:text-white leading-none">Oracle AI</h1>
-                                <div className="flex items-center gap-1.5 mt-1">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
-                                    <p className="text-[10px] text-slate-500 font-medium tracking-tight">Agentic Mode Active</p>
+                        <div className="max-w-4xl mx-auto w-full flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => setView('DASHBOARD')}
+                                    className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 dark:hover:text-white rounded-full transition-all active:scale-95"
+                                >
+                                    <ArrowLeft className="w-5 h-5" />
+                                </button>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-tr from-federalblue-900 to-federalblue-700 text-white shadow-md">
+                                    <Sparkles className="w-4 h-4" />
+                                </div>
+                                <div>
+                                    <h1 className="font-semibold text-sm tracking-tight text-federalblue-900 dark:text-white leading-none">Oracle AI</h1>
+                                    <div className="flex items-center gap-1.5 mt-1">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
+                                        <p className="text-[10px] text-slate-500 font-medium tracking-tight">Agentic Mode Active</p>
+                                    </div>
                                 </div>
                             </div>
+                            <button
+                                onClick={toggleTheme}
+                                className="p-2 text-slate-500 hover:text-federalblue-900 dark:hover:text-white transition-colors active:scale-95"
+                            >
+                                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                            </button>
                         </div>
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 text-slate-500 hover:text-federalblue-900 dark:hover:text-white transition-colors active:scale-95"
-                        >
-                            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                        </button>
                     </nav>
 
                     <div className="flex-1 min-h-0 relative z-0 flex flex-col">
@@ -448,7 +450,7 @@ const App: React.FC = () => {
 
         if (view === 'ORACLE_HUB') {
             return (
-                <div className="fixed inset-0 z-[40] w-full max-w-md mx-auto bg-white dark:bg-[#0b0c10] flex flex-col transition-colors duration-300 pb-20 border-x-2 border-slate-800 shadow-2xl overflow-hidden">
+                <div className="fixed inset-0 z-[40] w-full max-w-md md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto bg-white dark:bg-[#0b0c10] flex flex-col transition-colors duration-300 pb-20 md:border-x md:border-slate-200 md:dark:border-slate-800 shadow-2xl overflow-hidden">
                     <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#0b0c10]/95 backdrop-blur-md sticky top-0 z-50 shrink-0">
                         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
                             <div className="flex items-center gap-4">
@@ -502,7 +504,7 @@ const App: React.FC = () => {
 
         if (view === 'AUTOMATION_HUB') {
             return (
-                <div className="fixed inset-0 z-[40] w-full max-w-md mx-auto overflow-hidden">
+                <div className="fixed inset-0 z-[40] w-full max-w-md md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto overflow-hidden">
                     <AutomationHub
                         isDarkMode={isDarkMode}
                         onBack={() => setView('ORACLE_HUB')}
@@ -584,7 +586,7 @@ const App: React.FC = () => {
 
     return (
         <div className={`h-full ${isDarkMode ? 'dark' : ''} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''} bg-gray-50 dark:bg-gray-900 flex justify-center min-h-screen`}>
-            <div className="w-full max-w-md h-full min-h-screen bg-white dark:bg-zinc-950 border-2 border-slate-800 shadow-2xl relative overflow-hidden">
+            <div className="w-full max-w-md md:max-w-3xl lg:max-w-5xl xl:max-w-7xl h-full min-h-screen bg-white dark:bg-zinc-950 md:border-x md:border-slate-200 md:dark:border-slate-800 md:shadow-2xl relative overflow-hidden">
                 {renderContent()}
                 {(view !== 'PERSONA_SELECT' && view !== 'ONBOARDING' && view !== 'PAYMENTS' && view !== 'CARDS' && view !== 'SUPPORT' && view !== 'INVESTMENTS' && view !== 'LOANS' && view !== 'CARD_APPLY' && view !== 'NICHE_LOANS' && view !== 'LEGACY_SERVICES' && view !== 'ORACLE') && (
                     <BottomNav

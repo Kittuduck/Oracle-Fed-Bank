@@ -47,11 +47,13 @@ const SupportService: React.FC<SupportServiceProps> = ({ onBack, isDarkMode, fes
 
     const renderHeader = (title: string) => (
         <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 sticky top-0 z-20 transition-colors">
-            <button onClick={view === 'IDLE' ? onBack : () => setView('IDLE')} className="p-2 -ml-2 text-slate-400 hover:text-federalblue-900 transition-colors">
-                <ArrowLeft className="w-6 h-6" />
-            </button>
-            <h2 className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">{title}</h2>
-            <div className="w-10"></div>
+            <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
+                <button onClick={view === 'IDLE' ? onBack : () => setView('IDLE')} className="p-2 -ml-2 text-slate-400 hover:text-federalblue-900 transition-colors">
+                    <ArrowLeft className="w-6 h-6" />
+                </button>
+                <h2 className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">{title}</h2>
+                <div className="w-10"></div>
+            </div>
         </div>
     );
 
