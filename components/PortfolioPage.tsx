@@ -321,17 +321,17 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
                             <div className="relative z-10 flex flex-col justify-between h-full">
                                 <div className="flex justify-between items-start mb-4 sm:mb-6 gap-2">
                                     <div className="min-w-0 flex-1">
-                                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Total Portfolio Value</p>
-                                        <h2 className="text-2xl sm:text-4xl font-light text-[#333333] dark:text-white tracking-tight truncate">
-                                            {pData.displayValue}<span className="text-slate-400 text-lg sm:text-2xl">.00</span>
+                                        <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">Total Portfolio Value</p>
+                                        <h2 className="text-xl sm:text-4xl font-light text-[#333333] dark:text-white tracking-tight">
+                                            {pData.displayValue}<span className="text-slate-400 text-sm sm:text-2xl">.00</span>
                                         </h2>
                                     </div>
                                     <div className="flex flex-col items-end flex-shrink-0">
-                                        <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 sm:px-2.5 py-1 rounded-md text-xs sm:text-sm font-bold">
+                                        <span className="flex items-center gap-1 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 sm:px-2.5 py-1 rounded-md text-[10px] sm:text-sm font-bold">
                                             <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" />
                                             +{portfolioSummary.returnsPercentage}%
                                         </span>
-                                        <span className="text-[10px] sm:text-xs text-slate-500 mt-1.5">All Time Returns</span>
+                                        <span className="text-[9px] sm:text-xs text-slate-500 mt-1.5">All Time Returns</span>
                                     </div>
                                 </div>
 
