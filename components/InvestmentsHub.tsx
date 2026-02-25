@@ -70,7 +70,7 @@ const InvestmentsHub: React.FC<InvestmentsHubProps> = ({ onBack, onBookFD, onVie
 
                         <div className="space-y-3">
                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Tenure (Months)</label>
-                            <div className="grid grid-cols-4 gap-2">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                                 {fdRates.map((item) => (
                                     <button
                                         key={item.months}

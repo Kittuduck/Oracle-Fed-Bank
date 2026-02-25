@@ -40,8 +40,8 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                             </span>
                             <span className="px-2 py-1 bg-white/20 rounded text-[9px] font-bold uppercase tracking-wider backdrop-blur-md">Updated Just Now</span>
                         </div>
-                        <h2 className="text-4xl font-light tabular-nums tracking-tighter">
-                            ₹{persona ? persona.financials.safeToSpend.toLocaleString('en-IN') : '68,540'} <span className="text-sm font-medium text-white/60">left this month</span>
+                        <h2 className="text-2xl sm:text-4xl font-light tabular-nums tracking-tighter">
+                            ₹{persona ? persona.financials.safeToSpend.toLocaleString('en-IN') : '68,540'} <span className="text-xs sm:text-sm font-medium text-white/60">left this month</span>
                         </h2>
                         {persona && (
                             <p className="text-[10px] text-white/50">{persona.name}'s {persona.role} Dashboard</p>

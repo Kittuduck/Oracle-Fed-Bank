@@ -499,7 +499,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             <div className="space-y-2 group cursor-pointer" onClick={() => handleCopy('4321 5432 9876 8921', 'Card Number')}>
                                 <p className="text-[10px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">Card Number</p>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-2xl font-light text-slate-900 dark:text-white tracking-[0.1em] tabular-nums">4321 5432 9876 8921</p>
+                                    <p className="text-lg sm:text-2xl font-light text-slate-900 dark:text-white tracking-[0.05em] sm:tracking-[0.1em] tabular-nums">4321 5432 9876 8921</p>
                                     <div className="flex items-center gap-2">
                                         {copied === 'Card Number' && <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Copied!</span>}
                                         <Smartphone className="w-4 h-4 text-slate-300 dark:text-white/20 group-hover:text-slate-600 dark:group-hover:text-white transition-colors" />
