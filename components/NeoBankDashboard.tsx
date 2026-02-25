@@ -178,9 +178,9 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                 </div>
             </div>
 
-            <div className="px-6 space-y-10 max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto pt-4">
+            <div className="px-6 space-y-10 max-w-md mx-auto pt-4">
                 {/* --- Hero: The Titanium Balance Card --- */}
-                <div className="relative group cursor-pointer md:max-w-lg" onClick={() => setShowCardDetails(true)}>
+                <div className="relative group cursor-pointer" onClick={() => setShowCardDetails(true)}>
                     <div className="absolute -inset-1 bg-gradient-to-r from-federalblue-600 via-federalgold-500/30 to-federalblue-900 rounded-[2.5rem] blur-2xl opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                     <div className="relative aspect-[1.618/1] w-full rounded-[2rem] bg-gradient-to-br from-[#001d3d] via-federalblue-900 to-[#003566] px-8 py-7 flex flex-col justify-center shadow-hero overflow-hidden border border-white/10 transition-all duration-500 active:scale-[0.98]">
                         <div className="absolute top-0 right-0 w-72 h-72 bg-federalgold-500/15 rounded-full blur-[80px] -mr-16 -mt-16"></div>
@@ -216,9 +216,9 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                     onClick={() => {
                         onNavigate('ORACLE');
                     }}
-                    className="relative z-20 -mt-8 mb-4 px-6 flex justify-center md:justify-start cursor-pointer group/search"
+                    className="relative z-20 -mt-8 mb-4 px-6 flex justify-center cursor-pointer group/search"
                 >
-                    <div className="w-full max-w-sm md:max-w-md glass-card rounded-full p-1 pl-4 flex items-center justify-between shadow-oracle border border-federalgold-500/30 group-hover/search:scale-[1.02] transition-transform duration-300 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl">
+                    <div className="w-full max-w-sm glass-card rounded-full p-1 pl-4 flex items-center justify-between shadow-oracle border border-federalgold-500/30 group-hover/search:scale-[1.02] transition-transform duration-300 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl">
                         <div className="flex items-center gap-3">
                             <Sparkles className="w-4 h-4 text-federalgold-500 animate-pulse" />
                             <span className="text-sm font-medium text-slate-500 dark:text-zinc-500">Ask Oracle anything...</span>
@@ -230,7 +230,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                 </div>
 
                 {/* --- Quick Action Glass Pill (The floating bar) --- */}
-                <div className="relative md:max-w-2xl">
+                <div className="relative">
                     <div className="glass-card rounded-[2rem] p-3 flex items-center justify-between shadow-apple-lg border-t-white/90 dark:border-t-white/10 transform -translate-y-6">
                         {(persona ? persona.quickActions.map(qa => ({
                             icon: iconMap[qa.icon] || Send,
@@ -274,10 +274,10 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none tracking-tight">Discover</h3>
                         </div>
 
-                        <div className="flex gap-4 overflow-x-auto pb-2 -mx-2 px-2 snap-x snap-mandatory sleek-scroll md:flex-wrap md:overflow-x-visible md:snap-none">
+                        <div className="flex gap-4 overflow-x-auto pb-2 -mx-2 px-2 snap-x snap-mandatory sleek-scroll">
                             {savedLoanOffer && (
                                 <div
-                                    className="min-w-[220px] md:min-w-0 md:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] snap-center p-4 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 text-white shadow-lg relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform border border-white/15"
+                                    className="min-w-[220px] snap-center p-4 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 text-white shadow-lg relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform border border-white/15"
                                     onClick={() => onResumeLoanOffer?.()}
                                 >
                                     <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-[30px] -mr-8 -mt-8"></div>
@@ -293,7 +293,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             {persona.discoverCards.map((card, i) => (
                                 <div
                                     key={i}
-                                    className={`min-w-[200px] md:min-w-0 md:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)] snap-center p-4 rounded-2xl bg-gradient-to-br ${card.color} text-white shadow-lg relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform backdrop-blur-md bg-opacity-80 border border-white/15`}
+                                    className={`min-w-[200px] snap-center p-4 rounded-2xl bg-gradient-to-br ${card.color} text-white shadow-lg relative overflow-hidden cursor-pointer active:scale-[0.98] transition-transform backdrop-blur-md bg-opacity-80 border border-white/15`}
                                     onClick={() => card.navigateTo && onNavigate(card.navigateTo)}
                                 >
                                     <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full blur-[30px] -mr-8 -mt-8"></div>
@@ -321,7 +321,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             </div>
                             <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none">Oracle Daily Brief</h3>
                         </div>
-                        <div className="space-y-3 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-4 md:space-y-0">
+                        <div className="space-y-3">
                             {persona.oracleBriefs.slice(0, 3).map((brief) => (
                                 <div
                                     key={brief.id}
@@ -361,7 +361,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                         <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none tracking-tight">Explore</h3>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+                    <div className="grid grid-cols-2 gap-5">
                         {[
                             { icon: Zap, label: 'Loans', desc: 'Asset Backed', color: 'text-orange-500', bg: 'bg-orange-50', onClick: onOpenLoans },
                             { icon: TrendingUp, label: 'Wealth', desc: 'Yield Engine', color: 'text-indigo-600', bg: 'bg-indigo-50', onClick: onOpenInvestments },
@@ -407,7 +407,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                 )}
 
                 {activeLoan && (
-                    <div className="space-y-4 pt-2 md:max-w-2xl">
+                    <div className="space-y-4 pt-2">
                         <div className="flex justify-between items-center px-1">
                             <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 leading-none tracking-tight">Active Loan</h3>
                             <button

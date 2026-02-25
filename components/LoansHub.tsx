@@ -53,15 +53,13 @@ const LoansHub: React.FC<LoansHubProps> = ({ onBack, onApplyLoan, isDarkMode, fe
         return (
             <div className={`min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} flex flex-col font-sans`}>
                 <div className={`px-6 py-4 flex items-center gap-4 border-b sticky top-0 z-10 ${isDarkMode ? 'bg-zinc-950/90 border-zinc-800 backdrop-blur-md' : 'bg-white border-slate-100'}`}>
-                    <div className="max-w-4xl mx-auto w-full flex items-center gap-4">
-                        <button onClick={() => setView('MAIN')} className={`p-2 -ml-2 ${isDarkMode ? 'text-zinc-500 hover:text-white' : 'text-slate-400 hover:text-federalblue-900'} transition-colors`}>
-                            <ArrowLeft className="w-6 h-6" />
-                        </button>
-                        <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">{activeLoan?.name} Application</h2>
-                    </div>
+                    <button onClick={() => setView('MAIN')} className={`p-2 -ml-2 ${isDarkMode ? 'text-zinc-500 hover:text-white' : 'text-slate-400 hover:text-federalblue-900'} transition-colors`}>
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">{activeLoan?.name} Application</h2>
                 </div>
 
-                <div className="flex-1 p-6 space-y-8 overflow-y-auto max-w-4xl mx-auto w-full">
+                <div className="flex-1 p-6 space-y-8 overflow-y-auto">
                     <div className="space-y-6">
                         <div className="space-y-3">
                             <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Required Amount</label>
@@ -175,15 +173,13 @@ const LoansHub: React.FC<LoansHubProps> = ({ onBack, onApplyLoan, isDarkMode, fe
     return (
         <div className={`min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-slate-50 text-[#333333]'} flex flex-col font-sans ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             <div className={`px-6 py-4 flex items-center gap-4 border-b sticky top-0 z-10 ${isDarkMode ? 'bg-zinc-950/90 border-zinc-800 backdrop-blur-md' : 'bg-white border-slate-100'}`}>
-                <div className="max-w-4xl mx-auto w-full flex items-center gap-4">
-                    <button onClick={onBack} className="p-2 -ml-2 text-slate-400">
-                        <ArrowLeft className="w-6 h-6" />
-                    </button>
-                    <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Loans & Credit</h2>
-                </div>
+                <button onClick={onBack} className="p-2 -ml-2 text-slate-400">
+                    <ArrowLeft className="w-6 h-6" />
+                </button>
+                <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Loans & Credit</h2>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-8 max-w-4xl mx-auto w-full">
+            <div className="flex-1 overflow-y-auto p-6 space-y-8">
                 <div className="bg-federalblue-900 rounded-3xl p-6 text-white space-y-6 shadow-xl relative overflow-hidden">
                     <div className="relative z-10 space-y-4">
                         <div className="flex justify-between items-start">

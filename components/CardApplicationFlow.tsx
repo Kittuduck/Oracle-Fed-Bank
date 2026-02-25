@@ -73,15 +73,13 @@ const CardApplicationFlow: React.FC<CardApplicationFlowProps> = ({ onBack, onApp
         return (
             <div className={`min-h-screen flex flex-col font-sans transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-slate-50 text-[#333333]'}`}>
                 <div className="px-6 py-4 flex items-center gap-4 bg-white dark:bg-zinc-950 border-b border-slate-100 dark:border-zinc-800">
-                    <div className="max-w-4xl mx-auto w-full flex items-center gap-4">
-                        <button onClick={onBack} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500">
-                            <ArrowLeft className="w-6 h-6" />
-                        </button>
-                        <h2 className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">Recommended For You</h2>
-                    </div>
+                    <button onClick={onBack} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500">
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <h2 className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">Recommended For You</h2>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-6 space-y-8 max-w-4xl mx-auto w-full">
+                <div className="flex-1 overflow-y-auto p-6 space-y-8">
                     {/* Card Reveal Animation */}
                     <div className={`aspect-[1.58/1] w-full rounded-2xl p-6 shadow-2xl relative overflow-hidden transition-all duration-1000 transform animate-in slide-in-from-bottom-12 fade-in ${getCardStyles(recommendation.cardCode)}`}>
                         <div className="flex justify-between items-start">
@@ -171,21 +169,19 @@ const CardApplicationFlow: React.FC<CardApplicationFlowProps> = ({ onBack, onApp
             <div className={`min-h-screen transition-all duration-700 font-sans flex flex-col pt-safe ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
                 {/* Header */}
                 <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800">
-                    <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
-                        <button onClick={onBack} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500 hover:text-federalblue-900 transition-colors">
-                            <ArrowLeft className="w-6 h-6" />
-                        </button>
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-federalblue-900 dark:bg-zinc-100 flex items-center justify-center">
-                                <CreditCard className="w-5 h-5 text-white dark:text-zinc-950" />
-                            </div>
-                            <span className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">Card Application</span>
+                    <button onClick={onBack} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500 hover:text-federalblue-900 transition-colors">
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-federalblue-900 dark:bg-zinc-100 flex items-center justify-center">
+                            <CreditCard className="w-5 h-5 text-white dark:text-zinc-950" />
                         </div>
-                        <div className="w-10"></div>
+                        <span className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">Card Application</span>
                     </div>
+                    <div className="w-10"></div>
                 </div>
 
-                <div className="flex-1 p-6 space-y-8 max-w-4xl mx-auto w-full">
+                <div className="flex-1 p-6 space-y-8">
                     <div className="space-y-2">
                         <h1 className="text-2xl font-bold text-federalblue-900 dark:text-zinc-100">Almost there, Jane</h1>
                         <p className="text-sm text-slate-500 dark:text-zinc-400">Just verify your mobile and office details.</p>

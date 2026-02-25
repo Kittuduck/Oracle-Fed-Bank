@@ -40,16 +40,14 @@ const InvestmentsHub: React.FC<InvestmentsHubProps> = ({ onBack, onBookFD, onVie
         return (
             <div className={`min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} flex flex-col font-sans`}>
                 <div className={`px-6 py-4 flex items-center justify-between border-b sticky top-0 z-10 ${isDarkMode ? 'bg-zinc-950/90 border-zinc-800 backdrop-blur-md' : 'bg-white border-slate-100'}`}>
-                    <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
-                        <button onClick={() => setView('MAIN')} className="p-2 -ml-2 text-slate-400">
-                            <ArrowLeft className="w-6 h-6" />
-                        </button>
-                        <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Book Fixed Deposit</h2>
-                        <div className="w-10" />
-                    </div>
+                    <button onClick={() => setView('MAIN')} className="p-2 -ml-2 text-slate-400">
+                        <ArrowLeft className="w-6 h-6" />
+                    </button>
+                    <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Book Fixed Deposit</h2>
+                    <div className="w-10" />
                 </div>
 
-                <div className="flex-1 p-6 space-y-8 overflow-y-auto max-w-4xl mx-auto w-full">
+                <div className="flex-1 p-6 space-y-8 overflow-y-auto">
                     <div className="bg-federalblue-900 rounded-3xl p-6 text-white space-y-4 shadow-xl">
                         <span className="text-[10px] font-bold opacity-60 uppercase tracking-widest">Available Balance</span>
                         <h3 className="text-3xl font-bold">₹{currentBalance.toLocaleString()}</h3>
@@ -155,15 +153,13 @@ const InvestmentsHub: React.FC<InvestmentsHubProps> = ({ onBack, onBookFD, onVie
     return (
         <div className={`min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-slate-50 text-[#333333]'} flex flex-col font-sans ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             <div className={`px-6 py-4 flex items-center gap-4 border-b sticky top-0 z-10 ${isDarkMode ? 'bg-zinc-950/90 border-zinc-800 backdrop-blur-md' : 'bg-white border-slate-100'}`}>
-                <div className="max-w-4xl mx-auto w-full flex items-center gap-4">
-                    <button onClick={onBack} className="p-2 -ml-2 text-slate-400">
-                        <ArrowLeft className="w-6 h-6" />
-                    </button>
-                    <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Investments & Wealth</h2>
-                </div>
+                <button onClick={onBack} className="p-2 -ml-2 text-slate-400">
+                    <ArrowLeft className="w-6 h-6" />
+                </button>
+                <h2 className="text-sm font-bold text-federalblue-900 uppercase tracking-widest">Investments & Wealth</h2>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6 pb-32 space-y-8 max-w-4xl mx-auto w-full">
+            <div className="flex-1 overflow-y-auto p-6 pb-32 space-y-8">
                 {/* Wealth Overview Card */}
                 <div className="bg-white dark:bg-zinc-900 rounded-3xl p-6 shadow-federal border border-slate-100 dark:border-zinc-800 space-y-6">
                     <div className="flex justify-between items-center">

@@ -33,23 +33,21 @@ const AutomationHub: React.FC<AutomationHubProps> = ({ isDarkMode, onBack }) => 
     return (
         <div className={`flex flex-col h-full bg-white dark:bg-[#0b0c10] transition-all duration-700 ${isDarkMode ? 'dark' : ''}`}>
             <nav className="p-6 flex justify-between items-center border-b border-slate-100 dark:border-zinc-800">
-                <div className="max-w-4xl mx-auto w-full flex justify-between items-center">
-                    <div className="flex items-center gap-4">
-                        <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full transition-all">
-                            <ChevronRight className="w-5 h-5 rotate-180" />
-                        </button>
-                        <div>
-                            <h2 className="text-lg font-bold text-federalblue-900 dark:text-white">Automation Hub</h2>
-                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none">Powered by Oracle AI</p>
-                        </div>
-                    </div>
-                    <button className="p-2 text-slate-400 hover:text-federalblue-900 transition-colors">
-                        <Settings className="w-5 h-5" />
+                <div className="flex items-center gap-4">
+                    <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full transition-all">
+                        <ChevronRight className="w-5 h-5 rotate-180" />
                     </button>
+                    <div>
+                        <h2 className="text-lg font-bold text-federalblue-900 dark:text-white">Automation Hub</h2>
+                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest leading-none">Powered by Oracle AI</p>
+                    </div>
                 </div>
+                <button className="p-2 text-slate-400 hover:text-federalblue-900 transition-colors">
+                    <Settings className="w-5 h-5" />
+                </button>
             </nav>
 
-            <div className="flex-1 overflow-y-auto p-6 pb-32 space-y-8 max-w-4xl mx-auto w-full">
+            <div className="flex-1 overflow-y-auto p-6 pb-32 space-y-8">
                 {/* --- Hero: Efficiency Score --- */}
                 <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-indigo-900 to-federalblue-900 text-white shadow-xl relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-8 -mt-8"></div>

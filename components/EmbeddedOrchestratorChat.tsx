@@ -453,7 +453,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
 
     return (
         <div className="flex flex-col h-full w-full bg-white dark:bg-[#15161a] transition-colors relative">
-            <div className="flex-1 overflow-y-auto min-h-0 p-6 space-y-6 max-w-4xl mx-auto w-full" ref={scrollRef}>
+            <div className="flex-1 overflow-y-auto min-h-0 p-6 space-y-6" ref={scrollRef}>
                 {messages.map((msg) => (
                     <div key={msg.id} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                         <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${msg.role === 'user' ? 'bg-slate-200 dark:bg-slate-700' : 'bg-federalblue-900 dark:bg-federalblue-900/20 text-white dark:text-federalblue-400'
@@ -509,7 +509,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
             </div>
 
             <div className="shrink-0 p-4 bg-white dark:bg-[#15161a] border-t border-[#E0E0E0] dark:border-slate-800 sticky bottom-0 z-10">
-                <div className="relative flex items-center gap-2 max-w-4xl mx-auto">
+                <div className="relative flex items-center gap-2">
                     <button
                         onClick={startVoiceInput}
                         className={`flex items-center gap-1.5 px-3 py-2.5 rounded-lg text-xs font-semibold transition-all shrink-0 border ${

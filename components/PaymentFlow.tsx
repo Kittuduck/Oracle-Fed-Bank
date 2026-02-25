@@ -88,7 +88,6 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
 
     const renderHeader = () => (
         <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 sticky top-0 z-20">
-            <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
             <button onClick={step === 'IDLE' ? onBack : () => setStep('IDLE')} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500 hover:text-federalblue-900 dark:hover:text-white transition-colors">
                 <ArrowLeft className="w-6 h-6" />
             </button>
@@ -104,7 +103,6 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
                 ))}
             </div>
             <div className="w-10"></div>
-            </div>
         </div>
     );
 
@@ -230,7 +228,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
         <div className={`flex flex-col h-full min-h-screen bg-white dark:bg-zinc-950 ${isDarkMode ? 'dark' : ''} transition-all duration-700`}>
             {renderHeader()}
 
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8 max-w-4xl mx-auto w-full">
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8">
                 {tab === 'SEND' ? (
                     <>
                         <div className="space-y-4">

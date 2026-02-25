@@ -208,18 +208,16 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onExit, isD
         <div className={`min-h-screen transition-all duration-700 font-sans flex flex-col pt-safe ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             {/* Header */}
             <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800">
-                <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
-                    <button onClick={onExit} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500 hover:text-federalblue-900 transition-colors">
-                        <ArrowLeft className="w-6 h-6" />
-                    </button>
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-federalblue-900 dark:bg-white flex items-center justify-center">
-                            <ShieldCheck className="w-5 h-5 text-white dark:text-zinc-950" />
-                        </div>
-                        <span className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">Onboarding</span>
+                <button onClick={onExit} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500 hover:text-federalblue-900 transition-colors">
+                    <ArrowLeft className="w-6 h-6" />
+                </button>
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-federalblue-900 dark:bg-white flex items-center justify-center">
+                        <ShieldCheck className="w-5 h-5 text-white dark:text-zinc-950" />
                     </div>
-                    <div className="w-10"></div>
+                    <span className="text-sm font-bold text-federalblue-900 dark:text-zinc-100 uppercase tracking-widest">Onboarding</span>
                 </div>
+                <div className="w-10"></div>
             </div>
 
             {/* Progress Bar */}
@@ -230,7 +228,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({ onComplete, onExit, isD
                 />
             </div>
 
-            <div className="px-6 py-8 flex-1 overflow-y-auto max-w-4xl mx-auto w-full">
+            <div className="px-6 py-8 flex-1 overflow-y-auto">
                 <div className="mb-8">
                     <h1 className="text-2xl font-extrabold text-federalblue-900 dark:text-zinc-100 tracking-tight">
                         {step === 1 && "Identity Check"}
