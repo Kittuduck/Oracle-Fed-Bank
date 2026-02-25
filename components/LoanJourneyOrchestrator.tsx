@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import {
   Plane, TrendingUp, Shield, CheckCircle2, Sparkles, ChevronRight,
   IndianRupee, Calendar, Lock, FileText, ArrowRight, PartyPopper,
@@ -91,14 +91,19 @@ const formatCurrency = (amount: number) => {
   return `₹${amount.toLocaleString('en-IN')}`;
 };
 
-const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
+export interface LoanJourneyHandle {
+  handleVoiceCommand: (transcript: string) => boolean;
+}
+
+const LoanJourneyOrchestrator = ({
   persona,
   isDarkMode,
   onComplete,
   onDismiss,
   onNavigate,
-  currentFinancials
-}) => {
+  currentFinancials,
+  voiceRef
+}: LoanJourneyProps & { voiceRef?: React.MutableRefObject<LoanJourneyHandle | null> }) => {
   const [phase, setPhase] = useState<Phase>('INTAKE');
   const [intakeStep, setIntakeStep] = useState<IntakeStep>('DESTINATION');
   const [animateIn, setAnimateIn] = useState(false);
@@ -133,6 +138,126 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
   const rate = 10.49;
   const processingFee = 999;
   const liquid = currentFinancials?.liquid || persona?.financials?.liquid || 1240500;
+
+  const fuzzyMatch = (transcript: string, target: string): boolean => {
+    const t = transcript.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+    const tgt = target.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+    if (t.includes(tgt)) return true;
+    if (tgt.includes(t) && t.length > 3) return true;
+    const tgtWords = tgt.split(/\s+/);
+    return tgtWords.every(w => t.includes(w));
+  };
+
+  useImperativeHandle(voiceRef, () => ({
+    handleVoiceCommand: (transcript: string): boolean => {
+      const t = transcript.toLowerCase().trim();
+
+      if (phase === 'INTAKE' && intakeStep === 'DESTINATION') {
+        const destKeys = Object.keys(DESTINATIONS);
+        const matchedDest = destKeys.find(d => fuzzyMatch(t, d));
+        if (matchedDest) {
+          setSelectedDestination(matchedDest);
+          return true;
+        }
+        if (/continue|next|go ahead/i.test(t) && (selectedDestination || customDestination || itineraryParsed)) {
+          if (customDestination && !selectedDestination) {
+            const match = destKeys.find(d => d.toLowerCase() === customDestination.toLowerCase());
+            setSelectedDestination(match || customDestination);
+            if (!match) {
+              DESTINATIONS[customDestination] = { emoji: '🌍', perPersonPerDay: 7000, flightBase: 40000, visaCost: 4000 };
+              CITY_SUGGESTIONS[customDestination] = ['City Center', 'Old Town', 'Coastal Area', 'Mountain Region'];
+            }
+          }
+          setIntakeStep('TRAVELERS');
+          return true;
+        }
+        if (itineraryParsed && /analyze|analyse|trip/i.test(t)) {
+          setIntakeStep('ANALYZING');
+          return true;
+        }
+      }
+
+      if (phase === 'INTAKE' && intakeStep === 'TRAVELERS') {
+        const numMatch = t.match(/(\d+)\s*(people|person|traveler|traveller|member|of us)/i) || t.match(/\b(\d+)\b/);
+        if (numMatch) {
+          const n = Math.min(10, Math.max(1, parseInt(numMatch[1])));
+          setTravelerCount(n);
+          return true;
+        }
+        const dayMatch = t.match(/(\d+)\s*(day|night)/i);
+        if (dayMatch) {
+          const d = Math.min(45, Math.max(3, parseInt(dayMatch[1])));
+          setTripDays(d);
+          return true;
+        }
+        if (/continue|next|go ahead|looks good|confirm/i.test(t)) {
+          setIntakeStep('CITIES');
+          return true;
+        }
+      }
+
+      if (phase === 'INTAKE' && intakeStep === 'CITIES') {
+        let matched = false;
+        const availableCities = CITY_SUGGESTIONS[selectedDestination] || ['City Center', 'Historical Sites', 'Beaches', 'Mountains'];
+        for (const city of availableCities) {
+          if (fuzzyMatch(t, city)) {
+            setSelectedCities(prev => prev.includes(city) ? prev : [...prev, city]);
+            matched = true;
+          }
+        }
+        for (const interest of INTEREST_OPTIONS) {
+          if (fuzzyMatch(t, interest)) {
+            setSelectedInterests(prev => prev.includes(interest) ? prev : [...prev, interest]);
+            matched = true;
+          }
+        }
+        if (/analyze|analyse|trip|continue|next|go ahead/i.test(t) && (selectedCities.length > 0 || additionalNotes.trim().length > 0)) {
+          startAnalysis();
+          return true;
+        }
+        if (matched) return true;
+      }
+
+      if (phase === 'PRE_APPROVED') {
+        if (/custom|customise|customize|loan|proceed|accept/i.test(t)) {
+          if (!cibilConsent) setCibilConsent(true);
+          setTimeout(() => setPhase('CUSTOMIZATION'), 300);
+          return true;
+        }
+        if (/maybe later|later|not now|skip|dismiss/i.test(t)) {
+          onDismiss({
+            destination: tripDetails?.destination || selectedDestination || 'Travel',
+            amount: loanAmount,
+            emi,
+            rate,
+            tenure
+          });
+          return true;
+        }
+        if (/authorize|consent|cibil|credit|fetch/i.test(t) && !cibilConsent) {
+          setCibilConsent(true);
+          return true;
+        }
+      }
+
+      if (phase === 'CUSTOMIZATION') {
+        if (/accept|confirm|proceed|compliance|agree|go ahead/i.test(t)) {
+          setPhase('COMPLIANCE');
+          return true;
+        }
+      }
+
+      if (phase === 'COMPLIANCE') {
+        if (complianceStep === 'TERMS' && /accept|agree|terms|proceed/i.test(t)) {
+          setTermsAccepted(true);
+          setComplianceStep('AADHAAR');
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }));
 
   useEffect(() => {
     setAnimateIn(false);

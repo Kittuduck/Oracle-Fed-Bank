@@ -3,6 +3,7 @@ import { Send, Bot, User, ArrowRight, Shield, Zap, Compass, AlertTriangle, Trend
 import { chatWithOrchestrator, SimulationUpdateData, NewGoalData } from '../services/geminiService';
 import TradeOffVisualizer from './TradeOffVisualizer';
 import LoanJourneyOrchestrator from './LoanJourneyOrchestrator';
+import type { LoanJourneyHandle } from './LoanJourneyOrchestrator';
 
 interface EmbeddedOrchestratorChatProps {
     onUpdateSimulation: (data: SimulationUpdateData) => void;
@@ -83,6 +84,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
     const [isListening, setIsListening] = useState(false);
     const recognitionRef = useRef<any>(null);
     const handleSendRef = useRef<(text?: string) => void>(() => {});
+    const loanJourneyRef = useRef<LoanJourneyHandle | null>(null);
 
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
     const [uploadStatus, setUploadStatus] = useState<'IDLE' | 'UPLOADING' | 'SUCCESS'>('IDLE');
@@ -334,6 +336,14 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
             return;
         }
 
+        if (loanJourneyActive && loanJourneyRef.current) {
+            const handled = loanJourneyRef.current.handleVoiceCommand(text);
+            if (handled) {
+                setInput('');
+                return;
+            }
+        }
+
         const tripKeywords = /\b(trip|travel|vacation|holiday|abroad|international|japan|dubai|thailand|singapore|varanasi|flight|tour|family trip|afford.*trip|plan.*trip|trip.*plan)\b/i;
         if (tripKeywords.test(text) && !loanJourneyActive) {
             const userMsg: Message = { id: Date.now().toString(), role: 'user', content: text, text };
@@ -350,6 +360,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
                     text: "Travel Bridge - Loan Journey",
                     content: (
                         <LoanJourneyOrchestrator
+                            voiceRef={loanJourneyRef}
                             persona={persona}
                             isDarkMode={isDarkMode}
                             currentFinancials={currentFinancials}
