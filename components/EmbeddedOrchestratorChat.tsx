@@ -344,7 +344,7 @@ const EmbeddedOrchestratorChat: React.FC<EmbeddedOrchestratorChatProps> = ({
             }
         }
 
-        const tripKeywords = /\b(trip|travel|vacation|holiday|abroad|international|japan|dubai|thailand|singapore|varanasi|flight|tour|family trip|afford.*trip|plan.*trip|trip.*plan)\b/i;
+        const tripKeywords = /\b(trip|travel|travell?ing|vacation|holiday|abroad|international|overseas|foreign|japan|dubai|thailand|singapore|varanasi|goa|kashmir|bali|europe|maldives|vietnam|sri\s?lanka|flight|tour|plan.*trip|trip.*plan|plan.*vacation|plan.*holiday|plan.*travel|afford.*trip|afford.*travel|afford.*vacation|go\s+abroad|go\s+on\s+a|go\s+somewhere|visit\s+another\s+country|see\s+the\s+world|outside\s+india|fund.*trip|funding.*gap|extra\s+funds|additional\s+money|fall\s+short|enough\s+money.*travel|financial.*stress.*travel|shortfall|explore\s+another\s+country)\b/i;
         if (tripKeywords.test(text) && !loanJourneyActive) {
             const userMsg: Message = { id: Date.now().toString(), role: 'user', content: text, text };
             setMessages(prev => [...prev, userMsg]);
