@@ -468,12 +468,12 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
 
                 {/* Navigation */}
                 <nav className="sticky top-0 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md z-50 border-b border-[#E0E0E0] dark:border-zinc-800 transition-colors">
-                    <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
-                        <div className="flex items-center gap-4">
-                            <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full hover:bg-[#F6F6F6] dark:hover:bg-slate-800/50 transition-colors">
+                    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full hover:bg-[#F6F6F6] dark:hover:bg-slate-800/50 transition-colors flex-shrink-0">
                                 <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
                             </button>
-                            <span className="font-semibold text-lg text-[#333333] dark:text-white">Expenditure Intelligence</span>
+                            <span className="font-semibold text-base sm:text-lg text-[#333333] dark:text-white truncate">Expenditure Intelligence</span>
                         </div>
                         <button onClick={toggleTheme} className="p-2 text-slate-500 hover:text-federalblue-900 transition-colors">
                             {isDarkMode ? <Sun className="w-5 h-5" strokeWidth={1.5} /> : <Moon className="w-5 h-5" strokeWidth={1.5} />}
@@ -481,7 +481,7 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                     </div>
                 </nav>
 
-                <main className="max-w-4xl mx-auto px-6 py-8 space-y-8">
+                <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8">
 
                     {/* Anomaly Detection Section - Federal Style: Flat card, sharp borders */}
                     {anomalyStatus === 'PENDING' && (
@@ -542,11 +542,11 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                     </div>
 
                     {/* Insightful Spending Trends */}
-                    <div className="bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-slate-800 rounded-xl p-6 shadow-federal dark:shadow-none">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                    <div className="bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-slate-800 rounded-xl p-4 sm:p-6 shadow-federal dark:shadow-none">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3 sm:gap-4">
                             <div>
-                                <h3 className="text-lg font-bold text-[#333333] dark:text-white">Spending Analysis</h3>
-                                <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
+                                <h3 className="text-base sm:text-lg font-bold text-[#333333] dark:text-white">Spending Analysis</h3>
+                                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
                                     Current Period: <span className="font-semibold text-[#333333] dark:text-white">{pData.totalSpend}</span>
                                 </p>
                             </div>
@@ -556,7 +556,7 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                                     <button
                                         key={tf}
                                         onClick={() => setTimeframe(tf)}
-                                        className={`px-4 py-1.5 text-xs font-bold rounded-md transition-all ${timeframe === tf
+                                        className={`px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs font-bold rounded-md transition-all ${timeframe === tf
                                             ? 'bg-white dark:bg-[#1c1e24] text-federalblue-900 dark:text-white shadow-sm border border-[#E0E0E0] dark:border-slate-700'
                                             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
                                             }`}
@@ -567,11 +567,11 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                            <div className="lg:col-span-2 space-y-2">
-                                <div className="h-[250px] w-full">
+                        <div className="space-y-6">
+                            <div className="space-y-2">
+                                <div className="h-[220px] sm:h-[250px] w-full">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <ComposedChart data={getData()} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+                                        <ComposedChart data={getData()} margin={{ top: 10, right: 0, left: -25, bottom: 0 }}>
                                             <CartesianGrid vertical={false} stroke={isDarkMode ? '#334155' : '#e2e8f0'} strokeDasharray="3 3" opacity={0.4} />
                                             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: isDarkMode ? '#94a3b8' : '#64748b', fontSize: 12 }} dy={10} />
                                             <YAxis axisLine={false} tickLine={false} tick={{ fill: isDarkMode ? '#94a3b8' : '#64748b', fontSize: 12 }} tickFormatter={formatCurrency} />
@@ -590,27 +590,25 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                                 </div>
                             </div>
 
-                            <div className="flex flex-col justify-between h-full bg-[#F9F9F9] dark:bg-[#1c1e24] rounded-xl p-5 border border-[#E0E0E0] dark:border-slate-800">
-                                <div>
-                                    <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">Where it went</h4>
-                                    <div className="space-y-4">
-                                        {getCategoryBreakdown().map((cat) => (
-                                            <div key={cat.name}>
-                                                <div className="flex justify-between items-center mb-1.5">
-                                                    <div className="flex items-center gap-2">
-                                                        <div className={`p-1.5 rounded-md ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-100'}`}>
-                                                            <cat.icon className={`w-3 h-3 ${isDarkMode ? 'text-zinc-300' : cat.textColor}`} />
-                                                        </div>
-                                                        <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{cat.name}</span>
+                            <div className="bg-[#F9F9F9] dark:bg-[#1c1e24] rounded-xl p-4 sm:p-5 border border-[#E0E0E0] dark:border-slate-800">
+                                <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">Where it went</h4>
+                                <div className="space-y-4">
+                                    {getCategoryBreakdown().map((cat) => (
+                                        <div key={cat.name}>
+                                            <div className="flex justify-between items-center mb-1.5">
+                                                <div className="flex items-center gap-2">
+                                                    <div className={`p-1.5 rounded-md ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-100'}`}>
+                                                        <cat.icon className={`w-3 h-3 ${isDarkMode ? 'text-zinc-300' : cat.textColor}`} />
                                                     </div>
-                                                    <span className="text-xs font-semibold text-[#333333] dark:text-white">{formatCurrency(cat.amount)}</span>
+                                                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{cat.name}</span>
                                                 </div>
-                                                <div className="h-1.5 w-full bg-[#E0E0E0] dark:bg-slate-700 rounded-full overflow-hidden">
-                                                    <div className={`h-full rounded-full ${cat.color}`} style={{ width: `${cat.percent}%` }}></div>
-                                                </div>
+                                                <span className="text-xs font-semibold text-[#333333] dark:text-white">{formatCurrency(cat.amount)}</span>
                                             </div>
-                                        ))}
-                                    </div>
+                                            <div className="h-1.5 w-full bg-[#E0E0E0] dark:bg-slate-700 rounded-full overflow-hidden">
+                                                <div className={`h-full rounded-full ${cat.color}`} style={{ width: `${cat.percent}%` }}></div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
