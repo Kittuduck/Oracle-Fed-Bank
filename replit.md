@@ -44,7 +44,7 @@ A premium, AI-first multi-persona banking application for Federal Bank called "O
 - Dynamic cost calculation based on user-provided travelers, duration, cities
 - Uses real-time `currentFinancials.liquid` for gap analysis
 - EMI calculated with standard amortization formula at 10.49% p.a.
-- Simulated Aadhaar OTP and e-NACH mandate flows
+- Digital Compliance order: Terms → Mandate (e-NACH) → e-Sign (Aadhaar OTP) → Disbursement
 - **Loan Tracking**: After disbursement, loan appears on Dashboard (Active Loan card) and Loans Hub (detailed tracker with EMI schedule); navigation from disbursement screen to either Expenditure or Loans page
 
 ### Key Files

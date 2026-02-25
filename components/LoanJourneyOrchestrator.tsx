@@ -281,17 +281,16 @@ const LoanJourneyOrchestrator = ({
       if (phase === 'COMPLIANCE') {
         if (complianceStep === 'TERMS' && /accept|agree|terms|proceed/i.test(t)) {
           setTermsAccepted(true);
+          setComplianceStep('ENACH');
+          return true;
+        }
+        if (complianceStep === 'ENACH' && /confirm|mandate|authorize|nach|proceed/i.test(t)) {
+          setEnachConfirmed(true);
           setComplianceStep('AADHAAR');
           return true;
         }
         if (complianceStep === 'AADHAAR' && /send|otp|secure|aadhaar|aadhar|verify|sign/i.test(t) && !otpSent) {
           sendOtp();
-          return true;
-        }
-        if (complianceStep === 'ENACH' && /confirm|mandate|disburse|authorize|nach|proceed/i.test(t)) {
-          setEnachConfirmed(true);
-          setPhase('DISBURSEMENT');
-          completeDisbursement();
           return true;
         }
       }
@@ -435,7 +434,7 @@ const LoanJourneyOrchestrator = ({
       setOtp(['8', '4', '2', '7', '5', '1']);
       setTimeout(() => {
         setOtpVerified(true);
-        setTimeout(() => setComplianceStep('ENACH'), 1200);
+        setTimeout(() => { setPhase('DISBURSEMENT'); completeDisbursement(); }, 1200);
       }, 1500);
     }, 2000);
   };
@@ -1032,18 +1031,18 @@ const LoanJourneyOrchestrator = ({
     return (
       <div className={`space-y-4 transition-all duration-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         <div className="flex gap-1 mb-2">
-          {(['TERMS', 'AADHAAR', 'ENACH'] as ComplianceStep[]).map((step, idx) => (
+          {(['TERMS', 'ENACH', 'AADHAAR'] as ComplianceStep[]).map((step, idx) => (
             <div key={step} className="flex-1 flex flex-col items-center gap-1">
               <div className={`h-1.5 w-full rounded-full transition-all ${
                 complianceStep === step
                   ? 'bg-federalblue-900'
-                  : (['TERMS', 'AADHAAR', 'ENACH'].indexOf(complianceStep) > idx ? 'bg-emerald-500' : (isDarkMode ? 'bg-zinc-800' : 'bg-slate-200'))
+                  : (['TERMS', 'ENACH', 'AADHAAR'].indexOf(complianceStep) > idx ? 'bg-emerald-500' : (isDarkMode ? 'bg-zinc-800' : 'bg-slate-200'))
               }`} />
               <span className={`text-[9px] uppercase tracking-widest font-bold ${
                 complianceStep === step
                   ? (isDarkMode ? 'text-white' : 'text-federalblue-900')
                   : (isDarkMode ? 'text-zinc-600' : 'text-slate-400')
-              }`}>{step === 'AADHAAR' ? 'e-Sign' : step === 'ENACH' ? 'Mandate' : 'Terms'}</span>
+              }`}>{step === 'ENACH' ? 'Mandate' : step === 'AADHAAR' ? 'e-Sign' : 'Terms'}</span>
             </div>
           ))}
         </div>
@@ -1072,10 +1071,45 @@ const LoanJourneyOrchestrator = ({
             </div>
 
             <button
-              onClick={() => { setTermsAccepted(true); setComplianceStep('AADHAAR'); }}
+              onClick={() => { setTermsAccepted(true); setComplianceStep('ENACH'); }}
               className="w-full mt-4 py-3.5 bg-federalblue-900 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98]"
             >
               I Accept <Check className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {complianceStep === 'ENACH' && (
+          <div className={cardClass}>
+            <div className="flex items-center gap-2 mb-4">
+              <Building2 className={`w-4 h-4 ${isDarkMode ? 'text-federalblue-400' : 'text-federalblue-900'}`} />
+              <p className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>e-NACH Auto-Repayment</p>
+            </div>
+
+            <div className={`rounded-xl p-4 space-y-3 ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-50'}`}>
+              <div className="flex justify-between text-xs">
+                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Debit Account</span>
+                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Federal Bank {accountNum}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>EMI Amount</span>
+                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(emi)}/month</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Debit Date</span>
+                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>5th of every month</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Duration</span>
+                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{tenure} months</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => { setEnachConfirmed(true); setComplianceStep('AADHAAR'); }}
+              className="w-full mt-4 py-3.5 bg-federalblue-900 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98]"
+            >
+              Confirm Mandate <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         )}
@@ -1094,9 +1128,9 @@ const LoanJourneyOrchestrator = ({
             {!otpSent ? (
               <button
                 onClick={sendOtp}
-                className="w-full py-3.5 bg-federalblue-900 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98]"
+                className="w-full py-3.5 bg-gradient-to-r from-federalblue-900 to-federalblue-700 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98] shadow-lg"
               >
-                <Lock className="w-4 h-4" /> Send Secure OTP
+                <Lock className="w-4 h-4" /> Send Secure OTP & Disburse
               </button>
             ) : (
               <div className="space-y-4">
@@ -1134,41 +1168,6 @@ const LoanJourneyOrchestrator = ({
                 )}
               </div>
             )}
-          </div>
-        )}
-
-        {complianceStep === 'ENACH' && (
-          <div className={cardClass}>
-            <div className="flex items-center gap-2 mb-4">
-              <Building2 className={`w-4 h-4 ${isDarkMode ? 'text-federalblue-400' : 'text-federalblue-900'}`} />
-              <p className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>e-NACH Auto-Repayment</p>
-            </div>
-
-            <div className={`rounded-xl p-4 space-y-3 ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-50'}`}>
-              <div className="flex justify-between text-xs">
-                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Debit Account</span>
-                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Federal Bank {accountNum}</span>
-              </div>
-              <div className="flex justify-between text-xs">
-                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>EMI Amount</span>
-                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(emi)}/month</span>
-              </div>
-              <div className="flex justify-between text-xs">
-                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Debit Date</span>
-                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>5th of every month</span>
-              </div>
-              <div className="flex justify-between text-xs">
-                <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Duration</span>
-                <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{tenure} months</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => { setEnachConfirmed(true); setPhase('DISBURSEMENT'); completeDisbursement(); }}
-              className="w-full mt-4 py-3.5 bg-gradient-to-r from-federalblue-900 to-federalblue-700 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98] shadow-lg"
-            >
-              Confirm Mandate & Disburse <ArrowRight className="w-4 h-4" />
-            </button>
           </div>
         )}
       </div>
