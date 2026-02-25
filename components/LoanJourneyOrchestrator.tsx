@@ -3,7 +3,8 @@ import {
   Plane, TrendingUp, Shield, CheckCircle2, Sparkles, ChevronRight,
   IndianRupee, Calendar, Lock, FileText, ArrowRight, PartyPopper,
   CreditCard, Building2, Fingerprint, Smartphone, Check, X, Clock,
-  AlertCircle, Wallet, BarChart3, DollarSign
+  AlertCircle, Wallet, BarChart3, DollarSign, MapPin, Users, Globe,
+  Compass, Sun, Send
 } from 'lucide-react';
 
 interface LoanJourneyProps {
@@ -22,58 +23,53 @@ interface LoanData {
   accountNumber: string;
 }
 
-type Phase = 'GAP_ANALYSIS' | 'PRE_APPROVED' | 'CUSTOMIZATION' | 'COMPLIANCE' | 'DISBURSEMENT';
+interface TripDetails {
+  destination: string;
+  emoji: string;
+  travelers: number;
+  travelerDesc: string;
+  days: number;
+  cities: string[];
+  interests: string[];
+  estimatedCost: number;
+  breakdown: { flights: number; hotels: number; activities: number; food: number; visa: number };
+}
+
+type Phase = 'INTAKE' | 'GAP_ANALYSIS' | 'PRE_APPROVED' | 'CUSTOMIZATION' | 'COMPLIANCE' | 'DISBURSEMENT';
+type IntakeStep = 'DESTINATION' | 'TRAVELERS' | 'DURATION' | 'CITIES' | 'ANALYZING';
 type ComplianceStep = 'TERMS' | 'AADHAAR' | 'ENACH';
 
-const getPersonaTripData = (persona: any, currentFinancials?: { liquid: number; need: number; goal: number }) => {
-  const id = persona?.id || 'advait';
-  const name = persona?.name || 'User';
-  const liquid = currentFinancials?.liquid || persona?.financials?.liquid || 1240500;
-
-  const tripData: Record<string, { destination: string; travelers: string; estimatedCost: number; emoji: string; breakdown: { flights: number; hotels: number; activities: number; food: number; visa: number } }> = {
-    advait: {
-      destination: 'Japan',
-      travelers: 'family of 3 (you, spouse & Riya)',
-      estimatedCost: 650000,
-      emoji: '🇯🇵',
-      breakdown: { flights: 280000, hotels: 180000, activities: 85000, food: 65000, visa: 40000 }
-    },
-    kapoor: {
-      destination: 'Varanasi & Rishikesh',
-      travelers: 'you and your spouse',
-      estimatedCost: 180000,
-      emoji: '🙏',
-      breakdown: { flights: 45000, hotels: 65000, activities: 30000, food: 25000, visa: 15000 }
-    },
-    rajesh: {
-      destination: 'Dubai',
-      travelers: 'family of 4',
-      estimatedCost: 850000,
-      emoji: '🇦🇪',
-      breakdown: { flights: 320000, hotels: 260000, activities: 120000, food: 95000, visa: 55000 }
-    },
-    ishan: {
-      destination: 'Thailand',
-      travelers: 'you and 3 friends',
-      estimatedCost: 120000,
-      emoji: '🇹🇭',
-      breakdown: { flights: 35000, hotels: 30000, activities: 25000, food: 20000, visa: 10000 }
-    },
-    anjali: {
-      destination: 'Singapore',
-      travelers: 'family of 4 (you, spouse, Meera & Arjun)',
-      estimatedCost: 480000,
-      emoji: '🇸🇬',
-      breakdown: { flights: 180000, hotels: 140000, activities: 75000, food: 55000, visa: 30000 }
-    }
-  };
-
-  const trip = tripData[id] || tripData.advait;
-  const savings = Math.min(liquid * 0.4, trip.estimatedCost * 0.6);
-  const shortfall = Math.max(trip.estimatedCost - savings, 50000);
-
-  return { ...trip, name, savings: Math.round(savings), shortfall: Math.round(shortfall), liquid };
+const DESTINATIONS: Record<string, { emoji: string; perPersonPerDay: number; flightBase: number; visaCost: number }> = {
+  'Japan': { emoji: '🇯🇵', perPersonPerDay: 8000, flightBase: 55000, visaCost: 3000 },
+  'Thailand': { emoji: '🇹🇭', perPersonPerDay: 4000, flightBase: 18000, visaCost: 2500 },
+  'Dubai': { emoji: '🇦🇪', perPersonPerDay: 10000, flightBase: 25000, visaCost: 5500 },
+  'Singapore': { emoji: '🇸🇬', perPersonPerDay: 9000, flightBase: 22000, visaCost: 2000 },
+  'Bali': { emoji: '🇮🇩', perPersonPerDay: 5000, flightBase: 28000, visaCost: 3500 },
+  'Europe': { emoji: '🇪🇺', perPersonPerDay: 12000, flightBase: 65000, visaCost: 6000 },
+  'Maldives': { emoji: '🇲🇻', perPersonPerDay: 15000, flightBase: 20000, visaCost: 0 },
+  'Vietnam': { emoji: '🇻🇳', perPersonPerDay: 3500, flightBase: 22000, visaCost: 2500 },
+  'Sri Lanka': { emoji: '🇱🇰', perPersonPerDay: 4500, flightBase: 12000, visaCost: 2000 },
+  'Varanasi': { emoji: '🙏', perPersonPerDay: 3000, flightBase: 6000, visaCost: 0 },
+  'Goa': { emoji: '🏖️', perPersonPerDay: 4000, flightBase: 5000, visaCost: 0 },
+  'Kashmir': { emoji: '🏔️', perPersonPerDay: 3500, flightBase: 7000, visaCost: 0 },
 };
+
+const CITY_SUGGESTIONS: Record<string, string[]> = {
+  'Japan': ['Tokyo', 'Kyoto', 'Osaka', 'Hiroshima', 'Nara', 'Hakone'],
+  'Thailand': ['Bangkok', 'Chiang Mai', 'Phuket', 'Krabi', 'Pattaya', 'Koh Samui'],
+  'Dubai': ['Downtown Dubai', 'Abu Dhabi', 'Desert Safari', 'Palm Jumeirah'],
+  'Singapore': ['Sentosa', 'Marina Bay', 'Chinatown', 'Gardens by the Bay'],
+  'Bali': ['Ubud', 'Seminyak', 'Kuta', 'Nusa Dua', 'Uluwatu'],
+  'Europe': ['Paris', 'Rome', 'Barcelona', 'Amsterdam', 'London', 'Prague'],
+  'Maldives': ['Malé', 'Resort Island', 'Water Villa', 'Snorkeling Tours'],
+  'Vietnam': ['Hanoi', 'Ho Chi Minh', 'Ha Long Bay', 'Hoi An', 'Da Nang'],
+  'Sri Lanka': ['Colombo', 'Kandy', 'Sigiriya', 'Galle', 'Ella'],
+  'Varanasi': ['Ghats', 'Sarnath', 'Allahabad', 'Rishikesh'],
+  'Goa': ['North Goa', 'South Goa', 'Old Goa', 'Dudhsagar Falls'],
+  'Kashmir': ['Srinagar', 'Gulmarg', 'Pahalgam', 'Sonmarg', 'Dal Lake'],
+};
+
+const INTEREST_OPTIONS = ['Culture & History', 'Adventure & Outdoors', 'Food & Cuisine', 'Shopping', 'Relaxation & Spa', 'Nightlife', 'Photography', 'Nature & Wildlife'];
 
 const getPersonaTone = (persona: any) => {
   const id = persona?.id || 'advait';
@@ -100,7 +96,8 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
   onDismiss,
   currentFinancials
 }) => {
-  const [phase, setPhase] = useState<Phase>('GAP_ANALYSIS');
+  const [phase, setPhase] = useState<Phase>('INTAKE');
+  const [intakeStep, setIntakeStep] = useState<IntakeStep>('DESTINATION');
   const [animateIn, setAnimateIn] = useState(false);
   const [cibilConsent, setCibilConsent] = useState(false);
   const [loanAmount, setLoanAmount] = useState(0);
@@ -115,20 +112,64 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
   const [showConfetti, setShowConfetti] = useState(false);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const tripData = getPersonaTripData(persona, currentFinancials);
+  const [selectedDestination, setSelectedDestination] = useState('');
+  const [travelerCount, setTravelerCount] = useState(2);
+  const [tripDays, setTripDays] = useState(7);
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [customDestination, setCustomDestination] = useState('');
+  const [tripDetails, setTripDetails] = useState<TripDetails | null>(null);
+
   const tone = getPersonaTone(persona);
   const rate = 10.49;
   const processingFee = 999;
-
-  useEffect(() => {
-    setLoanAmount(tripData.shortfall);
-  }, [persona?.id]);
+  const liquid = currentFinancials?.liquid || persona?.financials?.liquid || 1240500;
 
   useEffect(() => {
     setAnimateIn(false);
     const timer = setTimeout(() => setAnimateIn(true), 50);
     return () => clearTimeout(timer);
-  }, [phase, complianceStep]);
+  }, [phase, intakeStep, complianceStep]);
+
+  const buildTripDetails = (): TripDetails => {
+    const dest = selectedDestination || 'Japan';
+    const destData = DESTINATIONS[dest] || DESTINATIONS['Japan'];
+    const flightCost = destData.flightBase * travelerCount;
+    const dailyCost = destData.perPersonPerDay * travelerCount;
+    const hotelCost = Math.round(dailyCost * 0.4 * tripDays);
+    const activityCost = Math.round(dailyCost * 0.25 * tripDays * (1 + selectedCities.length * 0.05));
+    const foodCost = Math.round(dailyCost * 0.2 * tripDays);
+    const visaCost = destData.visaCost * travelerCount;
+    const totalCost = flightCost + hotelCost + activityCost + foodCost + visaCost;
+
+    let travelerDesc = `${travelerCount} traveler${travelerCount > 1 ? 's' : ''}`;
+    if (persona?.id === 'advait' && travelerCount <= 3) travelerDesc = travelerCount === 3 ? 'you, spouse & Riya' : travelerDesc;
+    if (persona?.id === 'anjali' && travelerCount === 4) travelerDesc = 'you, spouse, Meera & Arjun';
+
+    return {
+      destination: dest,
+      emoji: destData.emoji,
+      travelers: travelerCount,
+      travelerDesc,
+      days: tripDays,
+      cities: selectedCities,
+      interests: selectedInterests,
+      estimatedCost: totalCost,
+      breakdown: { flights: flightCost, hotels: hotelCost, activities: activityCost, food: foodCost, visa: visaCost }
+    };
+  };
+
+  const startAnalysis = () => {
+    setIntakeStep('ANALYZING');
+    const details = buildTripDetails();
+    setTimeout(() => {
+      setTripDetails(details);
+      const savings = Math.min(liquid * 0.4, details.estimatedCost * 0.6);
+      const shortfall = Math.max(details.estimatedCost - savings, 25000);
+      setLoanAmount(Math.round(shortfall));
+      setPhase('GAP_ANALYSIS');
+    }, 2000);
+  };
 
   const calculateEMI = (principal: number, months: number) => {
     if (months <= 0 || principal <= 0) return 0;
@@ -182,42 +223,273 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
   };
 
   const progressPercent = () => {
-    const phases: Phase[] = ['GAP_ANALYSIS', 'PRE_APPROVED', 'CUSTOMIZATION', 'COMPLIANCE', 'DISBURSEMENT'];
-    return ((phases.indexOf(phase) + 1) / phases.length) * 100;
+    if (phase === 'INTAKE') return 5;
+    const phases: Phase[] = ['INTAKE', 'GAP_ANALYSIS', 'PRE_APPROVED', 'CUSTOMIZATION', 'COMPLIANCE', 'DISBURSEMENT'];
+    return ((phases.indexOf(phase)) / (phases.length - 1)) * 100;
   };
 
   const cardClass = `rounded-2xl p-5 border transition-all duration-500 ${isDarkMode
     ? 'bg-zinc-900 border-zinc-800'
     : 'bg-white border-slate-100 shadow-sm'}`;
 
+  const chipClass = (selected: boolean) => `px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer border ${
+    selected
+      ? (isDarkMode ? 'bg-federalblue-900 border-federalblue-700 text-white' : 'bg-federalblue-900 border-federalblue-900 text-white')
+      : (isDarkMode ? 'bg-zinc-800 border-zinc-700 text-zinc-300 hover:border-zinc-500' : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-400')
+  }`;
+
+  const oracleMsgClass = `text-sm leading-relaxed ${isDarkMode ? 'text-zinc-300' : 'text-slate-600'}`;
+  const labelClass = `text-[10px] font-bold uppercase tracking-widest mb-3 ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`;
+
+  const renderIntake = () => (
+    <div className={`space-y-4 transition-all duration-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      {intakeStep === 'DESTINATION' && (
+        <div className={cardClass}>
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles className={`w-4 h-4 ${isDarkMode ? 'text-federalgold-400' : 'text-federalgold-600'}`} />
+            <p className={labelClass} style={{marginBottom: 0}}>Oracle Travel Bridge</p>
+          </div>
+          <p className={oracleMsgClass}>
+            That sounds exciting, {tone.greeting}! ✈️ I'd love to help you plan this. Let me understand your trip first — <strong>where are you thinking of going?</strong>
+          </p>
+
+          <div className="mt-4">
+            <p className={labelClass}>Popular Destinations</p>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(DESTINATIONS).map(([name, data]) => (
+                <button
+                  key={name}
+                  onClick={() => setSelectedDestination(name)}
+                  className={chipClass(selectedDestination === name)}
+                >
+                  {data.emoji} {name}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-3">
+              <div className={`flex items-center gap-2 rounded-xl border px-3 py-2.5 ${isDarkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-slate-50 border-slate-200'}`}>
+                <MapPin className={`w-3.5 h-3.5 flex-shrink-0 ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`} />
+                <input
+                  type="text"
+                  placeholder="Or type a different destination..."
+                  value={customDestination}
+                  onChange={e => { setCustomDestination(e.target.value); if (e.target.value) setSelectedDestination(''); }}
+                  className={`flex-1 bg-transparent text-xs outline-none ${isDarkMode ? 'text-white placeholder-zinc-600' : 'text-slate-900 placeholder-slate-400'}`}
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => {
+              if (customDestination && !selectedDestination) {
+                const match = Object.keys(DESTINATIONS).find(d => d.toLowerCase() === customDestination.toLowerCase());
+                setSelectedDestination(match || customDestination);
+                if (!match) {
+                  DESTINATIONS[customDestination] = { emoji: '🌍', perPersonPerDay: 7000, flightBase: 40000, visaCost: 4000 };
+                  CITY_SUGGESTIONS[customDestination] = ['City Center', 'Old Town', 'Coastal Area', 'Mountain Region'];
+                }
+              }
+              setIntakeStep('TRAVELERS');
+            }}
+            disabled={!selectedDestination && !customDestination}
+            className="w-full mt-4 py-3 bg-federalblue-900 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Continue <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {intakeStep === 'TRAVELERS' && (
+        <div className={cardClass}>
+          <p className={oracleMsgClass}>
+            {(DESTINATIONS[selectedDestination]?.emoji || '🌍')} <strong>{selectedDestination || customDestination}</strong> — great choice! Now, <strong>how many people are travelling</strong>, and <strong>how many days</strong> are you planning for?
+          </p>
+
+          <div className="mt-4 space-y-5">
+            <div>
+              <p className={labelClass}>
+                <Users className="w-3 h-3 inline mr-1" /> Number of Travelers
+              </p>
+              <div className="flex gap-2">
+                {[1, 2, 3, 4, 5, 6].map(n => (
+                  <button
+                    key={n}
+                    onClick={() => setTravelerCount(n)}
+                    className={`flex-1 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                      travelerCount === n
+                        ? 'bg-federalblue-900 text-white shadow-md'
+                        : (isDarkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100')
+                    }`}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <p className={labelClass} style={{marginBottom: 0}}>
+                  <Calendar className="w-3 h-3 inline mr-1" /> Trip Duration
+                </p>
+                <span className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{tripDays} days</span>
+              </div>
+              <input
+                type="range"
+                min={3}
+                max={21}
+                step={1}
+                value={tripDays}
+                onChange={e => setTripDays(Number(e.target.value))}
+                className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                style={{
+                  background: `linear-gradient(to right, #004d9c ${((tripDays - 3) / 18) * 100}%, ${isDarkMode ? '#27272a' : '#e2e8f0'} ${((tripDays - 3) / 18) * 100}%)`
+                }}
+              />
+              <div className="flex justify-between text-[10px] mt-1">
+                <span className={isDarkMode ? 'text-zinc-600' : 'text-slate-300'}>3 days</span>
+                <span className={isDarkMode ? 'text-zinc-600' : 'text-slate-300'}>21 days</span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setIntakeStep('CITIES')}
+            className="w-full mt-4 py-3 bg-federalblue-900 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98]"
+          >
+            Continue <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {intakeStep === 'CITIES' && (
+        <div className={cardClass}>
+          <p className={oracleMsgClass}>
+            {travelerCount} traveler{travelerCount > 1 ? 's' : ''}, {tripDays} days in {selectedDestination} — sounds wonderful! 🗺️ <strong>Which places do you want to cover?</strong> And what kind of experiences are you looking for?
+          </p>
+
+          <div className="mt-4 space-y-5">
+            <div>
+              <p className={labelClass}>
+                <MapPin className="w-3 h-3 inline mr-1" /> Places to Visit
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {(CITY_SUGGESTIONS[selectedDestination] || ['City Center', 'Historical Sites', 'Beaches', 'Mountains']).map(city => (
+                  <button
+                    key={city}
+                    onClick={() => setSelectedCities(prev => prev.includes(city) ? prev.filter(c => c !== city) : [...prev, city])}
+                    className={chipClass(selectedCities.includes(city))}
+                  >
+                    {selectedCities.includes(city) && <Check className="w-3 h-3 inline mr-1" />}
+                    {city}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className={labelClass}>
+                <Compass className="w-3 h-3 inline mr-1" /> Travel Interests
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {INTEREST_OPTIONS.map(interest => (
+                  <button
+                    key={interest}
+                    onClick={() => setSelectedInterests(prev => prev.includes(interest) ? prev.filter(i => i !== interest) : [...prev, interest])}
+                    className={chipClass(selectedInterests.includes(interest))}
+                  >
+                    {selectedInterests.includes(interest) && <Check className="w-3 h-3 inline mr-1" />}
+                    {interest}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={startAnalysis}
+            disabled={selectedCities.length === 0}
+            className="w-full mt-4 py-3 bg-gradient-to-r from-federalblue-900 to-federalblue-700 text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98] shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <Sparkles className="w-4 h-4" /> Analyze My Trip
+          </button>
+        </div>
+      )}
+
+      {intakeStep === 'ANALYZING' && (
+        <div className={cardClass}>
+          <div className="py-8 flex flex-col items-center justify-center text-center">
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-federalblue-900 to-federalblue-600 flex items-center justify-center mb-4 shadow-lg">
+              <Globe className="w-6 h-6 text-white animate-spin" style={{ animationDuration: '3s' }} />
+            </div>
+            <h4 className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Oracle is building your itinerary</h4>
+            <p className={`text-xs mt-2 ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>
+              Estimating costs for {travelerCount} travelers, {tripDays} days in {selectedDestination}...
+            </p>
+            <div className="mt-4 flex gap-1">
+              {[0, 1, 2].map(i => (
+                <div key={i} className="w-2 h-2 rounded-full bg-federalblue-900 animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   const renderGapAnalysis = () => {
-    const savingsPercent = Math.round((tripData.savings / tripData.estimatedCost) * 100);
+    if (!tripDetails) return null;
+    const savings = Math.min(liquid * 0.4, tripDetails.estimatedCost * 0.6);
+    const shortfall = Math.max(tripDetails.estimatedCost - savings, 25000);
+    const savingsPercent = Math.round((savings / tripDetails.estimatedCost) * 100);
     const shortfallPercent = 100 - savingsPercent;
 
     return (
       <div className={`space-y-4 transition-all duration-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         <div className={cardClass}>
+          <p className={`${oracleMsgClass} mb-4`}>
+            Here's what I've put together for your <strong>{tripDetails.destination}</strong> trip, {tone.greeting}. Let me break down the finances:
+          </p>
+
           <div className="flex items-center gap-2 mb-4">
-            <div className={`p-2 rounded-xl ${isDarkMode ? 'bg-federalblue-900/30' : 'bg-federalblue-50'}`}>
+            <div className={`p-2 rounded-xl ${isDarkMode ? 'bg-zinc-800' : 'bg-federalblue-50'}`}>
               <Plane className={`w-4 h-4 ${isDarkMode ? 'text-federalblue-400' : 'text-federalblue-900'}`} />
             </div>
             <div>
-              <p className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>Trip Feasibility</p>
-              <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{tripData.destination} {tripData.emoji}</p>
+              <p className={`text-[10px] font-bold uppercase tracking-widest ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>Trip Estimate</p>
+              <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{tripDetails.destination} {tripDetails.emoji} · {tripDetails.days} days · {tripDetails.travelers} traveler{tripDetails.travelers > 1 ? 's' : ''}</p>
             </div>
           </div>
 
+          {tripDetails.cities.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {tripDetails.cities.map(city => (
+                <span key={city} className={`text-[10px] px-2 py-1 rounded-full font-medium ${isDarkMode ? 'bg-zinc-800 text-zinc-400' : 'bg-slate-100 text-slate-500'}`}>
+                  📍 {city}
+                </span>
+              ))}
+            </div>
+          )}
+
           <div className="space-y-3">
             <div className="flex justify-between text-xs">
-              <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Estimated Trip Cost ({tripData.travelers})</span>
-              <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(tripData.estimatedCost)}</span>
+              <span className={isDarkMode ? 'text-zinc-400' : 'text-slate-500'}>Total Estimated Cost</span>
+              <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(tripDetails.estimatedCost)}</span>
             </div>
 
             <div className="space-y-1.5">
-              {Object.entries(tripData.breakdown).map(([key, val]) => (
-                <div key={key} className="flex justify-between text-[11px]">
-                  <span className={`capitalize ${isDarkMode ? 'text-zinc-500' : 'text-slate-400'}`}>{key === 'visa' ? 'Visa & Insurance' : key}</span>
-                  <span className={isDarkMode ? 'text-zinc-300' : 'text-slate-600'}>{formatCurrency(val)}</span>
+              {[
+                { label: 'Flights', value: tripDetails.breakdown.flights },
+                { label: 'Hotels & Stays', value: tripDetails.breakdown.hotels },
+                { label: 'Activities & Sightseeing', value: tripDetails.breakdown.activities },
+                { label: 'Food & Dining', value: tripDetails.breakdown.food },
+                ...(tripDetails.breakdown.visa > 0 ? [{ label: 'Visa & Insurance', value: tripDetails.breakdown.visa }] : [])
+              ].map(item => (
+                <div key={item.label} className="flex justify-between text-[11px]">
+                  <span className={isDarkMode ? 'text-zinc-500' : 'text-slate-400'}>{item.label}</span>
+                  <span className={isDarkMode ? 'text-zinc-300' : 'text-slate-600'}>{formatCurrency(item.value)}</span>
                 </div>
               ))}
             </div>
@@ -226,8 +498,8 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <span className={`text-xs font-medium ${isDarkMode ? 'text-zinc-400' : 'text-slate-500'}`}>Available Savings</span>
-                <span className="text-xs font-bold text-emerald-600">{formatCurrency(tripData.savings)}</span>
+                <span className={`text-xs font-medium ${isDarkMode ? 'text-zinc-400' : 'text-slate-500'}`}>Your Available Savings</span>
+                <span className="text-xs font-bold text-emerald-600">{formatCurrency(Math.round(savings))}</span>
               </div>
               <div className={`h-3 rounded-full overflow-hidden flex ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-100'}`}>
                 <div className="h-full bg-emerald-500 rounded-l-full transition-all duration-1000" style={{ width: `${savingsPercent}%` }} />
@@ -241,7 +513,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
 
             <div className={`rounded-xl p-3 mt-2 ${isDarkMode ? 'bg-federalgold-900/10 border border-federalgold-800/20' : 'bg-federalgold-50 border border-federalgold-100'}`}>
               <p className={`text-xs font-semibold ${isDarkMode ? 'text-federalgold-400' : 'text-federalgold-700'}`}>
-                You're {formatCurrency(tripData.shortfall)} away from your {tripData.destination} dream.
+                You're {formatCurrency(Math.round(shortfall))} away from making this {tripDetails.destination} trip happen.
               </p>
             </div>
           </div>
@@ -266,7 +538,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
         </div>
 
         <p className={`text-sm leading-relaxed mb-4 ${isDarkMode ? 'text-zinc-300' : 'text-slate-600'}`}>
-          Hello {tone.greeting} 👋 Based on your profile and interest in this trip, I've unlocked a <span className="font-bold text-federalblue-900 dark:text-federalblue-400">pre-approved personal loan offer</span> to bridge this gap instantly.
+          Based on your profile and this {tripDetails?.destination} plan, I've unlocked a <span className={`font-bold ${isDarkMode ? 'text-federalblue-400' : 'text-federalblue-900'}`}>pre-approved personal loan offer</span> to bridge this gap instantly, {tone.greeting}.
         </p>
 
         <div className={`rounded-xl overflow-hidden border ${isDarkMode ? 'border-zinc-800' : 'border-slate-100'}`}>
@@ -274,7 +546,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-[10px] text-federalblue-200 font-bold uppercase tracking-widest">Eligible Amount</p>
-                <p className="text-2xl font-bold text-white mt-1">Up to {formatCurrency(Math.round(tripData.shortfall * 2))}</p>
+                <p className="text-2xl font-bold text-white mt-1">Up to {formatCurrency(Math.round(loanAmount * 2))}</p>
               </div>
               <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
                 <IndianRupee className="w-6 h-6 text-white" />
@@ -343,7 +615,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
 
   const renderCustomization = () => {
     const minLoan = 25000;
-    const maxLoan = Math.round(tripData.shortfall * 2);
+    const maxLoan = Math.round(loanAmount * 2);
     const minTenure = 6;
     const maxTenure = 60;
 
@@ -372,9 +644,9 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
                 step={5000}
                 value={loanAmount}
                 onChange={e => setLoanAmount(Number(e.target.value))}
-                className="w-full h-2 rounded-full appearance-none cursor-pointer accent-federalblue-900"
+                className="w-full h-2 rounded-full appearance-none cursor-pointer"
                 style={{
-                  background: `linear-gradient(to right, ${isDarkMode ? '#004d9c' : '#004d9c'} ${((loanAmount - minLoan) / (maxLoan - minLoan)) * 100}%, ${isDarkMode ? '#27272a' : '#e2e8f0'} ${((loanAmount - minLoan) / (maxLoan - minLoan)) * 100}%)`
+                  background: `linear-gradient(to right, #004d9c ${((loanAmount - minLoan) / (maxLoan - minLoan)) * 100}%, ${isDarkMode ? '#27272a' : '#e2e8f0'} ${((loanAmount - minLoan) / (maxLoan - minLoan)) * 100}%)`
                 }}
               />
               <div className="flex justify-between text-[10px] mt-1">
@@ -395,9 +667,9 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
                 step={6}
                 value={tenure}
                 onChange={e => setTenure(Number(e.target.value))}
-                className="w-full h-2 rounded-full appearance-none cursor-pointer accent-federalblue-900"
+                className="w-full h-2 rounded-full appearance-none cursor-pointer"
                 style={{
-                  background: `linear-gradient(to right, ${isDarkMode ? '#004d9c' : '#004d9c'} ${((tenure - minTenure) / (maxTenure - minTenure)) * 100}%, ${isDarkMode ? '#27272a' : '#e2e8f0'} ${((tenure - minTenure) / (maxTenure - minTenure)) * 100}%)`
+                  background: `linear-gradient(to right, #004d9c ${((tenure - minTenure) / (maxTenure - minTenure)) * 100}%, ${isDarkMode ? '#27272a' : '#e2e8f0'} ${((tenure - minTenure) / (maxTenure - minTenure)) * 100}%)`
                 }}
               />
               <div className="flex justify-between text-[10px] mt-1">
@@ -527,7 +799,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
                       onKeyDown={e => handleOtpKeyDown(i, e)}
                       className={`w-10 h-12 text-center text-lg font-bold rounded-xl border-2 transition-all focus:outline-none ${
                         otpVerified
-                          ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400'
+                          ? (isDarkMode ? 'border-emerald-500 bg-emerald-900/20 text-emerald-400' : 'border-emerald-500 bg-emerald-50 text-emerald-700')
                           : (isDarkMode
                             ? 'border-zinc-700 bg-zinc-800 text-white focus:border-federalblue-500'
                             : 'border-slate-200 bg-white text-slate-900 focus:border-federalblue-500')
@@ -538,7 +810,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
                 </div>
 
                 {otpVerified ? (
-                  <div className="flex items-center justify-center gap-2 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+                  <div className={`flex items-center justify-center gap-2 text-xs font-bold ${isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
                     <CheckCircle2 className="w-4 h-4" /> e-Sign Verified Successfully
                   </div>
                 ) : (
@@ -590,8 +862,10 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
     );
   };
 
+  const loanAccNoRef = useRef(`FBLPL${Math.floor(Math.random() * 9000000 + 1000000)}`);
+
   const renderDisbursement = () => {
-    const loanAccNo = `FBLPL${Math.floor(Math.random() * 9000000 + 1000000)}`;
+    const loanAccNo = loanAccNoRef.current;
 
     return (
       <div className={`space-y-4 transition-all duration-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
@@ -634,7 +908,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
 
           <div className={`p-5 space-y-4 ${isDarkMode ? 'bg-zinc-900' : 'bg-white'}`}>
             <p className={`text-sm font-medium text-center ${isDarkMode ? 'text-zinc-300' : 'text-slate-600'}`}>
-              Congratulations, {tone.greeting}! Your {tripData.destination} trip is officially a 'Go'! ✈️
+              Congratulations, {tone.greeting}! Your {tripDetails?.destination} trip is officially a 'Go'! ✈️
             </p>
 
             <div className={`h-px ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-100'}`} />
@@ -684,6 +958,7 @@ const LoanJourneyOrchestrator: React.FC<LoanJourneyProps> = ({
         </span>
       </div>
 
+      {phase === 'INTAKE' && renderIntake()}
       {phase === 'GAP_ANALYSIS' && renderGapAnalysis()}
       {phase === 'PRE_APPROVED' && renderPreApproved()}
       {phase === 'CUSTOMIZATION' && renderCustomization()}

@@ -35,9 +35,11 @@ A premium, AI-first multi-persona banking application for Federal Bank called "O
 5. **Anjali (38)** - Homemaker: Household Admin, Saving Architect, Spending Guardrails
 
 ### Pre-Approved Loan Journey
-- `components/LoanJourneyOrchestrator.tsx` - 5-phase loan journey state machine
+- `components/LoanJourneyOrchestrator.tsx` - 6-phase loan journey state machine
 - Triggered in Oracle AI chat when user mentions trip/travel/vacation keywords
-- Persona-specific trip data: Advait→Japan, Kapoor→Varanasi, Rajesh→Dubai, Ishan→Thailand, Anjali→Singapore
+- **Conversational Intake**: Oracle asks step-by-step (destination → travelers & duration → cities & interests) before any analysis
+- Supports 12 pre-configured destinations (Japan, Thailand, Dubai, Singapore, Bali, Europe, Maldives, Vietnam, Sri Lanka, Varanasi, Goa, Kashmir) + custom destinations
+- Dynamic cost calculation based on user-provided travelers, duration, cities
 - Uses real-time `currentFinancials.liquid` for gap analysis
 - EMI calculated with standard amortization formula at 10.49% p.a.
 - Simulated Aadhaar OTP and e-NACH mandate flows
