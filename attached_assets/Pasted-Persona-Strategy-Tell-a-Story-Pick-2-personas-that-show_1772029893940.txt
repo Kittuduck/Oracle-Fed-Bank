@@ -1,0 +1,27 @@
+Persona Strategy — Tell a Story
+Pick 2 personas that show the most contrast:
+* Advait (34, Salaried Professional) — for the full loan journey. His profile is relatable for most banking clients: young professional, family, planning a trip, needs a bridge loan.
+* Mr. Kapoor (68, Pensioner) — for a quick second segment showing how the same app adapts entirely for a different user. The contrast between a tech-savvy professional and a retiree is impressive.
+
+Demo Flow I'd Recommend (roughly 4-5 minutes)
+1. Open with Persona Selection (~15 sec) — Show the persona selector briefly, pick Advait. This immediately signals "this isn't a one-size-fits-all app."
+2. Dashboard Walkthrough (~30 sec) — Scroll through Advait's dashboard: balance card, recent transactions, active goals, discover cards. Don't linger, just show it's personalized.
+3. Oracle AI Chat (~30 sec) — Open Oracle, show the Daily Brief, then ask something conversational like "How are my goals looking?" to demonstrate AI awareness of the persona's finances.
+4. The Loan Journey — the showstopper (~2-2.5 min) — This is your centerpiece:
+    * Say or type "I'm planning a trip to Singapore"
+    * Walk through the conversational intake (travelers, duration, cities/interests)
+    * Show the cost breakdown and gap analysis
+    * Accept the pre-approved offer
+    * Customize the loan with the sliders
+    * Walk through compliance: Terms → Mandate → e-Sign
+    * Show the disbursement with confetti
+    * Tap "Track My Loan" to show it on the Loans Hub
+5. Quick Persona Switch (~30 sec) — Tap the circle icon, switch to Mr. Kapoor. Show how the entire dashboard, financials, and Oracle AI context change instantly.
+6. Dark Mode Toggle (~10 sec) — Quick toggle to show the premium dark theme. End on this.
+
+Pro Tips for Maximum Impact
+* Use voice input for the loan journey — Speaking "I want to plan a trip to Singapore" is far more impressive than typing it. It shows the AI + voice integration working together.
+* Use a clean browser — Full screen, no bookmarks bar, no other tabs visible.
+* Light mode for most of the demo, dark mode as the finale — light mode photographs and records better on screen.
+* Pre-test the Gemini API before recording — make sure your API key is active and responses are coming through quickly. If there's any lag, do a warm-up chat before you start recording.
+* Screen record at the highest resolution your screen allows, and use a phone-shaped crop/frame to make it look like a real mobile banking app.
