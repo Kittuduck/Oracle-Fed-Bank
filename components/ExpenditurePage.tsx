@@ -481,7 +481,7 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                     </div>
                 </nav>
 
-                <main className="max-w-4xl mx-auto px-6 py-8 space-y-8">
+                <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8">
 
                     {/* Anomaly Detection Section - Federal Style: Flat card, sharp borders */}
                     {anomalyStatus === 'PENDING' && (
@@ -542,11 +542,11 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                     </div>
 
                     {/* Insightful Spending Trends */}
-                    <div className="bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-slate-800 rounded-xl p-6 shadow-federal dark:shadow-none">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                    <div className="bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-slate-800 rounded-xl p-4 sm:p-6 shadow-federal dark:shadow-none">
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3 sm:gap-4">
                             <div>
-                                <h3 className="text-lg font-bold text-[#333333] dark:text-white">Spending Analysis</h3>
-                                <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
+                                <h3 className="text-base sm:text-lg font-bold text-[#333333] dark:text-white">Spending Analysis</h3>
+                                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-1">
                                     Current Period: <span className="font-semibold text-[#333333] dark:text-white">{pData.totalSpend}</span>
                                 </p>
                             </div>
@@ -556,7 +556,7 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                                     <button
                                         key={tf}
                                         onClick={() => setTimeframe(tf)}
-                                        className={`px-4 py-1.5 text-xs font-bold rounded-md transition-all ${timeframe === tf
+                                        className={`px-3 sm:px-4 py-1.5 text-[11px] sm:text-xs font-bold rounded-md transition-all ${timeframe === tf
                                             ? 'bg-white dark:bg-[#1c1e24] text-federalblue-900 dark:text-white shadow-sm border border-[#E0E0E0] dark:border-slate-700'
                                             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
                                             }`}
@@ -567,19 +567,19 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8">
                             <div className="lg:col-span-2 space-y-2">
-                                <div className="h-[250px] w-full">
+                                <div className="h-[220px] sm:h-[250px] w-full">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <ComposedChart data={getData()} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+                                        <ComposedChart data={getData()} margin={{ top: 10, right: 5, left: -10, bottom: 0 }}>
                                             <CartesianGrid vertical={false} stroke={isDarkMode ? '#334155' : '#e2e8f0'} strokeDasharray="3 3" opacity={0.4} />
-                                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: isDarkMode ? '#94a3b8' : '#64748b', fontSize: 12 }} dy={10} />
-                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: isDarkMode ? '#94a3b8' : '#64748b', fontSize: 12 }} tickFormatter={formatCurrency} />
+                                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: isDarkMode ? '#94a3b8' : '#64748b', fontSize: 11 }} dy={10} />
+                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: isDarkMode ? '#94a3b8' : '#64748b', fontSize: 10 }} tickFormatter={formatCurrency} width={45} />
                                             <Tooltip
                                                 cursor={{ fill: isDarkMode ? '#1e293b' : '#f1f5f9', opacity: 0.4 }}
                                                 contentStyle={{ backgroundColor: isDarkMode ? '#1e293b' : '#ffffff', border: isDarkMode ? '1px solid #334155' : '1px solid #e2e8f0', borderRadius: '8px', color: isDarkMode ? '#fff' : '#000' }}
                                             />
-                                            <Bar dataKey="amount" radius={[4, 4, 0, 0]} maxBarSize={40}>
+                                            <Bar dataKey="amount" radius={[4, 4, 0, 0]} maxBarSize={36}>
                                                 {getData().map((entry, index) => (
                                                     <Cell key={`cell-${index}`} fill={isDarkMode ? '#004d9c' : '#004d9c'} />
                                                 ))}
@@ -590,20 +590,20 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                                 </div>
                             </div>
 
-                            <div className="flex flex-col justify-between h-full bg-[#F9F9F9] dark:bg-[#1c1e24] rounded-xl p-5 border border-[#E0E0E0] dark:border-slate-800">
+                            <div className="flex flex-col justify-between bg-[#F9F9F9] dark:bg-[#1c1e24] rounded-xl p-4 sm:p-5 border border-[#E0E0E0] dark:border-slate-800">
                                 <div>
-                                    <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">Where it went</h4>
-                                    <div className="space-y-4">
+                                    <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 sm:mb-4">Where it went</h4>
+                                    <div className="space-y-3 sm:space-y-4">
                                         {getCategoryBreakdown().map((cat) => (
                                             <div key={cat.name}>
                                                 <div className="flex justify-between items-center mb-1.5">
                                                     <div className="flex items-center gap-2">
-                                                        <div className={`p-1.5 rounded-md ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-100'}`}>
+                                                        <div className={`p-1 sm:p-1.5 rounded-md ${isDarkMode ? 'bg-zinc-800' : 'bg-slate-100'}`}>
                                                             <cat.icon className={`w-3 h-3 ${isDarkMode ? 'text-zinc-300' : cat.textColor}`} />
                                                         </div>
-                                                        <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{cat.name}</span>
+                                                        <span className="text-[11px] sm:text-xs font-medium text-slate-700 dark:text-slate-300">{cat.name}</span>
                                                     </div>
-                                                    <span className="text-xs font-semibold text-[#333333] dark:text-white">{formatCurrency(cat.amount)}</span>
+                                                    <span className="text-[11px] sm:text-xs font-semibold text-[#333333] dark:text-white">{formatCurrency(cat.amount)}</span>
                                                 </div>
                                                 <div className="h-1.5 w-full bg-[#E0E0E0] dark:bg-slate-700 rounded-full overflow-hidden">
                                                     <div className={`h-full rounded-full ${cat.color}`} style={{ width: `${cat.percent}%` }}></div>
@@ -633,26 +633,26 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
 
                         <div className="divide-y divide-[#E0E0E0] dark:divide-slate-800">
                             {autopayBillers.map((item) => (
-                                <div key={item.id} className="p-4 flex items-center justify-between hover:bg-[#F9F9F9] dark:hover:bg-slate-800/30 transition-colors">
-                                    <div className="flex items-center gap-4">
-                                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${item.status === 'ACTIVE'
+                                <div key={item.id} className="p-3 sm:p-4 flex items-center justify-between gap-3 hover:bg-[#F9F9F9] dark:hover:bg-slate-800/30 transition-colors">
+                                    <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                                        <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center border flex-shrink-0 ${item.status === 'ACTIVE'
                                             ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400'
                                             : 'bg-[#F6F6F6] dark:bg-slate-800 border-[#E0E0E0] dark:border-slate-700 text-slate-400'
                                             }`}>
-                                            <item.icon className="w-5 h-5" />
+                                            <item.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                                         </div>
-                                        <div>
-                                            <h4 className={`text-sm font-semibold ${item.status === 'ACTIVE' ? 'text-[#333333] dark:text-white' : 'text-slate-500 line-through'}`}>
+                                        <div className="min-w-0">
+                                            <h4 className={`text-xs sm:text-sm font-semibold truncate ${item.status === 'ACTIVE' ? 'text-[#333333] dark:text-white' : 'text-slate-500 line-through'}`}>
                                                 {item.name}
                                             </h4>
                                             <div className="flex items-center gap-2 mt-0.5">
-                                                <span className="text-xs font-medium text-slate-500 dark:text-slate-400">₹{item.amount.toLocaleString()}</span>
-                                                <span className="text-[10px] text-slate-400">• {item.dueDate}</span>
+                                                <span className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-slate-400">₹{item.amount.toLocaleString()}</span>
+                                                <span className="text-[9px] sm:text-[10px] text-slate-400 hidden sm:inline">• {item.dueDate}</span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button onClick={() => onToggleAutopay(item.id)} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${item.status === 'ACTIVE'
+                                    <button onClick={() => onToggleAutopay(item.id)} className={`flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold transition-all flex-shrink-0 ${item.status === 'ACTIVE'
                                         ? 'bg-[#F6F6F6] dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-[#E0E0E0] dark:hover:bg-slate-700'
                                         : 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800'
                                         }`}>
