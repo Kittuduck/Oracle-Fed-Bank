@@ -304,8 +304,8 @@ const GoalTracker: React.FC<GoalTrackerProps> = ({ goals, onAddGoal, onUpdateGoa
 
             {/* Full Report Modal */}
             {showFullReport && (
-                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-                    <div className="bg-white dark:bg-[#15161a] w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col max-h-[90vh]">
+                <div className="absolute inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white dark:bg-[#15161a] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col max-h-[80vh]">
                         <div className="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-[#1c1e24]/50">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-federalblue-100 dark:bg-federalblue-500/10 rounded-lg text-federalblue-600 dark:text-federalblue-400">
@@ -381,8 +381,8 @@ const GoalTracker: React.FC<GoalTrackerProps> = ({ goals, onAddGoal, onUpdateGoa
 
             {/* Add/Edit Goal Modal */}
             {(isAdding || editingGoal) && (
-                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-                    <div className="bg-white dark:bg-[#15161a] w-full max-w-md mx-4 rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 max-h-[90vh] flex flex-col">
+                <div className="absolute inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white dark:bg-[#15161a] w-full max-w-sm mx-4 rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 max-h-[80vh] flex flex-col">
                         <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-[#1c1e24]/50 shrink-0">
                             <h3 className="font-bold text-slate-900 dark:text-white">
                                 {editingGoal ? 'Edit Strategic Goal' : 'New Strategic Goal'}

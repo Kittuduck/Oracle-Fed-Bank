@@ -395,7 +395,7 @@ const App: React.FC = () => {
 
         if (view === 'ORACLE') {
             return (
-                <div className="fixed inset-0 z-[50] w-full max-w-md mx-auto bg-white dark:bg-[#15161a] transition-colors duration-300 shadow-2xl overflow-hidden shadow-apple-lg border-x-2 border-slate-800 flex flex-col">
+                <div className="absolute inset-0 z-[50] bg-white dark:bg-[#15161a] transition-colors duration-300 overflow-hidden flex flex-col">
                     <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#15161a]/95 backdrop-blur-md shrink-0 py-4 px-6 flex justify-between items-center relative z-10 transition-colors">
                         <div className="flex items-center gap-3">
                             <button
@@ -448,7 +448,7 @@ const App: React.FC = () => {
 
         if (view === 'ORACLE_HUB') {
             return (
-                <div className="fixed inset-0 z-[40] w-full max-w-md mx-auto bg-white dark:bg-[#0b0c10] flex flex-col transition-colors duration-300 pb-20 border-x-2 border-slate-800 shadow-2xl overflow-hidden">
+                <div className="absolute inset-0 z-[40] bg-white dark:bg-[#0b0c10] flex flex-col transition-colors duration-300 pb-20 overflow-hidden">
                     <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#0b0c10]/95 backdrop-blur-md sticky top-0 z-50 shrink-0">
                         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
                             <div className="flex items-center gap-4">
@@ -502,7 +502,7 @@ const App: React.FC = () => {
 
         if (view === 'AUTOMATION_HUB') {
             return (
-                <div className="fixed inset-0 z-[40] w-full max-w-md mx-auto overflow-hidden">
+                <div className="absolute inset-0 z-[40] overflow-hidden">
                     <AutomationHub
                         isDarkMode={isDarkMode}
                         onBack={() => setView('ORACLE_HUB')}
@@ -513,8 +513,8 @@ const App: React.FC = () => {
 
         if (view === 'GOALS') {
             return (
-                <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-slate-900 dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 pb-20 pt-[60px]">
-                    <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#0b0c10]/95 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
+                <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-slate-900 dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 pb-20">
+                    <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#0b0c10]/95 backdrop-blur-md sticky top-0 z-50">
                         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
                             <div className="flex items-center gap-4">
                                 <button
@@ -584,8 +584,10 @@ const App: React.FC = () => {
 
     return (
         <div className={`h-full ${isDarkMode ? 'dark' : ''} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''} bg-gray-50 dark:bg-gray-900 flex justify-center min-h-screen`}>
-            <div className="w-full max-w-md h-full min-h-screen bg-white dark:bg-zinc-950 border-2 border-slate-800 shadow-2xl relative overflow-hidden">
-                {renderContent()}
+            <div className="w-full max-w-md h-screen bg-white dark:bg-zinc-950 border-2 border-slate-800 shadow-2xl relative flex flex-col overflow-hidden">
+                <div className="flex-1 overflow-y-auto overflow-x-hidden relative">
+                    {renderContent()}
+                </div>
                 {(view !== 'PERSONA_SELECT' && view !== 'ONBOARDING' && view !== 'PAYMENTS' && view !== 'CARDS' && view !== 'SUPPORT' && view !== 'LOANS' && view !== 'CARD_APPLY' && view !== 'NICHE_LOANS' && view !== 'LEGACY_SERVICES' && view !== 'ORACLE') && (
                     <BottomNav
                         activePage={view as any}

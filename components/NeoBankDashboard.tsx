@@ -121,9 +121,9 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
     };
 
     return (
-        <div className={`min-h-screen pb-32 pt-[72px] animate-fade-in font-sans selection:bg-federalgold-100 selection:text-federalgold-900 bg-zinc-50 dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
+        <div className={`min-h-screen pb-32 animate-fade-in font-sans selection:bg-federalgold-100 selection:text-federalgold-900 bg-zinc-50 dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             {/* --- Atmospheric Header --- */}
-            <div className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl px-6 py-4 flex justify-between items-center transition-colors duration-500 border-b border-slate-200/50 dark:border-white/10">
+            <div className="sticky top-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl px-6 py-4 flex justify-between items-center transition-colors duration-500 border-b border-slate-200/50 dark:border-white/10">
                 <div className="flex items-center gap-3 group cursor-pointer" onClick={onOpenProfile}>
                     <div className="relative w-11 h-11">
                         <div className="absolute inset-0 bg-federalblue-900/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -476,7 +476,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
 
             {/* --- Debit Card Details Modal --- */}
             {showCardDetails && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                <div className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
                     <div className="w-full max-w-sm bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:to-black p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/20 shadow-2xl space-y-8 relative overflow-hidden transition-colors">
                         {/* Background Glows */}
                         <div className="absolute top-0 right-0 w-48 h-48 bg-federalblue-600/10 dark:bg-federalblue-600/20 rounded-full blur-[60px] -mr-20 -mt-20"></div>
@@ -544,7 +544,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
             )}
 
             {/* Global Mesh Gradient Overlay (Very subtle) */}
-            <div className="fixed inset-0 pointer-events-none z-[-1] opacity-50">
+            <div className="absolute inset-0 pointer-events-none z-[-1] opacity-50">
                 <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-federalblue-50 rounded-full blur-[120px]"></div>
                 <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-federalgold-50 rounded-full blur-[100px]"></div>
             </div>

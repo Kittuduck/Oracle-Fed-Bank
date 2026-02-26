@@ -289,9 +289,9 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-[#333333] dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 relative pt-[60px]">
+        <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-[#333333] dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 relative">
             {/* Navigation */}
-            <nav className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-[#0b0c10]/90 backdrop-blur-md z-40 px-6 py-4 flex justify-between items-center border-b border-[#E0E0E0] dark:border-slate-800 transition-colors">
+            <nav className="sticky top-0 bg-white/95 dark:bg-[#0b0c10]/90 backdrop-blur-md z-40 px-6 py-4 flex justify-between items-center border-b border-[#E0E0E0] dark:border-slate-800 transition-colors">
                 <div className="flex items-center gap-4">
                     <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full hover:bg-[#F6F6F6] dark:hover:bg-slate-800/50 transition-colors">
                         <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
@@ -311,7 +311,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
 
             {/* Global Toast Notification */}
             {toastMessage && (
-                <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-3 rounded-full text-sm font-bold shadow-2xl flex items-center gap-2 animate-fade-in z-50">
+                <div className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-5 py-3 rounded-full text-sm font-bold shadow-2xl flex items-center gap-2 animate-fade-in z-50">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                     {toastMessage}
                 </div>
@@ -662,7 +662,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
 
             {/* Top Up Modal */}
             {activeModal === 'TOPUP' && (
-                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+                <div className="absolute inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
                     <div className="bg-white dark:bg-[#15161a] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-[#E0E0E0] dark:border-slate-800">
                         <div className="p-6 text-center border-b border-[#E0E0E0] dark:border-slate-800/50">
                             <div className="w-16 h-16 bg-federalblue-50 dark:bg-federalblue-900/20 rounded-full flex items-center justify-center mx-auto mb-4 text-federalblue-900 dark:text-federalblue-400">
@@ -730,8 +730,8 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
 
             {/* Manage Access Modal */}
             {activeModal === 'MANAGE' && (
-                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-                    <div className="bg-white dark:bg-[#15161a] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-[#E0E0E0] dark:border-slate-800 flex flex-col max-h-[80vh]">
+                <div className="absolute inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white dark:bg-[#15161a] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-[#E0E0E0] dark:border-slate-800 flex flex-col max-h-[80vh]">
                         <div className="px-6 py-5 border-b border-[#E0E0E0] dark:border-slate-800 flex justify-between items-center bg-[#F9F9F9] dark:bg-[#1c1e24]/50">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-federalblue-50 dark:bg-federalblue-900/10 rounded-lg text-federalblue-900 dark:text-federalblue-400">

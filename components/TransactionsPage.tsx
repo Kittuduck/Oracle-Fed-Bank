@@ -33,8 +33,8 @@ const TransactionsPage: React.FC<TransactionsPageProps> = ({ onBack, isDarkMode,
 
     return (
         <div className={`min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'}`}>
-            <div className="bg-transparent min-h-screen font-sans pt-[60px]">
-                <nav className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-xl z-50 border-b border-[#E0E0E0] dark:border-zinc-800 transition-colors">
+            <div className="bg-transparent min-h-screen font-sans">
+                <nav className="sticky top-0 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-xl z-50 border-b border-[#E0E0E0] dark:border-zinc-800 transition-colors">
                     <div className="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
                         <div className="flex items-center gap-4">
                             <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full hover:bg-[#F6F6F6] dark:hover:bg-slate-800/50 transition-colors">

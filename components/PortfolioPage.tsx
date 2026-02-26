@@ -294,10 +294,10 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
 
     return (
         <div className={`min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
-            <div className="bg-transparent min-h-screen font-sans pt-[60px]">
+            <div className="bg-transparent min-h-screen font-sans">
 
                 {/* Navigation */}
-                <nav className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-xl z-50 border-b border-[#E0E0E0] dark:border-zinc-800 transition-colors">
+                <nav className="sticky top-0 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-xl z-50 border-b border-[#E0E0E0] dark:border-zinc-800 transition-colors">
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
                         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                             <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full hover:bg-[#F6F6F6] dark:hover:bg-slate-800/50 transition-colors flex-shrink-0">
@@ -610,8 +610,8 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({ onBack, isDarkMode, toggl
 
                 {/* Optimization Report Modal */}
                 {showReport && (
-                    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-                        <div className="bg-white dark:bg-[#15161a] rounded-xl w-full max-w-2xl border border-[#E0E0E0] dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+                    <div className="absolute inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+                        <div className="bg-white dark:bg-[#15161a] rounded-xl w-full max-w-sm border border-[#E0E0E0] dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
                             <div className="px-6 py-4 border-b border-[#E0E0E0] dark:border-slate-800 flex justify-between items-center bg-[#F9F9F9] dark:bg-[#1c1e24]/50">
                                 <div className="flex items-center gap-3">
                                     {executionStep !== 'SUCCESS' && (

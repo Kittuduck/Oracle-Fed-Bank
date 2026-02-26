@@ -72,8 +72,8 @@ const CardManagement: React.FC<CardManagementProps> = ({ onBack }) => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 text-[#333333] font-sans flex flex-col pb-safe pt-[60px]">
-            <div className="px-6 py-4 flex items-center justify-between border-b border-slate-200 bg-white/95 backdrop-blur-md fixed top-0 left-0 right-0 z-20">
+        <div className="min-h-screen bg-slate-50 text-[#333333] font-sans flex flex-col pb-safe">
+            <div className="px-6 py-4 flex items-center justify-between border-b border-slate-200 bg-white/95 backdrop-blur-md sticky top-0 z-20">
                 <button onClick={onBack} className="p-2 -ml-2 text-slate-400 hover:text-federalblue-900 transition-colors">
                     <ArrowLeft className="w-6 h-6" />
                 </button>

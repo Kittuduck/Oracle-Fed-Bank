@@ -1182,7 +1182,7 @@ const LoanJourneyOrchestrator = ({
     return (
       <div className={`space-y-4 transition-all duration-500 ${animateIn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         {showConfetti && (
-          <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none z-50 overflow-hidden">
             {Array.from({ length: 40 }).map((_, i) => {
               const colors = ['#ff5500', '#0055cc', '#00c853', '#ffab00', '#d500f9', '#ff1744', '#00bcd4', '#651fff'];
               return (

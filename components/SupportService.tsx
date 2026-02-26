@@ -46,7 +46,7 @@ const SupportService: React.FC<SupportServiceProps> = ({ onBack, isDarkMode, fes
     ];
 
     const renderHeader = (title: string) => (
-        <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md fixed top-0 left-0 right-0 z-20 transition-colors">
+        <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md sticky top-0 z-20 transition-colors">
             <button onClick={view === 'IDLE' ? onBack : () => setView('IDLE')} className="p-2 -ml-2 text-slate-400 hover:text-federalblue-900 transition-colors">
                 <ArrowLeft className="w-6 h-6" />
             </button>
@@ -70,7 +70,7 @@ const SupportService: React.FC<SupportServiceProps> = ({ onBack, isDarkMode, fes
 
     if (view === 'FRAUD') {
         return (
-            <div className={`flex flex-col h-full min-h-screen pt-[60px] bg-white dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
+            <div className={`flex flex-col h-full min-h-screen bg-white dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
                 {renderHeader('Report Fraud')}
                 <div className="p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4">
                     <div className="bg-red-50 dark:bg-red-950/20 p-6 rounded-2xl border border-red-100 dark:border-red-900/30 flex flex-col items-center text-center gap-4">
@@ -110,7 +110,7 @@ const SupportService: React.FC<SupportServiceProps> = ({ onBack, isDarkMode, fes
 
     if (view === 'DISPUTE') {
         return (
-            <div className={`flex flex-col h-full min-h-screen pt-[60px] bg-white dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
+            <div className={`flex flex-col h-full min-h-screen bg-white dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
                 {renderHeader('Raise Dispute')}
                 <div className="p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4">
                     <div className="bg-federalblue-50 dark:bg-federalblue-900/20 p-6 rounded-2xl border border-federalblue-100 dark:border-federalblue-900/30 flex flex-col items-center text-center gap-4">
@@ -164,7 +164,7 @@ const SupportService: React.FC<SupportServiceProps> = ({ onBack, isDarkMode, fes
 
     if (view === 'TICKETS') {
         return (
-            <div className={`flex flex-col h-full min-h-screen pt-[60px] bg-white dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
+            <div className={`flex flex-col h-full min-h-screen bg-white dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
                 {renderHeader('Ticket History')}
                 <div className="p-6 space-y-4 animate-in fade-in slide-in-from-right-4">
                     {[
@@ -190,7 +190,7 @@ const SupportService: React.FC<SupportServiceProps> = ({ onBack, isDarkMode, fes
     }
 
     return (
-        <div className={`flex flex-col min-h-screen pt-[60px] transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
+        <div className={`flex flex-col min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-zinc-50 text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             {renderHeader('Support & Safety')}
 
             <div className="p-6 space-y-8 flex-1">
@@ -258,7 +258,7 @@ const SupportService: React.FC<SupportServiceProps> = ({ onBack, isDarkMode, fes
             </div>
 
             {toastMsg && (
-                <div className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-6 py-3 rounded-full text-xs font-bold shadow-2xl animate-in fade-in slide-in-from-bottom-5 z-50">
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-zinc-900 text-white px-6 py-3 rounded-full text-xs font-bold shadow-2xl animate-in fade-in slide-in-from-bottom-5 z-50">
                     {toastMsg}
                 </div>
             )}

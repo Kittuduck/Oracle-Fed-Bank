@@ -21,7 +21,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activePage, onNavigate }) => {
   };
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-48px)] max-sm:w-[calc(100%-32px)] max-w-sm glass-card rounded-[2.5rem] py-4 px-8 flex justify-between items-center z-50 transition-all font-sans shadow-apple-lg border-t-white/90 dark:border-t-white/10">
+    <div className="shrink-0 mx-4 mb-4 glass-card rounded-[2.5rem] py-4 px-8 flex justify-between items-center z-50 transition-all font-sans shadow-apple-lg border-t-white/90 dark:border-t-white/10">
       <div
         onClick={() => onNavigate('DASHBOARD')}
         className={`flex flex-col items-center gap-1 cursor-pointer transition-all duration-300 hover:scale-110 active:scale-90 ${getIconColor('DASHBOARD')}`}
