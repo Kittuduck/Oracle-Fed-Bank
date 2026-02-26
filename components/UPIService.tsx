@@ -349,9 +349,9 @@ const UPIService: React.FC<UPIServiceProps> = ({ onBack, currentBalance, isDarkM
     );
 
     return (
-        <div className={`min-h-screen transition-all duration-700 font-sans flex flex-col pt-safe overflow-hidden ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
+        <div className={`min-h-screen transition-all duration-700 font-sans flex flex-col pt-[60px] overflow-hidden ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-white text-[#333333]'} ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             {/* Header */}
-            <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-xl sticky top-0 z-50">
+            <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-xl fixed top-0 left-0 right-0 z-50">
                 <button
                     onClick={view === 'LANDING' ? onBack : () => setView('LANDING')}
                     className="p-2 -ml-2 text-zinc-400 hover:text-federalblue-900 transition-colors"

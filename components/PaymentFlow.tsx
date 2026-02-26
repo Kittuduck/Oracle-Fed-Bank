@@ -87,7 +87,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
     };
 
     const renderHeader = () => (
-        <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 sticky top-0 z-20">
+        <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md fixed top-0 left-0 right-0 z-20">
             <button onClick={step === 'IDLE' ? onBack : () => setStep('IDLE')} className="p-2 -ml-2 text-slate-400 dark:text-zinc-500 hover:text-federalblue-900 dark:hover:text-white transition-colors">
                 <ArrowLeft className="w-6 h-6" />
             </button>
@@ -140,7 +140,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
 
     if (step === 'VERIFY') {
         return (
-            <div className={`flex flex-col h-full bg-white dark:bg-zinc-950 ${isDarkMode ? 'dark' : ''}`}>
+            <div className={`flex flex-col h-full pt-[60px] bg-white dark:bg-zinc-950 ${isDarkMode ? 'dark' : ''}`}>
                 {renderHeader()}
                 <div className="p-8 flex-1 flex flex-col items-center justify-center text-center space-y-8 animate-in fade-in slide-in-from-bottom-4">
                     <div className="w-20 h-20 bg-federalblue-50 text-federalblue-900 rounded-full flex items-center justify-center relative">
@@ -176,7 +176,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
 
     if (step === 'AMOUNT') {
         return (
-            <div className={`flex flex-col h-full bg-white dark:bg-zinc-950 ${isDarkMode ? 'dark' : ''}`}>
+            <div className={`flex flex-col h-full pt-[60px] bg-white dark:bg-zinc-950 ${isDarkMode ? 'dark' : ''}`}>
                 {renderHeader()}
                 <div className="p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4">
                     <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-zinc-900 rounded-2xl border border-slate-100 dark:border-zinc-800">
@@ -225,7 +225,7 @@ const PaymentFlow: React.FC<PaymentFlowProps> = ({ onBack, onPaymentSuccess, cur
     }
 
     return (
-        <div className={`flex flex-col h-full min-h-screen bg-white dark:bg-zinc-950 ${isDarkMode ? 'dark' : ''} transition-all duration-700`}>
+        <div className={`flex flex-col h-full min-h-screen pt-[60px] bg-white dark:bg-zinc-950 ${isDarkMode ? 'dark' : ''} transition-all duration-700`}>
             {renderHeader()}
 
             <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8">

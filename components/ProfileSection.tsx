@@ -289,9 +289,9 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-[#333333] dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 relative">
+        <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-[#333333] dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 relative pt-[60px]">
             {/* Navigation */}
-            <nav className="sticky top-0 bg-white/95 dark:bg-[#0b0c10]/90 backdrop-blur-md z-40 px-6 py-4 flex justify-between items-center border-b border-[#E0E0E0] dark:border-slate-800 transition-colors">
+            <nav className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-[#0b0c10]/90 backdrop-blur-md z-40 px-6 py-4 flex justify-between items-center border-b border-[#E0E0E0] dark:border-slate-800 transition-colors">
                 <div className="flex items-center gap-4">
                     <button onClick={onBack} className="p-2 -ml-2 text-slate-500 hover:text-federalblue-900 rounded-full hover:bg-[#F6F6F6] dark:hover:bg-slate-800/50 transition-colors">
                         <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />

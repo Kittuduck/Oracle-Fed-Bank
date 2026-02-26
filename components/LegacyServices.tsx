@@ -53,7 +53,7 @@ const LegacyServices: React.FC<LegacyServicesProps> = ({ onBack, isDarkMode, fes
 
     return (
         <div className={`min-h-screen transition-all duration-700 ${isDarkMode ? 'dark bg-zinc-950 text-zinc-100' : 'bg-slate-50 text-[#333333]'} flex flex-col font-sans ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
-            <div className={`px-6 py-4 flex items-center gap-4 border-b sticky top-0 z-10 ${isDarkMode ? 'bg-zinc-950/90 border-zinc-800 backdrop-blur-md' : 'bg-white border-slate-100'}`}>
+            <div className={`px-6 py-4 flex items-center gap-4 border-b fixed top-0 left-0 right-0 z-10 ${isDarkMode ? 'bg-zinc-950/90 border-zinc-800 backdrop-blur-md' : 'bg-white/95 border-slate-100 backdrop-blur-md'}`}>
                 <button onClick={view === 'SELECTION' ? onBack : () => setView('SELECTION')} className={`p-2 -ml-2 ${isDarkMode ? 'text-zinc-500 hover:text-white' : 'text-slate-400 hover:text-federalblue-900'} transition-colors`}>
                     <ArrowLeft className="w-6 h-6" />
                 </button>
@@ -64,7 +64,7 @@ const LegacyServices: React.FC<LegacyServicesProps> = ({ onBack, isDarkMode, fes
                 </h2>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            <div className="flex-1 overflow-y-auto p-6 pt-[80px] space-y-6">
                 {view === 'SELECTION' && (
                     <div className="space-y-4">
                         <div
