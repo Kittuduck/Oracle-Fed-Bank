@@ -1,0 +1,98 @@
+SCRIPT PROPOSAL (here for review)
+
+Here's a polished demo script based on your persona strategy and flow. I've written it as a narration guide — what to say, what to do on screen, and timing cues.
+
+ORACLE BY FEDERAL BANK — PRODUCT DEMO SCRIPT
+
+Duration: ~4-5 minutes
+
+[SCENE 1: PERSONA SELECTION — 15 sec]
+Screen shows the Oracle persona selector
+NARRATION:
+
+"Oracle isn't a one-size-fits-all banking app. It adapts to who you are. Every dashboard, every insight, every interaction is shaped by your life stage, your goals, and your financial reality. Let's start with Advait — a 34-year-old salaried professional."
+Tap Advait's card
+
+[SCENE 2: DASHBOARD WALKTHROUGH — 30 sec]
+Dashboard loads with Advait's data. Scroll slowly through each section.
+NARRATION:
+
+"Advait sees his total liquidity up front — twelve lakhs, with a 2.4% month-over-month trend. Below that, quick actions personalized for his profile: Send, UPI, Scan, and SOS.
+(scroll to Discover cards)
+The Discover section surfaces contextual recommendations — a Fat FIRE calculator, family insurance review, smart automations — all tied to his actual financial data.
+(scroll to Recent Transactions)
+Recent transactions, Oracle Daily Briefs... everything here is Advait's. No generic content."
+
+[SCENE 3: ORACLE AI CHAT — 30 sec]
+Tap the "Ask Oracle anything..." bar or the Oracle button in the bottom nav
+NARRATION:
+
+"Oracle is our AI intelligence layer — powered by Gemini. It knows Advait's portfolio, his goals, his dependents, his risk profile. It doesn't just answer questions — it thinks ahead."
+Type or speak: "How are my goals looking?"
+(Wait for response)
+"Notice — it's referencing his Fat FIRE target, Riya's education fund, his parents' healthcare corpus. This isn't a generic chatbot. This is a financial co-pilot that knows your life."
+
+[SCENE 4: THE LOAN JOURNEY — 2 to 2.5 min]
+This is the centerpiece. Stay in the Oracle chat.
+NARRATION:
+
+"Now here's where it gets interesting. Watch what happens when Advait mentions a trip."
+[4a: Trigger — 10 sec]
+
+Tap the microphone button and speak:
+
+"I'm planning a trip to Singapore"
+(Oracle detects travel intent and launches the conversational intake)
+"Oracle immediately recognizes this as a potential financial event. Instead of showing a loan form, it starts a conversation."
+[4b: Conversational Intake — 30 sec]
+
+Oracle asks step by step. Respond to each:
+
+Travelers & Duration: "2 travelers, 5 days"
+Cities & Interests: Select cities, pick interests like food, culture, shopping
+
+"It's gathering context the way a real advisor would — naturally, one step at a time. No forms. No dropdowns. Just conversation."
+[4c: Cost Breakdown & Gap Analysis — 20 sec]
+
+(The breakdown appears: flights, hotels, activities, food — with a total cost and gap amount)
+"Oracle builds a real cost estimate — flights, hotels, activities, food — all itemized. Then it does something critical: it checks Advait's actual liquid cash against the trip cost and identifies the funding gap."
+[4d: Pre-Approved Offer — 15 sec]
+
+(CIBIL consent screen appears, then the pre-approved offer)
+"With one tap on CIBIL consent, Oracle pulls a pre-approved offer. Ten-point-four-nine percent. No branch visit. No paperwork."
+[4e: Loan Modeler — 20 sec]
+
+(Interactive sliders appear for amount and tenure)
+"And this is fully customizable. Advait can adjust the loan amount, slide the tenure — the EMI recalculates in real time. He's in control of the exact commitment he's making."
+Adjust sliders slightly to show real-time EMI change
+[4f: Digital Compliance — 30 sec]
+
+(Three steps: Terms → Mandate → e-Sign)
+"Compliance is fully digital. Terms acceptance... e-NACH mandate for automated EMI deductions... and Aadhaar-based e-Sign with OTP verification. Three taps. Done."
+Tap through each: Accept Terms → Confirm Mandate → Enter OTP → Tap "Send Secure OTP & Disburse"
+[4g: Disbursement — 15 sec]
+
+(Confetti animation plays. Disbursement confirmation shows.)
+"And... disbursed. Confetti. The money is in his account. The entire journey — from 'I want to go to Singapore' to money in the bank — happened inside a single conversation."
+[4h: Loan Tracking — 10 sec]
+
+Tap "Track My Loan"
+"And it doesn't end there. The loan now appears in his Loans Hub with a full EMI schedule, payment tracker, and next-due alerts."
+
+[SCENE 5: PERSONA SWITCH — 30 sec]
+Tap the circle icon in the header to return to persona selector. Tap Mr. Kapoor.
+NARRATION:
+
+"Now watch this. Same app. Different person."
+(Mr. Kapoor's dashboard loads)
+"Mr. Kapoor is 68. Retired bank manager. His dashboard shows pension inflows, Senior Citizen Savings Scheme, health insurance reminders. The Oracle briefs warn him about FD maturity dates and TDS optimization — not travel loans.
+The quick actions are different. The goals are different. The entire personality of the app has changed — because the user changed."
+
+[SCENE 6: DARK MODE FINALE — 10 sec]
+Tap the moon icon
+NARRATION:
+
+"And one last thing — everything you've seen works beautifully in dark mode."
+(The UI transitions to the dark theme)
+"Oracle by Federal Bank. AI-first. Persona-aware. Built for the way people actually bank."
+(Hold on the dark mode dashboard for 3 seconds. End.)
