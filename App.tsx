@@ -513,8 +513,8 @@ const App: React.FC = () => {
 
         if (view === 'GOALS') {
             return (
-                <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-slate-900 dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 pb-20">
-                    <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#0b0c10]/95 backdrop-blur-md sticky top-0 z-50">
+                <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-slate-900 dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 pb-20 pt-[60px]">
+                    <nav className="border-b border-[#E0E0E0] dark:border-slate-800/50 bg-white/95 dark:bg-[#0b0c10]/95 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
                         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
                             <div className="flex items-center gap-4">
                                 <button
