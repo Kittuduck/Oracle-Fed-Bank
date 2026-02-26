@@ -121,7 +121,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
     };
 
     return (
-        <div className={`relative min-h-screen pb-32 animate-fade-in font-sans selection:bg-federalgold-100 selection:text-federalgold-900 bg-zinc-50 dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
+        <div className={`min-h-screen pb-32 animate-fade-in font-sans selection:bg-federalgold-100 selection:text-federalgold-900 bg-zinc-50 dark:bg-zinc-950 transition-all duration-700 ${festival !== 'DEFAULT' ? `theme-festive-${festival.toLowerCase()}` : ''}`}>
             {/* --- Atmospheric Header --- */}
             <div className="sticky top-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl px-6 py-4 flex justify-between items-center transition-colors duration-500 border-b border-slate-200/50 dark:border-white/10">
                 <div className="flex items-center gap-3 group cursor-pointer" onClick={onOpenProfile}>
@@ -476,8 +476,8 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
 
             {/* --- Debit Card Details Modal --- */}
             {showCardDetails && (
-                <div className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
-                    <div className="w-full max-w-sm bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:to-black p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/20 shadow-2xl space-y-8 relative overflow-hidden transition-colors">
+                <div className="absolute inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl animate-in fade-in duration-300">
+                    <div className="w-full max-w-sm bg-white dark:bg-gradient-to-br dark:from-zinc-900 dark:to-black p-6 rounded-[2rem] border border-slate-200 dark:border-white/20 shadow-2xl space-y-6 relative overflow-hidden transition-colors">
                         {/* Background Glows */}
                         <div className="absolute top-0 right-0 w-48 h-48 bg-federalblue-600/10 dark:bg-federalblue-600/20 rounded-full blur-[60px] -mr-20 -mt-20"></div>
                         <div className="absolute bottom-0 left-0 w-48 h-48 bg-federalgold-500/5 dark:bg-federalgold-500/10 rounded-full blur-[60px] -ml-20 -mb-20"></div>
@@ -499,7 +499,7 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
                             <div className="space-y-2 group cursor-pointer" onClick={() => handleCopy('4321 5432 9876 8921', 'Card Number')}>
                                 <p className="text-[10px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-[0.2em]">Card Number</p>
                                 <div className="flex items-center justify-between">
-                                    <p className="text-lg sm:text-2xl font-light text-slate-900 dark:text-white tracking-[0.05em] sm:tracking-[0.1em] tabular-nums">4321 5432 9876 8921</p>
+                                    <p className="text-base font-light text-slate-900 dark:text-white tracking-[0.05em] tabular-nums">4321 5432 9876 8921</p>
                                     <div className="flex items-center gap-2">
                                         {copied === 'Card Number' && <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Copied!</span>}
                                         <Smartphone className="w-4 h-4 text-slate-300 dark:text-white/20 group-hover:text-slate-600 dark:group-hover:text-white transition-colors" />
@@ -544,9 +544,9 @@ const NeoBankDashboard: React.FC<NeoBankDashboardProps> = ({
             )}
 
             {/* Global Mesh Gradient Overlay (Very subtle) */}
-            <div className="absolute inset-0 pointer-events-none z-[-1] opacity-50">
-                <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-federalblue-50 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-federalgold-50 rounded-full blur-[100px]"></div>
+            <div className="relative pointer-events-none z-[-1] opacity-50 h-0 overflow-visible">
+                <div className="absolute top-[-50vh] left-0 w-[500px] h-[500px] bg-federalblue-50 rounded-full blur-[120px]"></div>
+                <div className="absolute top-[-30vh] right-0 w-[400px] h-[400px] bg-federalgold-50 rounded-full blur-[100px]"></div>
             </div>
         </div>
     );

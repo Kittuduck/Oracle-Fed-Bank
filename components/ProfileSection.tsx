@@ -289,7 +289,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ onBack, isDarkMode, tog
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-[#333333] dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300 relative">
+        <div className="min-h-screen bg-white dark:bg-[#0b0c10] text-[#333333] dark:text-slate-200 font-sans animate-fade-in transition-colors duration-300">
             {/* Navigation */}
             <nav className="sticky top-0 bg-white/95 dark:bg-[#0b0c10]/90 backdrop-blur-md z-40 px-6 py-4 flex justify-between items-center border-b border-[#E0E0E0] dark:border-slate-800 transition-colors">
                 <div className="flex items-center gap-4">
