@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
     ArrowLeft,
+    ChevronLeft,
     ChevronRight,
     CreditCard,
     Lock,
@@ -86,55 +87,70 @@ const CardManagement: React.FC<CardManagementProps> = ({ onBack }) => {
 
             <div className="flex-1 overflow-y-auto">
                 <div className="px-6 py-8 space-y-6">
-                    <div className="relative h-56 w-full">
-                        {cards.map((card, idx) => (
-                            <div
-                                key={card.id}
-                                onClick={() => setActiveIndex(idx)}
-                                className={`absolute inset-0 rounded-2xl p-6 text-white shadow-2xl transition-all duration-500 cursor-pointer ${card.color} ${idx === activeIndex
-                                    ? 'translate-y-0 scale-100 opacity-100 z-10'
-                                    : idx < activeIndex ? '-translate-x-full opacity-0' : 'translate-y-4 scale-95 opacity-40 z-0'
-                                    }`}
-                            >
-                                <div className="flex justify-between items-start mb-12">
-                                    <div className="space-y-0.5">
-                                        <p className="text-[10px] font-bold opacity-60 uppercase tracking-widest">{card.type}</p>
-                                        <h3 className="text-lg font-bold tracking-tight">{card.name}</h3>
-                                    </div>
-                                    <Wifi className="w-6 h-6 rotate-90 opacity-40" />
-                                </div>
-
-                                <div className="space-y-4" onClick={(e) => { e.stopPropagation(); handleCopy(card.number.replace(/\s/g, ''), 'Card Number'); }}>
-                                    <div className="flex justify-between items-center group/num">
-                                        <p className="text-xl font-mono tracking-[0.2em]">{card.number}</p>
-                                        {copied === 'Card Number' && activeIndex === idx && <span className="text-[10px] text-emerald-400 font-bold">Copied!</span>}
-                                    </div>
-                                    <div className="flex justify-between items-end">
+                    <div className="relative h-56 w-full overflow-hidden">
+                        <div className="flex transition-transform duration-500 ease-out h-full" style={{ transform: `translateX(-${activeIndex * 100}%)` }}>
+                            {cards.map((card, idx) => (
+                                <div
+                                    key={card.id}
+                                    className={`flex-shrink-0 w-full h-full rounded-2xl p-6 text-white shadow-2xl relative ${card.color}`}
+                                >
+                                    <div className="flex justify-between items-start mb-12">
                                         <div className="space-y-0.5">
-                                            <p className="text-[8px] font-bold opacity-60 uppercase">Expiry Date</p>
-                                            <p className="text-sm font-bold">{card.expiry}</p>
+                                            <p className="text-[10px] font-bold opacity-60 uppercase tracking-widest">{card.type}</p>
+                                            <h3 className="text-lg font-bold tracking-tight">{card.name}</h3>
                                         </div>
-                                        <div className="w-12 h-8 bg-white/20 rounded backdrop-blur-sm border border-white/10 flex items-center justify-center italic font-bold text-xs">
-                                            VISA
-                                        </div>
+                                        <Wifi className="w-6 h-6 rotate-90 opacity-40" />
                                     </div>
-                                </div>
 
-                                {card.isBlocked && (
-                                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] rounded-2xl flex items-center justify-center">
-                                        <div className="bg-white text-slate-900 px-4 py-2 rounded-full flex items-center gap-2 shadow-xl">
-                                            <Lock className="w-4 h-4 text-red-500" />
-                                            <span className="text-xs font-bold uppercase tracking-widest">Card Blocked</span>
+                                    <div className="space-y-4" onClick={(e) => { e.stopPropagation(); handleCopy(card.number.replace(/\s/g, ''), 'Card Number'); }}>
+                                        <div className="flex justify-between items-center group/num">
+                                            <p className="text-xl font-mono tracking-[0.2em]">{card.number}</p>
+                                            {copied === 'Card Number' && activeIndex === idx && <span className="text-[10px] text-emerald-400 font-bold">Copied!</span>}
+                                        </div>
+                                        <div className="flex justify-between items-end">
+                                            <div className="space-y-0.5">
+                                                <p className="text-[8px] font-bold opacity-60 uppercase">Expiry Date</p>
+                                                <p className="text-sm font-bold">{card.expiry}</p>
+                                            </div>
+                                            <div className="w-12 h-8 bg-white/20 rounded backdrop-blur-sm border border-white/10 flex items-center justify-center italic font-bold text-xs">
+                                                VISA
+                                            </div>
                                         </div>
                                     </div>
-                                )}
-                            </div>
-                        ))}
+
+                                    {card.isBlocked && (
+                                        <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] rounded-2xl flex items-center justify-center">
+                                            <div className="bg-white text-slate-900 px-4 py-2 rounded-full flex items-center gap-2 shadow-xl">
+                                                <Lock className="w-4 h-4 text-red-500" />
+                                                <span className="text-xs font-bold uppercase tracking-widest">Card Blocked</span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {activeIndex > 0 && (
+                            <button
+                                onClick={() => setActiveIndex(activeIndex - 1)}
+                                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center text-federalblue-900 hover:bg-white active:scale-90 transition-all"
+                            >
+                                <ChevronLeft className="w-5 h-5" />
+                            </button>
+                        )}
+                        {activeIndex < cards.length - 1 && (
+                            <button
+                                onClick={() => setActiveIndex(activeIndex + 1)}
+                                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center text-federalblue-900 hover:bg-white active:scale-90 transition-all"
+                            >
+                                <ChevronRight className="w-5 h-5" />
+                            </button>
+                        )}
                     </div>
 
                     <div className="flex justify-center gap-2">
                         {cards.map((_, i) => (
-                            <div key={i} className={`h-1.5 rounded-full transition-all ${i === activeIndex ? 'w-6 bg-federalblue-900' : 'w-1.5 bg-slate-300'}`} />
+                            <button key={i} onClick={() => setActiveIndex(i)} className={`h-1.5 rounded-full transition-all ${i === activeIndex ? 'w-6 bg-federalblue-900' : 'w-1.5 bg-slate-300 hover:bg-slate-400'}`} />
                         ))}
                     </div>
                 </div>

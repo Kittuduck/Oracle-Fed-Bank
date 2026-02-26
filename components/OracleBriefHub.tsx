@@ -49,6 +49,19 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                     </div>
                 </div>
 
+                {/* --- Ask Oracle Anything --- */}
+                <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-[2.5rem] border border-slate-100 dark:border-zinc-800 text-center space-y-4 shadow-sm animate-in slide-in-from-top-4">
+                    <div className="space-y-1">
+                        <h4 className="text-sm font-bold text-federalblue-900 dark:text-white">Ask Oracle Anything</h4>
+                        <p className="text-[10px] text-slate-500 dark:text-zinc-400">Type "Can I afford a trip to Bali?" or track expenses.</p>
+                    </div>
+                    <button onClick={() => onAction('Chat')} className="w-full py-4 bg-federalblue-900 dark:bg-white text-white dark:text-black rounded-2xl text-xs font-bold flex items-center justify-center gap-2 group shadow-lg active:scale-95 transition-transform">
+                        <Sparkles className="w-4 h-4 text-federalgold-500" />
+                        Enter Agentic Mode
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                    </button>
+                </div>
+
                 {/* --- Persona Oracle Briefs --- */}
                 {persona && persona.oracleBriefs.length > 0 && (
                     <div className="space-y-3">
@@ -93,19 +106,6 @@ const OracleBriefHub: React.FC<OracleBriefHubProps> = ({ isDarkMode, festival, o
                         ))}
                     </div>
                 )}
-
-                {/* --- Predictive Prompt Top --- */}
-                <div className="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-[2.5rem] border border-slate-100 dark:border-zinc-800 text-center space-y-4 shadow-sm animate-in slide-in-from-top-4">
-                    <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-federalblue-900 dark:text-white">Ask Oracle Anything</h4>
-                        <p className="text-[10px] text-slate-500 dark:text-zinc-400">Type "Can I afford a trip to Bali?" or track expenses.</p>
-                    </div>
-                    <button onClick={() => onAction('Chat')} className="w-full py-4 bg-federalblue-900 dark:bg-white text-white dark:text-black rounded-2xl text-xs font-bold flex items-center justify-center gap-2 group shadow-lg active:scale-95 transition-transform">
-                        <Sparkles className="w-4 h-4 text-federalgold-500" />
-                        Enter Agentic Mode
-                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </button>
-                </div>
 
                 {/* --- Predictive Chart Section --- */}
                 < PredictiveChart isDarkMode={isDarkMode} />
