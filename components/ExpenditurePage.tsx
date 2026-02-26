@@ -590,29 +590,42 @@ const ExpenditurePage: React.FC<ExpenditurePageProps> = ({ onBack, isDarkMode, t
                     </div>
 
                     {/* Oracle Insight - Federal Style */}
-                    <div className="bg-gradient-to-r from-federalblue-50/80 to-white dark:from-federalblue-900/10 dark:to-[#1c1e24] border border-federalblue-100 dark:border-federalblue-800/30 rounded-xl p-5 relative overflow-hidden">
-                        <div className="flex items-start gap-3 relative z-10">
-                            <div className="p-2 bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-federalblue-800/20 rounded-lg text-federalblue-900 dark:text-federalblue-400 shadow-sm">
-                                <Zap className="w-5 h-5" />
-                            </div>
-                            <div className="flex-1">
-                                <div className="flex justify-between items-center mb-1">
-                                    <h4 className="text-xs font-bold text-federalblue-900 dark:text-federalblue-400 uppercase tracking-wider">Oracle Insight</h4>
-                                    <span className="text-[10px] text-slate-400">Just now</span>
+                    {billers.find(a => a.id === pData.insight.billerId)?.status === 'PAUSED' ? (
+                        <div className="bg-gradient-to-r from-emerald-50/80 to-white dark:from-emerald-900/10 dark:to-[#1c1e24] border border-emerald-200 dark:border-emerald-800/30 rounded-xl p-4 relative overflow-hidden">
+                            <div className="flex items-center gap-3 relative z-10">
+                                <div className="p-2 bg-white dark:bg-[#15161a] border border-emerald-200 dark:border-emerald-800/20 rounded-lg text-emerald-600 dark:text-emerald-400 shadow-sm">
+                                    <CheckCircle2 className="w-5 h-5" />
                                 </div>
-                                <p className="text-sm text-slate-700 dark:text-slate-200 font-medium mb-3">
-                                    {pData.insight.text}
-                                </p>
-                                <button
-                                    onClick={() => onToggleAutopay(pData.insight.billerId)}
-                                    disabled={billers.find(a => a.id === pData.insight.billerId)?.status === 'PAUSED'}
-                                    className="text-xs bg-white border border-[#E0E0E0] hover:border-federalblue-500 hover:text-federalblue-900 dark:bg-[#1c1e24] dark:border-slate-700 dark:hover:border-federalblue-500 text-slate-700 dark:text-white px-4 py-2 rounded-lg font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-                                >
-                                    {billers.find(a => a.id === pData.insight.billerId)?.status === 'PAUSED' ? 'Suggestion Executed' : pData.insight.action}
-                                </button>
+                                <div className="flex-1">
+                                    <h4 className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Suggestion Executed</h4>
+                                    <p className="text-sm text-slate-600 dark:text-slate-300 mt-0.5">Gold's Gym auto-pay has been paused. You saved ₹3,500 this month.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div className="bg-gradient-to-r from-federalblue-50/80 to-white dark:from-federalblue-900/10 dark:to-[#1c1e24] border border-federalblue-100 dark:border-federalblue-800/30 rounded-xl p-5 relative overflow-hidden">
+                            <div className="flex items-start gap-3 relative z-10">
+                                <div className="p-2 bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-federalblue-800/20 rounded-lg text-federalblue-900 dark:text-federalblue-400 shadow-sm">
+                                    <Zap className="w-5 h-5" />
+                                </div>
+                                <div className="flex-1">
+                                    <div className="flex justify-between items-center mb-1">
+                                        <h4 className="text-xs font-bold text-federalblue-900 dark:text-federalblue-400 uppercase tracking-wider">Oracle Insight</h4>
+                                        <span className="text-[10px] text-slate-400">Just now</span>
+                                    </div>
+                                    <p className="text-sm text-slate-700 dark:text-slate-200 font-medium mb-3">
+                                        {pData.insight.text}
+                                    </p>
+                                    <button
+                                        onClick={() => onToggleAutopay(pData.insight.billerId)}
+                                        className="text-xs bg-white border border-[#E0E0E0] hover:border-federalblue-500 hover:text-federalblue-900 dark:bg-[#1c1e24] dark:border-slate-700 dark:hover:border-federalblue-500 text-slate-700 dark:text-white px-4 py-2 rounded-lg font-bold transition-all shadow-sm"
+                                    >
+                                        {pData.insight.action}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Autopay Manager - Federal Style */}
                     <div className="bg-white dark:bg-[#15161a] border border-[#E0E0E0] dark:border-slate-800 rounded-xl overflow-hidden shadow-federal dark:shadow-none">
